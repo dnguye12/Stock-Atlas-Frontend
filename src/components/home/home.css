@@ -1,0 +1,11 @@
+.home-p {
+    @apply text-white text-[1rem] sm:text-lg;
+}
+
+h1 span {
+    @apply text-yellow-500;
+}
+
+.home-p span {
+    @apply text-yellow-500 italic font-semibold;
+}

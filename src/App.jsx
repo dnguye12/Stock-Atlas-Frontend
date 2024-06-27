@@ -1,15 +1,25 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons' 
-import { fab }  from '@fortawesome/free-brands-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 library.add(fas, fab, far)
+
+import Header from './components/header/Header'
+import Menu from './components/menu/Menu'
+import Home from './components/home/Home'
 
 function App() {
 
   return (
-    <p className=' text-red-500'><FontAwesomeIcon icon="fa-brands fa-hire-a-helper" /> Homepage</p>
+    <div className=' bg-neutral-900 min-h-screen'>
+      <Header />
+      <div className='flex mx-auto h-full'>
+        <Menu />
+        <div className='w-full'>
+          <Home />
+        </div>
+      </div>
+    </div>
   )
 }
 
