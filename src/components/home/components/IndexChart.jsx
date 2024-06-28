@@ -17,12 +17,12 @@ const IndexChart = ({ data }) => {
             layout: {
                 background: {
                     type: ColorType.Solid,
-                    color: 'transparent'
+                    color: 'rgba( 38, 166, 154, 0)'
                 },
                 textColor: 'white',
             },
             width: chartContainerRef.current.clientWidth,
-            height: 40,
+            height: 44,
             rightPriceScale: {
                 visible: false
             },
@@ -41,7 +41,7 @@ const IndexChart = ({ data }) => {
             handleScroll: false,
             crosshair: {
                 mode: CrosshairMode.Hidden
-            }
+            },
         })
 
         chart.timeScale().fitContent()
@@ -54,7 +54,8 @@ const IndexChart = ({ data }) => {
             bottomFillColor1: 'rgba( 239, 83, 80, 0.05)',
             bottomFillColor2: 'rgba( 239, 83, 80, 0.28)',
             lastValueVisible: false,
-            priceLineVisible: false
+            priceLineVisible: false,
+            lineWidth: 1
         });
         mySeries.setData(data);
 

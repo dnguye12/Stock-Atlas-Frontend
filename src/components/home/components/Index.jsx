@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { getYahooChart } from "../../../services/stock"
 import { isTradingTime } from "../../../utils/timeUtils"
@@ -23,7 +24,7 @@ const Index = ({ name, ticker }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getYahooChart(ticker, period1, period2, "15m")
+                const data = await getYahooChart(ticker, period1, period2, "1m")
                 setQuotes(data)
             } catch (error) {
                 console.log("Index: ", error)
@@ -41,15 +42,36 @@ const Index = ({ name, ticker }) => {
         )
     }
 
-    const myData = quotes.quotes.map(quote => ({
-        time: new Date(quote.date).getTime(),
-        value: quote.open
-    }))
+    const myData = [];
+    quotes.quotes.forEach(quote => {
+        if (quote.open) {
+            myData.push({
+                time: new Date(quote.date).getTime(),
+                value: quote.open
+            });
+        }
+    })
+
+    const startValue = quotes.quotes[0].open
+    const endValue = quotes.quotes[quotes.quotes.length - 1].close
+
+    if(ticker === '^GSPC') {
+    console.log(quotes)
+    }
 
     return (
         <div className="flex items-center justify-between space-x-2 rounded border border-neutral-700 p-1.5 shadow-sm bg-neutral-800 hover:bg-neutral-700 lg-px-2">
-            <div>
+            <div className="flex flex-col items-start justify-center">
                 <p className=" whitespace-nowrap text-sm font-semibold leading-tight">{name}</p>
+
+                {
+                    startValue < endValue
+                        ?
+                        <p className="flex items-center text-up"><FontAwesomeIcon className="mr-2" icon="fa-solid fa-caret-up" /> {((endValue - startValue) / startValue * 100).toFixed(2)}%</p>
+                        :
+                        <p className="flex items-center text-down"><FontAwesomeIcon className="mr-2" icon="fa-solid fa-caret-down" /> {((startValue - endValue) / startValue * 100).toFixed(2)}%</p>
+                }
+
             </div>
             <div className="w-full lg:h-[44px]">
                 <IndexChart data={myData}></IndexChart>
