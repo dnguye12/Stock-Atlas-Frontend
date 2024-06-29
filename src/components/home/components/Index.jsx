@@ -38,7 +38,7 @@ const Index = ({ name, ticker }) => {
 
     if (isLoading) {
         return (
-            <div>Loading...</div>
+            <div className="skeleton w-full rounded border border-neutral-700 bg-neutral-900" style={{height: 58}}></div>
         )
     }
 
@@ -52,12 +52,8 @@ const Index = ({ name, ticker }) => {
         }
     })
 
-    const startValue = quotes.quotes[0].open
+    const startValue = quotes.meta.previousClose
     const endValue = quotes.quotes[quotes.quotes.length - 1].close
-
-    if(ticker === '^GSPC') {
-    console.log(quotes)
-    }
 
     return (
         <div className="flex items-center justify-between space-x-2 rounded border border-neutral-700 p-1.5 shadow-sm bg-neutral-800 hover:bg-neutral-700 lg-px-2">
@@ -74,7 +70,7 @@ const Index = ({ name, ticker }) => {
 
             </div>
             <div className="w-full lg:h-[44px]">
-                <IndexChart data={myData}></IndexChart>
+                <IndexChart data={myData} prevClose={startValue}></IndexChart>
             </div>
         </div>
     )

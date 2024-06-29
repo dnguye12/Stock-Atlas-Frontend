@@ -2,8 +2,8 @@
 import { useEffect, useRef } from "react"
 import { createChart, ColorType, CrosshairMode } from 'lightweight-charts';
 
-const IndexChart = ({ data }) => {
-    const baseValue = data[0].value
+const IndexChart = ({ data, prevClose }) => {
+    const baseValue = prevClose
 
     const chartContainerRef = useRef()
     useEffect(() => {
