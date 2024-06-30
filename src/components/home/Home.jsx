@@ -4,6 +4,7 @@ import Indexes from "./components/Indexes";
 
 const Home = () => {
     return (
+        <div className="w-full">
         <div className="flex w-full flex-col justify-center mx-auto">
             <Indexes />
 
@@ -17,6 +18,7 @@ const Home = () => {
                 <Gainers />
                 <Active />
             </div>
+        </div>
         </div>
     )
 }

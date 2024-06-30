@@ -7,6 +7,7 @@ library.add(fas, fab, far)
 import Header from './components/header/Header'
 import Menu from './components/menu/Menu'
 import Home from './components/home/Home'
+import {Routes, Route} from 'react-router-dom'
 
 function App() {
 
@@ -15,9 +16,9 @@ function App() {
       <Header />
       <div className='flex mx-auto h-full'>
         <Menu />
-        <div className='w-full'>
-          <Home />
-        </div>
+        <Routes>
+          <Route path='/' element={<Home />} />
+        </Routes>
       </div>
     </div>
   )
