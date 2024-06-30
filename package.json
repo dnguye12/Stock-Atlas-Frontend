@@ -16,6 +16,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "axios": "^1.7.2",
+    "axios-cache-interceptor": "^1.5.3",
     "lightweight-charts": "^4.1.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
