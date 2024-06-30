@@ -32,12 +32,13 @@ const getMinute = date => {
 }
 
 const isTradingDay = date => {
-    const day = date.getDate()
-
-    if (day === 0 || day === 6) {
-        return false
+    const day = date.getDay()
+    if (day === 0) {
+        return 'Sunday'
+    } else if (day === 6) {
+        return 'Saturday'
     }
-    return true
+    return 'Weekday'
 }
 
 const isTradingHour = (date, startHour, startMin, endHour, endMin) => {
@@ -55,19 +56,25 @@ const isTradingHour = (date, startHour, startMin, endHour, endMin) => {
     return 2
 }
 
-// 0 not trading day
-// 1 pre market
-// 2 trading time
-// 3 post market
+// 0 Saturday
+// 1 Sunday
+// 2 pre market
+// 3 trading time
+// 4 post market
 
 // US Market 9:30-16:00 EDT
 export const isTradingTime = markets => {
     if (markets === "US") {
         const edt = getCurrentEDTTime()
-        if (isTradingDay(edt)) {
-            return isTradingHour(edt, 9, 30, 16, 0)
-        } else {
+        const day = isTradingDay(edt)
+
+        if (day === 'Saturday') {
             return 0
+        }
+        else if (day === 'Sunday') {
+            return 1
+        } else {
+            return isTradingHour(edt, 9, 30, 16, 0)
         }
     }
     return -1

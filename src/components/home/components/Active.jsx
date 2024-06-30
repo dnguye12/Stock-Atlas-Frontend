@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react"
-import { getYahooDailyGainers } from "../../../services/stock"
-import { formatMarketCap } from "../../../utils/moneyUtils"
+import { getYahooDailyActives } from "../../../services/stock"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-const Gainers = () => {
-    const [gainers, setGainers] = useState()
+const Active = () => {
+    const [actives, setActives] = useState()
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getYahooDailyGainers(5)
-                setGainers(data.quotes)
+                const data = await getYahooDailyActives(5)
+                setActives(data)
             } catch (error) {
-                console.log("Getting gainers: ", error)
+                console.log("Getting daily actives: ", error)
             } finally {
                 setIsLoading(false)
             }
@@ -30,28 +29,30 @@ const Gainers = () => {
     }
     return (
         <div className="overflow-x-auto">
-            <h3>Top Gainers Today</h3>
+            <h3>Most Active Today</h3>
             <table className="table">
                 <thead>
                     <tr className="bg-neutral-900">
                         <th>Symbol</th>
                         <th>Name</th>
-                        <th>Market Cap</th>
+                        <th>Volume</th>
                         <th>Today</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        gainers.map((gainer, idx) => (
+                        actives.map((active, idx) => (
                             <tr className="hover odd:bg-neutral-800 even:bg-neutral-900" key={`gainer-${idx}`}>
-                                <td>{gainer.symbol}</td>
-                                {gainer.displayName
-                                    ? <td>{gainer.displayName}</td>
-                                    : <td>{gainer.shortName}</td>}
-                                <td>{ formatMarketCap(gainer.marketCap)}</td>
+                                <td>{active.symbol}</td>
+                                <td>{active.name}</td>
+                                <td>{active.volume}</td>
                                 <td>
-                                    <p>{`$${gainer.regularMarketPrice.toFixed(2)}`}</p>
-                                    <p><FontAwesomeIcon icon="fa-solid fa-caret-up" /> {`+${gainer.regularMarketChangePercent.toFixed(2)}%`}</p>
+                                    <p>{`$${active.price}`}</p>
+                                    {
+                                        active.percentChange > 0
+                                        ? <p><FontAwesomeIcon icon="fa-solid fa-caret-up" /> {`${active.percentChange}`}</p>
+                                        : <p><FontAwesomeIcon icon="fa-solid fa-caret-down" /> {`${active.percentChange}`}</p>
+                                    }
                                 </td>
                             </tr>
                         ))
@@ -62,4 +63,4 @@ const Gainers = () => {
     )
 }
 
-export default Gainers
+export default Active

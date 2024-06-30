@@ -30,3 +30,25 @@ export const getYahooDailyGainers = async (count, region) => {
     const request = await axios.get(query)
     return request.data
 }
+
+export const getYahooDailyActives = async(count) => {
+    let query = baseUrl + dailyUrl + '/active';
+
+    if(count) {
+        query += `/${count}`
+    }
+    const request = await axios.get(query)
+    return request.data
+}
+
+export const getYahooTrending = async (count, region) => {
+    let query = baseUrl + dailyUrl + '/trending';
+    if (count) {
+        query += `/${count}`
+    }
+    if (region) {
+        query += `/${region}`
+    }
+    const request = await axios.get(query)
+    return request.data
+}

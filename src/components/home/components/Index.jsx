@@ -12,11 +12,27 @@ const Index = ({ name, ticker }) => {
     const [isLoading, setIsLoading] = useState(true)
 
     const tradingPeriod = isTradingTime('US')
+   
+
+    //isTradingTime
+    // 0 Saturday
+    // 1 Sunday
+    // 2 pre market
+    // 3 trading time
+    // 4 post market
+
+    // US Market 9:30-16:00 EDT
     let period1, period2
-    if (tradingPeriod === 0 || tradingPeriod === 1) {
+    if(tradingPeriod === 0) {
+        period1 = new Date(Date.now() - 86400000).toISOString().slice(0, 10) // Friday - yesterday
+        period2 = new Date().toISOString().slice(0, 10) // Saturday - today
+    }else if(tradingPeriod === 1) {
+        period1 = new Date(Date.now() - 86400000 * 2).toISOString().slice(0, 10) // Friday - 2 days ago
+        period2 = new Date().toISOString().slice(0, 10) // Saturday - yesterday
+    }else if(tradingPeriod === 2) {
         period1 = new Date(Date.now() - 86400000).toISOString().slice(0, 10) // yesterday
         period2 = new Date().toISOString().slice(0, 10) // today
-    } else if (tradingPeriod === 2 || tradingPeriod === 3) {
+    }else if (tradingPeriod === 2 || tradingPeriod === 3) {
         period1 = new Date().toISOString().slice(0, 10) // today
         period2 = new Date(Date.now() + 86400000).toISOString().slice(0, 10) // tomorrow
     }

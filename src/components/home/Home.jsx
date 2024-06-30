@@ -1,3 +1,4 @@
+import Active from "./components/Active";
 import Gainers from "./components/Gainers";
 import Indexes from "./components/Indexes";
 
@@ -12,9 +13,9 @@ const Home = () => {
                 <p className="home-p">See stock prices, news, financial, forecasts, charts and more.</p>
             </div>
 
-            <div className="grid grid-cols-2 w-full mx-auto gap-10">
+            <div className="grid grid-cols-2 mx-auto w-full gap-10">
                 <Gainers />
-                <Gainers />
+                <Active />
             </div>
         </div>
     )
