@@ -15,11 +15,12 @@ const Index = ({ name, ticker }) => {
     console.log(day + " " + hour)
 
     //isTradingTime
-    // 0 Saturday
-    // 1 Sunday
-    // 2 pre market
-    // 3 trading time
-    // 4 post market
+    // Saturday: get Friday data
+    // Sunday: get Friday data
+    // Monday pre: get Friday data
+    // else
+    //          pre hour: get yesterday data
+    //          post hour: get today to tomorrow data
 
     // US Market 9:30-16:00 EDT
     let period1, period2
@@ -32,7 +33,11 @@ const Index = ({ name, ticker }) => {
     } else if (day === "Monday" && hour === "pre") {
         period1 = new Date(Date.now() - 86400000 * 3).toISOString().slice(0, 10) // Friday - 3 days ago
         period2 = new Date(Date.now() - 86400000 * 2).toISOString().slice(0, 10) // Saturday - 2 days ago
-    } else {
+    } else if(hour === "pre") {
+        period1 = new Date(Date.now() - 86400000 ).toISOString().slice(0, 10) // yesterday
+        period2 = new Date().toISOString().slice(0, 10) // today
+    }
+    else {
         period1 = new Date().toISOString().slice(0, 10) // today
         period2 = new Date(Date.now() + 86400000).toISOString().slice(0, 10) // tomorrow
     }
