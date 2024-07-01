@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { getYahooChart } from "../../../services/stock"
-import { isTradingTime } from "../../../utils/timeUtils"
+import { getTradingTime } from "../../../utils/timeUtils"
 
 import IndexChart from "./IndexChart";
 
@@ -11,8 +11,8 @@ const Index = ({ name, ticker }) => {
     const [quotes, setQuotes] = useState()
     const [isLoading, setIsLoading] = useState(true)
 
-    const tradingPeriod = isTradingTime('US')
-   
+    const { day, hour } = getTradingTime('US')
+    console.log(day + " " + hour)
 
     //isTradingTime
     // 0 Saturday
@@ -23,19 +23,20 @@ const Index = ({ name, ticker }) => {
 
     // US Market 9:30-16:00 EDT
     let period1, period2
-    if(tradingPeriod === 0) {
+    if (day === "Saturday") {
         period1 = new Date(Date.now() - 86400000).toISOString().slice(0, 10) // Friday - yesterday
         period2 = new Date().toISOString().slice(0, 10) // Saturday - today
-    }else if(tradingPeriod === 1) {
+    } else if (day === "Sunday") {
         period1 = new Date(Date.now() - 86400000 * 2).toISOString().slice(0, 10) // Friday - 2 days ago
         period2 = new Date().toISOString().slice(0, 10) // Saturday - yesterday
-    }else if(tradingPeriod === 2) {
-        period1 = new Date(Date.now() - 86400000).toISOString().slice(0, 10) // yesterday
-        period2 = new Date().toISOString().slice(0, 10) // today
-    }else if (tradingPeriod === 2 || tradingPeriod === 3) {
+    } else if (day === "Monday" && hour === "pre") {
+        period1 = new Date(Date.now() - 86400000 * 3).toISOString().slice(0, 10) // Friday - 3 days ago
+        period2 = new Date(Date.now() - 86400000 * 2).toISOString().slice(0, 10) // Saturday - 2 days ago
+    } else {
         period1 = new Date().toISOString().slice(0, 10) // today
         period2 = new Date(Date.now() + 86400000).toISOString().slice(0, 10) // tomorrow
     }
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -54,7 +55,7 @@ const Index = ({ name, ticker }) => {
 
     if (isLoading) {
         return (
-            <div className="skeleton w-full rounded border border-neutral-700 bg-neutral-900" style={{height: 58}}></div>
+            <div className="skeleton w-full rounded border border-neutral-700 bg-neutral-900" style={{ height: 58 }}></div>
         )
     }
 
