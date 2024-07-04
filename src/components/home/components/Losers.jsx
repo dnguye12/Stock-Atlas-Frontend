@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react"
-import { getYahooDailyGainers } from "../../../services/stock"
-import { formatMarketCap } from "../../../utils/moneyUtils"
+import { getYahooDailyLosers } from "../../../services/stock"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-const Gainers = () => {
-    const [gainers, setGainers] = useState()
+const Losers = () => {
+    const [losers, setLosers] = useState()
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getYahooDailyGainers(5)
-                setGainers(data.quotes)
+                const data = await getYahooDailyLosers(5)
+                setLosers(data)
             } catch (error) {
                 console.log("Getting gainers: ", error)
             } finally {
@@ -41,16 +40,14 @@ const Gainers = () => {
                 </thead>
                 <tbody>
                     {
-                        gainers.map((gainer, idx) => (
+                        losers.map((loser, idx) => (
                             <tr className="hover odd:bg-neutral-800 even:bg-neutral-900" key={`gainer-${idx}`}>
-                                <td>{gainer.symbol}</td>
-                                {gainer.displayName
-                                    ? <td>{gainer.displayName}</td>
-                                    : <td>{gainer.shortName}</td>}
-                                <td>{ formatMarketCap(gainer.marketCap)}</td>
+                                <td>{loser.symbol}</td>
+                                <td>{loser.name}</td>
+                                <td>{ loser.marketCap}</td>
                                 <td>
-                                    <p>{`$${gainer.regularMarketPrice.toFixed(2)}`}</p>
-                                    <p><FontAwesomeIcon icon="fa-solid fa-caret-up" /> {`+${gainer.regularMarketChangePercent.toFixed(2)}%`}</p>
+                                    <p>{loser.price}</p>
+                                    <p><FontAwesomeIcon icon="fa-solid fa-caret-down" /> {loser.percentChange}</p>
                                 </td>
                             </tr>
                         ))
@@ -61,4 +58,4 @@ const Gainers = () => {
     )
 }
 
-export default Gainers
+export default Losers

@@ -3,9 +3,9 @@
 }
 
 h1 span {
-    @apply text-yellow-500;
+    @apply text-up;
 }
 
 .home-p span {
-    @apply text-yellow-500 italic font-semibold;
+    @apply text-up italic font-semibold;
 }
