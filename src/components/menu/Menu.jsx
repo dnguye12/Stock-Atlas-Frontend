@@ -7,6 +7,7 @@ const Menu = () => {
         <ul className='menu h-full w-1/5 bg-neutral-800 max-w-48 z-40 shadow border-r border-r-neutral-700 px-5 py-4'>
             <li>
                 <Link to="/"><FontAwesomeIcon icon="fa-solid fa-house" />Homepage</Link>
+                <Link to={`/stock/test`}>Test Stock</Link>
             </li>
         </ul>
     )

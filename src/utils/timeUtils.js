@@ -80,3 +80,80 @@ export const getTradingTime = markets => {
     }
     return {}
 }
+
+export const Range1D = (day, hour) => {
+    let period1, period2
+    if (day === "Saturday") {
+        period1 = new Date(Date.now() - 86400000).toISOString().slice(0, 10) // Friday - yesterday
+        period2 = new Date().toISOString().slice(0, 10) // Saturday - today
+    } else if (day === "Sunday") {
+        period1 = new Date(Date.now() - 86400000 * 2).toISOString().slice(0, 10) // Friday - 2 days ago
+        period2 = new Date().toISOString().slice(0, 10) // Saturday - yesterday
+    } else if (day === "Monday" && hour === "pre") {
+        period1 = new Date(Date.now() - 86400000 * 3).toISOString().slice(0, 10) // Friday - 3 days ago
+        period2 = new Date(Date.now() - 86400000 * 2).toISOString().slice(0, 10) // Saturday - 2 days ago
+    } else if (hour === "pre") {
+        period1 = new Date(Date.now() - 86400000).toISOString().slice(0, 10) // yesterday
+        period2 = new Date().toISOString().slice(0, 10) // today
+    }
+    else {
+        period1 = new Date().toISOString().slice(0, 10) // today
+        period2 = new Date(Date.now() + 86400000).toISOString().slice(0, 10) // tomorrow
+    }
+
+    return {
+        period1,
+        period2
+    }
+}
+
+export const Range1W = () => {
+    let period1 = new Date(Date.now() - 86400000 * 7).toISOString().slice(0, 10)
+    let period2 = new Date().toISOString().slice(0, 10)
+
+    return {
+        period1,
+        period2
+    }
+}
+
+export const Range1M = () => {
+    let period1 = new Date(Date.now() - 86400000 * 30).toISOString().slice(0, 10)
+    let period2 = new Date().toISOString().slice(0, 10)
+
+    return {
+        period1,
+        period2
+    }
+}
+
+export const Range1Y = () => {
+    let period1 = new Date(Date.now() - 86400000 * 365).toISOString().slice(0, 10)
+    let period2 = new Date().toISOString().slice(0, 10)
+
+    return {
+        period1,
+        period2
+    }
+}
+
+export const Range5Y = () => {
+    let period1 = new Date(Date.now() - 86400000 * 365 * 5).toISOString().slice(0, 10)
+    let period2 = new Date().toISOString().slice(0, 10)
+
+    return {
+        period1,
+        period2
+    }
+}
+
+export const RangeYTD = () => {
+    let now = new Date();
+    let period1 = new Date(now.getFullYear(), 0, 1).toISOString().slice(0, 10);
+    let period2 = now.toISOString().slice(0, 10);
+
+    return {
+        period1,
+        period2
+    }
+}

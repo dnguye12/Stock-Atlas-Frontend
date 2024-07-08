@@ -4,10 +4,12 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 library.add(fas, fab, far)
 
+import {Routes, Route} from 'react-router-dom'
+
 import Header from './components/header/Header'
 import Menu from './components/menu/Menu'
 import Home from './components/home/Home'
-import {Routes, Route} from 'react-router-dom'
+import Stock from './components/stock/Stock'
 
 function App() {
 
@@ -18,6 +20,7 @@ function App() {
         <Menu />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/stock/:symbol' element={<Stock/>} />
         </Routes>
       </div>
     </div>

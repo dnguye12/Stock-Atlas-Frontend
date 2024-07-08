@@ -4,6 +4,7 @@ import { setupCache } from 'axios-cache-interceptor';
 const baseUrl = import.meta.env.VITE_API_URL
 const chartUrl = import.meta.env.VITE_CHART_API_URL
 const dailyUrl = import.meta.env.VITE_DAILY_API_URL
+const quoteUrl = import.meta.env.VITE_QUOTE_API_URL
 
 const chartAxios = setupCache(axios.create(), {
     ttl: 60000, // 1 minute cache for chart data
@@ -69,6 +70,13 @@ export const getYahooTrending = async (count, region) => {
     if (region) {
         query += `/${region}`
     }
+    const request = await dailyAxios.get(query)
+    return request.data
+}
+
+export const getYahooQuote = async(ticker) => {
+    let query = baseUrl + quoteUrl + `/${ticker}`
+
     const request = await dailyAxios.get(query)
     return request.data
 }
