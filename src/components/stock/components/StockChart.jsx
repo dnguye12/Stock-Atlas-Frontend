@@ -3,8 +3,6 @@ import { useEffect, useRef } from "react"
 import { createChart, ColorType, CrosshairMode } from 'lightweight-charts';
 
 const StockChart = ({ data, prevClose }) => {
-    const baseValue = prevClose
-
     const chartContainerRef = useRef()
     useEffect(() => {
         const handleResize = () => {
@@ -21,32 +19,13 @@ const StockChart = ({ data, prevClose }) => {
                 },
                 textColor: 'white',
             },
-            width: 400,
+            width: chartContainerRef.current.clientWidth,
             height: 400,
-            rightPriceScale: {
-                visible: false
-            },
-            timeScale: {
-                visible: false
-            },
-            grid: {
-                horzLines: {
-                    visible: false
-                },
-                vertLines: {
-                    visible: false
-                }
-            },
-            handleScale: false,
-            handleScroll: false,
-            crosshair: {
-                mode: CrosshairMode.Hidden
-            },
         })
 
         chart.timeScale().fitContent()
         const mySeries = chart.addBaselineSeries({
-            baseValue: { type: "price", price: baseValue },
+            baseValue: { type: "price", price: prevClose },
             topLineColor: 'rgba( 38, 166, 154, 1)',
             topFillColor1: 'rgba( 38, 166, 154, 0.28)',
             topFillColor2: 'rgba( 38, 166, 154, 0.05)',
@@ -66,7 +45,7 @@ const StockChart = ({ data, prevClose }) => {
 
             chart.remove();
         };
-    }, [data, baseValue])
+    }, [data, prevClose])
     return (
         <div ref={chartContainerRef} />
     )
