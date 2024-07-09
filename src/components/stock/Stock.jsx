@@ -2,9 +2,11 @@ import { useState, useEffect } from "react"
 import RangeButtons from "./components/RangeButtons"
 import StockChart from "./components/StockChart"
 import { getYahooChart, getYahooQuote } from "../../services/stock"
-import { getTradingTime, Range1D, Range1W, Range1M, Range1Y, Range5Y, RangeYTD } from "../../utils/timeUtils"
+import { getTradingTime, Range1D, Range1W, Range1M, Range1Y, Range5Y, RangeYTD, RangeMax } from "../../utils/timeUtils"
+import { useParams } from "react-router-dom"
 
-const Stock = ({ ticker = 'AAPL' }) => {
+const Stock = () => {
+    const ticker = useParams().ticker
     // Stock general data
     const [stockQuote, setStockQuote] = useState(null)
     const [stockChart, setStockChart] = useState(null)
@@ -30,7 +32,7 @@ const Stock = ({ ticker = 'AAPL' }) => {
     }, [])
 
     //Once we have the detail of the stock, search up the ticker using Yahoo.chart
-    //'1D', '1W', '1M', 'YTD', '1Y', '5Y'
+    //'1D', '1W', '1M', 'YTD', '1Y', '5Y', 'Max
     useEffect(() => {
         const fetchData = async () => {
             if (stockQuote) {
@@ -62,20 +64,27 @@ const Stock = ({ ticker = 'AAPL' }) => {
                         let { period1: helper1, period2: helper2 } = Range5Y()
                         period1 = helper1
                         period2 = helper2
+                    } else if (chartInterval === 'Max') {
+                        let { period1: helper1, period2: helper2 } = RangeMax(stockQuote.firstTradeDateMilliseconds)
+                        period1 = helper1
+                        period2 = helper2
                     }
-
 
                     if (period1 && period2) {
                         let data;
-                        if (chartInterval === '1D' || chartInterval === '1W') {
-                            data = await getYahooChart(ticker, period1, period2, '1m')
-                        } else if (chartInterval === '1M') {
-                            data = await getYahooChart(ticker, period1, period2, '2m')
+                        if (chartInterval === '1D') {
+                            data = await getYahooChart(ticker, period1, period2, '5m')
+                        } else if (chartInterval === '1W') {
+                            data = await getYahooChart(ticker, period1, period2, '30m')
+                        }
+                        else if (chartInterval === '1M') {
+                            data = await getYahooChart(ticker, period1, period2, '1d')
                         }
                         else if (chartInterval === '1Y' || chartInterval === 'YTD') {
-                            data = await getYahooChart(ticker, period1, period2, '1h')
-                        } else if (chartInterval === '5Y') {
                             data = await getYahooChart(ticker, period1, period2, '1d')
+                        }
+                        else if (chartInterval === '5Y' || chartInterval === 'Max') {
+                            data = await getYahooChart(ticker, period1, period2, '1wk')
                         }
                         setStockChart(data)
                     }
@@ -98,12 +107,8 @@ const Stock = ({ ticker = 'AAPL' }) => {
                     });
                 }
             })
-
             setChartQuote(helper)
         }
-
-
-
     }, [chartInterval, stockChart])
 
     return (
@@ -111,10 +116,11 @@ const Stock = ({ ticker = 'AAPL' }) => {
             <RangeButtons setChartInterval={setChartInterval} />
             {
                 chartQuote && stockChart &&
-                <StockChart data={chartQuote} prevClose={stockChart.meta.previousClose} />
+                <div className=" w-full">
+                    <StockChart key={`${chartInterval}-${chartQuote.length}`} data={chartQuote} prevClose={stockChart.meta.previousClose} />
+                </div>
             }
             {chartInterval}
-
         </>
     )
 }

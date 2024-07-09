@@ -157,3 +157,14 @@ export const RangeYTD = () => {
         period2
     }
 }
+
+export const RangeMax = (firstDate) => {
+    let now = new Date();
+    let period1 = firstDate.split('T')[0]
+    let period2 = now.toISOString().slice(0, 10);
+
+    return {
+        period1,
+        period2
+    }
+}

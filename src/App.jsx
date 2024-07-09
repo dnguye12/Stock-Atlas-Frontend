@@ -20,7 +20,7 @@ function App() {
         <Menu />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/stock/:symbol' element={<Stock/>} />
+          <Route path='/stock/:ticker' element={<Stock/>} />
         </Routes>
       </div>
     </div>

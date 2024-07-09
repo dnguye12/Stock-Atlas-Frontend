@@ -4,9 +4,12 @@ import { createChart, ColorType, CrosshairMode } from 'lightweight-charts';
 
 const StockChart = ({ data, prevClose }) => {
     const chartContainerRef = useRef()
+    const chartRef = useRef()
+    const seriesRef = useRef()
+
     useEffect(() => {
         const handleResize = () => {
-            chart.applyOptions({
+            chartRef.current.applyOptions({
                 width: chartContainerRef.current.clientWidth
             });
         }
@@ -22,8 +25,8 @@ const StockChart = ({ data, prevClose }) => {
             width: chartContainerRef.current.clientWidth,
             height: 400,
         })
-
-        chart.timeScale().fitContent()
+        chartRef.current = chart
+        
         const mySeries = chart.addBaselineSeries({
             baseValue: { type: "price", price: prevClose },
             topLineColor: 'rgba( 38, 166, 154, 1)',
@@ -36,7 +39,7 @@ const StockChart = ({ data, prevClose }) => {
             priceLineVisible: false,
             lineWidth: 1
         });
-        mySeries.setData(data);
+        seriesRef.current = mySeries
 
         window.addEventListener('resize', handleResize);
 
@@ -45,7 +48,16 @@ const StockChart = ({ data, prevClose }) => {
 
             chart.remove();
         };
-    }, [data, prevClose])
+    }, [prevClose])
+
+    useEffect(() => {
+        if(chartRef.current) {
+            seriesRef.current.setData(data)
+            chartRef.current.timeScale().fitContent();
+        }
+    }, [data]);
+
+
     return (
         <div ref={chartContainerRef} />
     )
