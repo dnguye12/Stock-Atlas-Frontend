@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef } from "react"
-import { createChart, ColorType, CrosshairMode } from 'lightweight-charts';
+import { createChart, ColorType } from 'lightweight-charts';
 
 const StockChart = ({ data, prevClose }) => {
     const chartContainerRef = useRef()
@@ -24,6 +24,14 @@ const StockChart = ({ data, prevClose }) => {
             },
             width: chartContainerRef.current.clientWidth,
             height: 400,
+            grid: {
+                horzLines: {
+                    visible: false
+                },
+                vertLines: {
+                    visible: false
+                }
+            },
         })
         chartRef.current = chart
         

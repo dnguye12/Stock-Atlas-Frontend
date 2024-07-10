@@ -5,6 +5,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 library.add(fas, fab, far)
 
 import {Routes, Route} from 'react-router-dom'
+import { useTranslation } from 'react-i18next';
 
 import Header from './components/header/Header'
 import Menu from './components/menu/Menu'
@@ -12,6 +13,7 @@ import Home from './components/home/Home'
 import Stock from './components/stock/Stock'
 
 function App() {
+  const { t, i18n } = useTranslation();
 
   return (
     <div className=' bg-neutral-900 min-h-screen'>
@@ -23,6 +25,7 @@ function App() {
           <Route path='/stock/:ticker' element={<Stock/>} />
         </Routes>
       </div>
+      <h1>{t('Welcome to React')}</h1>
     </div>
   )
 }
