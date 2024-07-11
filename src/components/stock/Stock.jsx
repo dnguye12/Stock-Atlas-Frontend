@@ -101,10 +101,17 @@ const Stock = () => {
             const helper = []
             stockChart.quotes.forEach(quote => {
                 if (quote.open) {
-                    helper.push({
-                        time: new Date(quote.date).getTime(),
-                        value: quote.open
-                    });
+                    if (chartInterval === '1D') {
+                        helper.push({
+                            time: new Date(quote.date).getTime(),
+                            value: quote.open
+                        });
+                    } else {
+                        helper.push({
+                            time: new Date(quote.date).getTime(),
+                            value: quote.open
+                        });
+                    }
                 }
             })
             setChartQuote(helper)
@@ -117,7 +124,7 @@ const Stock = () => {
             {
                 chartQuote && stockChart &&
                 <div className=" w-full">
-                    <StockChart key={`${chartInterval}-${chartQuote.length}`} data={chartQuote} prevClose={stockChart.meta.previousClose} />
+                    <StockChart key={`${chartInterval}-${chartQuote.length}`} data={chartQuote} prevClose={stockChart.meta.previousClose} chartInterval={chartInterval} />
                 </div>
             }
             {chartInterval}

@@ -25,7 +25,6 @@ function App() {
           <Route path='/stock/:ticker' element={<Stock/>} />
         </Routes>
       </div>
-      <h1>{t('Welcome to React')}</h1>
     </div>
   )
 }

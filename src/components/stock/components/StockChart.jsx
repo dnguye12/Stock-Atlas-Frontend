@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react"
 import { createChart, ColorType } from 'lightweight-charts';
 
-const StockChart = ({ data, prevClose }) => {
+const StockChart = ({ data, prevClose, chartInterval }) => {
     const chartContainerRef = useRef()
     const chartRef = useRef()
     const seriesRef = useRef()
@@ -32,9 +32,56 @@ const StockChart = ({ data, prevClose }) => {
                     visible: false
                 }
             },
+            timeScale: {
+                fixLeftEdge: true,
+                fixRightEdge: true
+                
+            }
         })
+
+        if (chartInterval === '1D') {
+            chart.applyOptions({
+                timeScale: {
+                    tickMarkFormatter: (time) => {
+                        const date = new Date(time);
+                        const hours = date.getUTCHours().toString().padStart(2, '0');
+                        const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+                        return `${hours}:${minutes}`;
+
+                    }
+                }
+            })
+        } else if (chartInterval === '1W') {
+            chart.applyOptions({
+                timeScale: {
+                    tickMarkFormatter: (time) => {
+                        const date = new Date(time);
+                        const day = date.getUTCDate().toString().padStart(2, '0');
+                        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+                        const hours = date.getUTCHours().toString().padStart(2, '0');
+                        const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+                        return `${day}/${month} ${hours}:${minutes}`;
+                    }
+                }
+            })
+        } else {
+            chart.applyOptions({
+                timeScale: {
+                    tickMarkFormatter: (time) => {
+                        console.log(time)
+                        const date = new Date(time);
+                        const day = date.getUTCDate().toString().padStart(2, '0');
+                        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+                        const year = date.getUTCFullYear().toString().slice(-2)
+                        return `${day}/${month}/${year}`;
+                    }
+                }
+            })
+        }
+
+
         chartRef.current = chart
-        
+
         const mySeries = chart.addBaselineSeries({
             baseValue: { type: "price", price: prevClose },
             topLineColor: 'rgba( 38, 166, 154, 1)',
@@ -59,7 +106,7 @@ const StockChart = ({ data, prevClose }) => {
     }, [prevClose])
 
     useEffect(() => {
-        if(chartRef.current) {
+        if (chartRef.current) {
             seriesRef.current.setData(data)
             chartRef.current.timeScale().fitContent();
         }
