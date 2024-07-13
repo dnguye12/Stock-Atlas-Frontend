@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef } from "react"
-import { createChart, ColorType } from 'lightweight-charts';
+import { createChart, ColorType, CrosshairMode, LineStyle } from 'lightweight-charts';
 
 const StockChart = ({ data, prevClose, chartInterval }) => {
     const chartContainerRef = useRef()
@@ -35,8 +35,20 @@ const StockChart = ({ data, prevClose, chartInterval }) => {
             timeScale: {
                 fixLeftEdge: true,
                 fixRightEdge: true
-                
-            }
+
+            },
+            crosshair: {
+                vertLine: {
+                    width: 8,
+                    color: '#C3BCDB44',
+                    style: LineStyle.Solid,
+                    labelBackgroundColor: '#9B7DFF',
+                },
+                horzLine: {
+                    color: '#9B7DFF',
+                    labelBackgroundColor: '#9B7DFF',
+                },
+            },
         })
 
         if (chartInterval === '1D') {
@@ -49,7 +61,15 @@ const StockChart = ({ data, prevClose, chartInterval }) => {
                         return `${hours}:${minutes}`;
 
                     }
-                }
+                },
+                localization: ({
+                    timeFormatter: (time) => {
+                        const date = new Date(time);
+                        const hours = date.getUTCHours().toString().padStart(2, '0');
+                        const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+                        return `${hours}:${minutes}`;
+                    }
+                })
             })
         } else if (chartInterval === '1W') {
             chart.applyOptions({
@@ -58,24 +78,92 @@ const StockChart = ({ data, prevClose, chartInterval }) => {
                         const date = new Date(time);
                         const day = date.getUTCDate().toString().padStart(2, '0');
                         const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+                        return `${day}/${month}`;
+                    }
+                },
+                localization: ({
+                    timeFormatter: (time) => {
+                        const date = new Date(time);
+                        const day = date.getUTCDate().toString().padStart(2, '0');
+                        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
                         const hours = date.getUTCHours().toString().padStart(2, '0');
                         const minutes = date.getUTCMinutes().toString().padStart(2, '0');
                         return `${day}/${month} ${hours}:${minutes}`;
                     }
-                }
+                })
             })
-        } else {
+        } else if (chartInterval === 'YTD') {
             chart.applyOptions({
                 timeScale: {
                     tickMarkFormatter: (time) => {
-                        console.log(time)
+                        const date = new Date(time);
+                        const day = date.getUTCDate().toString().padStart(2, '0');
+                        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+                        return `${day}/${month}`;
+                    }
+                },
+                localization: ({
+                    timeFormatter: (time) => {
+                        const date = new Date(time);
+                        const day = date.getUTCDate().toString().padStart(2, '0');
+                        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+                        return `${day}/${month}`;
+                    }
+                })
+            })
+        }
+
+
+        else if (chartInterval === '1Y') {
+            const helper1 = new Date().getFullYear().toString()
+            let helper2 = false
+            chart.applyOptions({
+                timeScale: {
+                    tickMarkFormatter: (time) => {
+                        const date = new Date(time);
+                        const year = date.getUTCFullYear().toString()
+                        if (year === helper1 && !helper2) {
+                            helper2 = true
+                            return `${year}`
+                        } else {
+                            return ''
+                        }
+                    }
+                },
+                localization: ({
+                    timeFormatter: (time) => {
                         const date = new Date(time);
                         const day = date.getUTCDate().toString().padStart(2, '0');
                         const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
                         const year = date.getUTCFullYear().toString().slice(-2)
                         return `${day}/${month}/${year}`;
                     }
-                }
+                })
+            })
+        } else {
+            let helper1 = ''
+            chart.applyOptions({
+                timeScale: {
+                    tickMarkFormatter: (time) => {
+                        const date = new Date(time);
+                        const year = date.getUTCFullYear().toString()
+                        if (year !== helper1) {
+                            helper1 = year
+                            return `${year}`;
+                        } else {
+                            return ''
+                        }
+                    }
+                },
+                localization: ({
+                    timeFormatter: (time) => {
+                        const date = new Date(time);
+                        const day = date.getUTCDate().toString().padStart(2, '0');
+                        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+                        const year = date.getUTCFullYear().toString()
+                        return `${day}/${month}/${year}`;
+                    }
+                })
             })
         }
 
