@@ -4,6 +4,7 @@ import StockChart from "./components/StockChart"
 import { getYahooChart, getYahooQuote } from "../../services/stock"
 import { getTradingTime, Range1D, Range1W, Range1M, Range1Y, Range5Y, RangeYTD, RangeMax } from "../../utils/timeUtils"
 import { useParams } from "react-router-dom"
+import StockHeader from "./components/StockHeader"
 
 const Stock = () => {
     const ticker = useParams().ticker
@@ -119,7 +120,8 @@ const Stock = () => {
     }, [chartInterval, stockChart])
 
     return (
-        <>
+        <div className="w-full max-w-7xl sm:px-5 mx-auto my-20">
+            <StockHeader ticker={ticker}/>
             <RangeButtons setChartInterval={setChartInterval} />
             {
                 chartQuote && stockChart &&
@@ -128,7 +130,7 @@ const Stock = () => {
                 </div>
             }
             {chartInterval}
-        </>
+        </div>
     )
 }
 
