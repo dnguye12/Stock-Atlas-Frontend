@@ -4,13 +4,14 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 library.add(fas, fab, far)
 
-import {Routes, Route} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
 
 import Header from './components/header/Header'
 import Menu from './components/menu/Menu'
 import Home from './components/home/Home'
 import Stock from './components/stock/Stock'
+import StockStatistics from './components/stock/StockStatistics'
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -22,7 +23,8 @@ function App() {
         <Menu />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/stock/:ticker' element={<Stock/>} />
+          <Route path='/stock/:ticker' element={<Stock />} />
+          <Route path='/stock/:ticker/statistics' element={<StockStatistics />} />
         </Routes>
       </div>
     </div>

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react"
-import RangeButtons from "./components/RangeButtons"
-import StockChart from "./components/StockChart"
 import { getYahooChart, getYahooQuote } from "../../services/stock"
 import { getTradingTime, Range1D, Range1W, Range1M, Range1Y, Range5Y, RangeYTD, RangeMax } from "../../utils/timeUtils"
 import { useParams } from "react-router-dom"
+
+import RangeButtons from "./components/RangeButtons"
+import StockChart from "./components/StockChart"
 import StockHeader from "./components/StockHeader"
+import StockAbout from "./components/StockAbout"
 
 const Stock = () => {
     const ticker = useParams().ticker
@@ -119,17 +121,25 @@ const Stock = () => {
         }
     }, [chartInterval, stockChart])
 
+    if(!stockQuote) {
+        return (
+            <div>...Loading</div>
+        )
+    }
+
     return (
-        <div className="w-full max-w-7xl sm:px-5 mx-auto my-20">
-            <StockHeader ticker={ticker}/>
-            <RangeButtons setChartInterval={setChartInterval} />
-            {
-                chartQuote && stockChart &&
-                <div className=" w-full">
-                    <StockChart key={`${chartInterval}-${chartQuote.length}`} data={chartQuote} prevClose={stockChart.meta.previousClose} chartInterval={chartInterval} />
-                </div>
-            }
-            {chartInterval}
+        <div className="w-full flex">
+            <div className="w-full my-5 p-5 border-r border-r-neutral-700">
+                <StockHeader ticker={ticker} stockQuote={stockQuote} />
+                <RangeButtons setChartInterval={setChartInterval} />
+                {
+                    chartQuote && stockChart &&
+                    <div className=" w-full">
+                        <StockChart key={`${chartInterval}-${chartQuote.length}`} data={chartQuote} prevClose={stockChart.meta.previousClose} chartInterval={chartInterval} />
+                    </div>
+                }
+            </div>
+            <StockAbout ticker={ticker} stockQuote={stockQuote}/>
         </div>
     )
 }

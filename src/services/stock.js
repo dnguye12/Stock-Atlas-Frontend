@@ -87,3 +87,18 @@ export const getStockLogo = async(ticker) => {
     const request = await dailyAxios.get(query)
     return request.data
 }
+
+export const getYahooQuoteSummary = async(ticker, modules) => {
+    let query = baseUrl + quoteUrl + `/summary/${ticker}/`
+
+    modules.forEach((module, index) => {
+        if(index === 0) {
+            query += `${module}`
+        }else {
+            query += `&${module}`
+        }
+    })
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}
