@@ -22,7 +22,7 @@ const IndexChart = ({ data, prevClose }) => {
                 textColor: 'white',
             },
             width: chartContainerRef.current.clientWidth,
-            height: 44,
+            height: 64,
             rightPriceScale: {
                 visible: false
             },

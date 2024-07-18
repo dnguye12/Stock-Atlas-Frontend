@@ -3,6 +3,7 @@ import { getYahooDailyGainers } from "../../../services/stock"
 import { formatMarketCap } from "../../../utils/moneyUtils"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { truncateText } from "../../../utils/textUtils"
 
 const Gainers = () => {
     const [gainers, setGainers] = useState()
@@ -42,15 +43,15 @@ const Gainers = () => {
                 <tbody>
                     {
                         gainers.map((gainer, idx) => (
-                            <tr className="hover odd:bg-neutral-800 even:bg-neutral-900" key={`gainer-${idx}`}>
-                                <td>{gainer.symbol}</td>
+                            <tr className="hover cursor-pointer odd:bg-neutral-800 even:bg-neutral-900" key={`gainer-${idx}`}>
+                                <td className="symbol">{gainer.symbol}</td>
                                 {gainer.displayName
-                                    ? <td>{gainer.displayName}</td>
-                                    : <td>{gainer.shortName}</td>}
+                                    ? <td className="name">{truncateText(gainer.displayName)}</td>
+                                    : <td className="name">{truncateText(gainer.shortName)}</td>}
                                 <td>{ formatMarketCap(gainer.marketCap)}</td>
                                 <td>
-                                    <p>{`$${gainer.regularMarketPrice.toFixed(2)}`}</p>
-                                    <p><FontAwesomeIcon icon="fa-solid fa-caret-up" /> {`+${gainer.regularMarketChangePercent.toFixed(2)}%`}</p>
+                                    <p className="price">{`$${gainer.regularMarketPrice.toFixed(2)}`}</p>
+                                    <p className="change text-up"><FontAwesomeIcon icon="fa-solid fa-caret-up" /> {`${gainer.regularMarketChangePercent.toFixed(2)}%`}</p>
                                 </td>
                             </tr>
                         ))

@@ -8,6 +8,8 @@ import { getTradingTime } from "../../../utils/timeUtils"
 import IndexChart from "./IndexChart";
 import { Range1D } from "../../../utils/timeUtils";
 
+import { myToLocaleString } from "../../../utils/numberUtils";
+
 const Index = ({ name, ticker }) => {
     const [quotes, setQuotes] = useState()
     const [isLoading, setIsLoading] = useState(true)
@@ -23,7 +25,7 @@ const Index = ({ name, ticker }) => {
     //          post hour: get today to tomorrow data
 
     // US Market 9:30-16:00 EDT
-    let {period1, period2} = Range1D(day, hour)
+    let { period1, period2 } = Range1D(day, hour)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,7 +40,7 @@ const Index = ({ name, ticker }) => {
         }
 
         fetchData()
-    }, [ticker])
+    }, [ticker, period1, period2])
 
     if (isLoading) {
         return (
@@ -56,24 +58,28 @@ const Index = ({ name, ticker }) => {
         }
     })
 
-    const startValue = quotes.meta.previousClose
-    const endValue = quotes.quotes[quotes.quotes.length - 1].close
+    let startValue, endValue;
+    if (myData.length > 0) {
+        startValue = quotes.meta.previousClose
+        endValue = quotes.quotes[quotes.quotes.length - 1].close
+    }
 
     return (
-        <div className="flex items-center justify-between space-x-2 rounded border border-neutral-700 p-1.5 shadow-sm bg-neutral-800 hover:bg-neutral-700 lg-px-2">
-            <div className="flex flex-col items-start justify-center">
-                <p className=" whitespace-nowrap text-sm font-semibold leading-tight">{name}</p>
-
+        <div className="flex items-center justify-between space-x-2 rounded border p-3 cursor-pointer transition-all duration-300 border-neutral-700 shadow-sm bg-neutral-800 hover:bg-neutral-700 hover:scale-105">
+            <div className="flex flex-col items-start justify-start">
+                <p className=" whitespace-nowrap text-sm font-semibold leading-tight text-white" to={`/stock/${ticker}`}>{name}</p>
+                <p className=" whitespace-nowrap text-sm leading-tight my-1">${myToLocaleString(quotes.meta.regularMarketPrice)}</p>
                 {
-                    startValue < endValue
+                    startValue && endValue
+                    && (startValue < endValue
                         ?
-                        <p className="flex items-center text-up"><FontAwesomeIcon className="mr-2" icon="fa-solid fa-caret-up" /> {((endValue - startValue) / startValue * 100).toFixed(2)}%</p>
+                        <p className="text-sm font-semibold flex items-center text-up"><FontAwesomeIcon className="mr-2" icon="fa-solid fa-caret-up" /> {((endValue - startValue) / startValue * 100).toFixed(2)}%</p>
                         :
-                        <p className="flex items-center text-down"><FontAwesomeIcon className="mr-2" icon="fa-solid fa-caret-down" /> {((startValue - endValue) / startValue * 100).toFixed(2)}%</p>
+                        <p className="text-sm font-semibold flex items-center text-down"><FontAwesomeIcon className="mr-2" icon="fa-solid fa-caret-down" /> {((startValue - endValue) / startValue * 100).toFixed(2)}%</p>
+                    )
                 }
-
             </div>
-            <div className="w-full lg:h-[44px]">
+            <div className="w-full lg:h-[64px]">
                 <IndexChart data={myData} prevClose={startValue}></IndexChart>
             </div>
         </div>

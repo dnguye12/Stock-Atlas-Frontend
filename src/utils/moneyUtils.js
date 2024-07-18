@@ -4,8 +4,10 @@ export const formatMarketCap = (marketCap) => {
     }
 
     let formattedCap = "";
-
-    if (Math.abs(marketCap) >= 1e9) {
+    if (Math.abs(marketCap) >= 1e12) {
+        formattedCap = `$${(marketCap / 1e12).toFixed(2)}T`;
+    }
+    else if (Math.abs(marketCap) >= 1e9) {
         formattedCap = `$${(marketCap / 1e9).toFixed(2)}B`;
     } else if (Math.abs(marketCap) >= 1e6) {
         formattedCap = `$${(marketCap / 1e6).toFixed(2)}M`;

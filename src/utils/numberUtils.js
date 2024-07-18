@@ -2,15 +2,22 @@ export const formatNumber = (n) => {
     let formattedCap = "";
 
     if (Math.abs(n) >= 1e9) {
-        formattedCap = `${(n / 1e9)}B`;
+        formattedCap = `${(n / 1e9).toFixed(0)}B`;
     } else if (Math.abs(n) >= 1e6) {
-        formattedCap = `${(n / 1e6)}M`;
+        formattedCap = `${(n / 1e6).toFixed(0)}M`;
     } else if (Math.abs(n) >= 1000) {
-        formattedCap = `${(n / 1000)}k`
+        formattedCap = `${(n / 1000).toFixed(0)}k`
     }
     else {
         formattedCap = `${n}`;
     }
 
     return formattedCap;
+}
+
+export const myToLocaleString = (n) => {
+    return n.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
 }

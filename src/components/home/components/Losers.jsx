@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { getYahooDailyLosers } from "../../../services/stock"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { truncateText } from "../../../utils/textUtils"
 
 const Losers = () => {
     const [losers, setLosers] = useState()
@@ -41,13 +42,13 @@ const Losers = () => {
                 <tbody>
                     {
                         losers.map((loser, idx) => (
-                            <tr className="hover odd:bg-neutral-800 even:bg-neutral-900" key={`gainer-${idx}`}>
-                                <td>{loser.symbol}</td>
-                                <td>{loser.name}</td>
+                            <tr className="hover cursor-pointer odd:bg-neutral-800 even:bg-neutral-900" key={`gainer-${idx}`}>
+                                <td className="symbol">{loser.symbol}</td>
+                                <td className="name">{truncateText(loser.name)}</td>
                                 <td>{ loser.marketCap}</td>
                                 <td>
-                                    <p>{loser.price}</p>
-                                    <p><FontAwesomeIcon icon="fa-solid fa-caret-down" /> {loser.percentChange}</p>
+                                    <p className="price">{loser.price}</p>
+                                    <p className="change text-down"><FontAwesomeIcon icon="fa-solid fa-caret-down" /> {loser.percentChange.substring(1)}</p>
                                 </td>
                             </tr>
                         ))

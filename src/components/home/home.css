@@ -9,3 +9,27 @@ h1 span {
 .home-p span {
     @apply text-up italic font-semibold;
 }
+
+.home h3 {
+    @apply font-semibold select-none text-xl text-white;
+}
+
+.home .table thead tr th {
+    @apply text-white text-sm
+}
+
+.home .table tbody tr td {
+    @apply text-white min-w-24
+}
+
+.home .table tbody tr .symbol {
+    @apply text-sm font-semibold text-blue-500
+}
+
+.home .table tbody tr td .price {
+    @apply font-bold mb-1
+}
+
+.home .table tbody tr td .change {
+    @apply text-sm font-semibold
+}

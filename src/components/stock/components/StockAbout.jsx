@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react"
+import { Link } from 'react-router-dom'
+
 import { getYahooQuoteSummary } from "../../../services/stock"
 import { formatMarketCap } from "../../../utils/moneyUtils"
 import { formatNumber } from "../../../utils/numberUtils"
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 /* eslint-disable react/prop-types */
 const StockAbout = ({ ticker, stockQuote }) => {
@@ -25,9 +29,8 @@ const StockAbout = ({ ticker, stockQuote }) => {
             <div>...Loading</div>
         )
     }
-console.log(assetProfile)
     return (
-        <div className=" w-1/3 p-3">
+        <div className=" w-full">
             <h2>About {stockQuote.displayName}</h2>
             <table className="table table-sm table-compact ">
                 <tbody>
@@ -61,7 +64,13 @@ console.log(assetProfile)
                 </tbody>
             </table>
             <h3>Description</h3>
-            {assetProfile.longBusinessSummary}
+            <p className=" line-clamp-3">{assetProfile.longBusinessSummary}</p>
+            <div className="flex justify-between items-center">
+                        <Link to="">Show more</Link>
+                        {
+                            assetProfile.website && <a href={assetProfile.website} target="_blank">Go to website<FontAwesomeIcon icon="fa-solid fa-arrow-up-right-from-square" /></a>
+                        }
+            </div>
         </div>
     )
 }

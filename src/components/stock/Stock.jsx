@@ -7,6 +7,7 @@ import RangeButtons from "./components/RangeButtons"
 import StockChart from "./components/StockChart"
 import StockHeader from "./components/StockHeader"
 import StockAbout from "./components/StockAbout"
+import StockAnalystRating from "./components/StockAnalystRating"
 
 const Stock = () => {
     const ticker = useParams().ticker
@@ -121,7 +122,7 @@ const Stock = () => {
         }
     }, [chartInterval, stockChart])
 
-    if(!stockQuote) {
+    if (!stockQuote) {
         return (
             <div>...Loading</div>
         )
@@ -139,7 +140,10 @@ const Stock = () => {
                     </div>
                 }
             </div>
-            <StockAbout ticker={ticker} stockQuote={stockQuote}/>
+            <div className="w-1/3 p-3">
+                <StockAbout ticker={ticker} stockQuote={stockQuote} />
+                <StockAnalystRating ticker={ticker}/>
+            </div>
         </div>
     )
 }

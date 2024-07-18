@@ -10,7 +10,7 @@ const Home = () => {
     const [showingGainers, setShowingGainers] = useState(true)
 
     return (
-        <div className="w-full max-w-7xl sm:px-5 mx-auto my-20">
+        <div className="home w-full max-w-7xl sm:px-5 mx-auto mt-20 bg-neutral-900">
             <div className="flex w-full flex-col justify-center mx-auto">
                 <Indexes />
 
@@ -25,17 +25,17 @@ const Home = () => {
                         showingGainers
                             ?
                             <div>
-                                <div className="flex items-center">
-                                    <FontAwesomeIcon className="mr-2 cursor-pointer" onClick={() => { setShowingGainers(false) }} icon="fa-solid fa-chevron-down" />
-                                    <h3 className=" select-none">Top Gainers Today</h3>
+                                <div className="flex items-center cursor-pointer" onClick={() => { setShowingGainers(false) }}>
+                                    <FontAwesomeIcon className="mr-2 text-white text-xl"  icon="fa-solid fa-rotate" />
+                                    <h3>Top <span className=" font-bold text-up">Gainers</span> Today</h3>
                                 </div>
                                 <Gainers />
                             </div>
                             :
                             <div>
-                                <div className="flex items-center">
-                                    <FontAwesomeIcon className="mr-2 cursor-pointer" onClick={() => { setShowingGainers(true) }} icon="fa-solid fa-chevron-up" />
-                                    <h3 className=" select-none">Top Losers Today</h3>
+                                <div className="flex items-center cursor-pointer" onClick={() => { setShowingGainers(true) }}>
+                                    <FontAwesomeIcon className="mr-2 text-white text-xl"  icon="fa-solid fa-rotate" />
+                                    <h3>Top <span className=" font-bold text-down">Losers</span> Today</h3>
                                 </div>
                                 <Losers />
                             </div>
