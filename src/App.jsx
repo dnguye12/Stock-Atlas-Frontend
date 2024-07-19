@@ -19,11 +19,11 @@ function App() {
   const { t, i18n } = useTranslation();
 
   return (
-    <div className="drawer">
+    <div className="drawer ">
       <input id="my-drawer-1" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content bg-neutral-900 min-h-screen">
+      <div className="drawer-content min-h-screen">
         <Header />
-        <div className='flex mx-auto h-full'>
+        <div className='flex mx-auto h-full bg-neutral-900'>
           <Menu />
           <Routes>
             <Route path='/' element={<Home />} />

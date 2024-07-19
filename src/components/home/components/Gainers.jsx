@@ -26,9 +26,13 @@ const Gainers = () => {
 
     if (isLoading) {
         return (
-            <div>Loading</div>
+            <div>
+                <div className="skeleton"></div>
+            </div>
+
         )
     }
+
     return (
         <div className="overflow-x-auto">
             <table className="table">

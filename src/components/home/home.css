@@ -11,11 +11,15 @@ h1 span {
 }
 
 .home h3 {
-    @apply font-semibold select-none text-xl text-white;
+    @apply font-semibold select-none text-lg text-white mb-1;
+}
+
+.home .table {
+    @apply border border-neutral-800 rounded
 }
 
 .home .table thead tr th {
-    @apply text-white text-sm
+    @apply text-white text-sm font-semibold
 }
 
 .home .table tbody tr td {
@@ -32,4 +36,8 @@ h1 span {
 
 .home .table tbody tr td .change {
     @apply text-sm font-semibold
+}
+
+.home .skeleton {
+    @apply w-full h-[390px] bg-neutral-900 border border-neutral-800 rounded-md
 }
