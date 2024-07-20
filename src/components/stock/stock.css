@@ -1,0 +1,47 @@
+.my-analysis .my-bar {
+    @apply w-full top-2/4 h-[6px] bg-neutral-500 rounded-full absolute
+}
+
+.my-analysis .priceContainer {
+    @apply absolute flex flex-col top-2/4
+}
+
+.my-analysis .priceContainerAverage {
+    @apply bottom-[46%] top-0
+}
+
+.my-analysis .dot {
+    @apply box-content inline-flex rounded-full bg-white h-[6px] w-[6px];
+}
+
+.my-analysis .dotaverage {
+    @apply bg-blue-400
+}
+
+.my-analysis .label {
+    @apply mt-2 flex flex-col text-sm leading-3 p-0 ;
+}
+
+.my-analysis .label .price {
+    @apply text-base font-semibold text-white;
+}
+
+.my-analysis .line {
+    @apply w-[3px] h-6 border-r border-r-white z-10 
+}
+
+.my-analysis .lineAverage {
+    @apply border-r-blue-400
+}
+
+.my-analysis .labelExtend {
+    @apply flex flex-col border border-white rounded pt-0.5 pb-1.5 px-1.5 text-sm leading-3 text-center z-10;
+}
+
+.my-analysis .labelExtend .price {
+    @apply text-base font-semibold text-white;
+}
+
+.my-analysis .averageLabel {
+    @apply border-blue-400
+}
