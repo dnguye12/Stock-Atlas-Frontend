@@ -45,3 +45,19 @@
 .my-analysis .averageLabel {
     @apply border-blue-400
 }
+
+.my-analysis .table tr {
+    @apply border-neutral-700
+}
+
+.my-analysis .table thead th {
+    @apply border-l border-l-neutral-700 text-white text-sm font-semibold
+}
+
+.my-analysis .table tbody tr th {
+    @apply text-white text-sm font-semibold
+}
+
+.my-analysis .table tbody tr td {
+    @apply border-l border-l-neutral-700 font-semibold
+}

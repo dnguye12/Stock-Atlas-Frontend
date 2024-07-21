@@ -6,8 +6,19 @@ const PriceTargets = ({ stockSummary }) => {
         )
     }
 
+    console.log(stockSummary)
+
+    const currentPrice = stockSummary.financialData.currentPrice;
+    const targetLowPrice = stockSummary.financialData.targetLowPrice;
+    const targetMeanPrice = stockSummary.financialData.targetMeanPrice;
+    const targetHighPrice = stockSummary.financialData.targetHighPrice;
+
+    const compLow = currentPrice >= targetLowPrice
+    const compMean = currentPrice >= targetMeanPrice
+    const compHigh = currentPrice >= targetHighPrice
+
     return (
-        <div className="my-analysis bg-neutral-800 border border-neutral-700 rounded p-4">
+        <div className="my-analysis bg-neutral-800 border border-neutral-700 rounded p-4 min-w-96">
             <h3 className="font-semibold text-white mb-3">Analyst Price Targets</h3>
             <div className="w-full relative min-h-32 mb-5">
                 <div className="my-bar"></div>
@@ -43,8 +54,9 @@ const PriceTargets = ({ stockSummary }) => {
                     </div>
                 </div>
             </div>
-            <div className="overflow-x-auto">
-                <table className="table">
+            <div className="pt-5">
+                <h4 className="font-semibold text-white mb-3">Percentage differences to Current Price</h4>
+                <table className="table table-sm border border-neutral-700 rounded-lg">
                     <thead>
                         <tr>
                             <th>Current Price</th>
@@ -55,16 +67,23 @@ const PriceTargets = ({ stockSummary }) => {
                     </thead>
                     <tbody>
                         <tr>
-                            <th>179.39</th>
-                            <td>145.50</td>
-                            <td>205.51</td>
-                            <td>238.00</td>
+                            <th>{currentPrice}</th>
+                            <td className={compLow ? "text-down" : "text-up"}>{targetLowPrice}</td>
+                            <td className={compMean ? "text-down" : "text-up"}>{targetMeanPrice}</td>
+                            <td className={compHigh ? "text-down" : "text-up"}>{targetHighPrice}</td>
                         </tr>
                         <tr>
                             <th></th>
-                            <td>-18.89%</td>
-                            <td>11.52%</td>
-                            <td>32.67%</td>
+                            <td className={compLow ? "text-down" : "text-up"}>
+                                {((targetLowPrice - currentPrice) / currentPrice * 100).toFixed(2)}%
+                            </td>
+                            <td className={compMean ? "text-down" : "text-up"}>
+                                {((targetMeanPrice - currentPrice) / currentPrice * 100).toFixed(2)}%
+                            </td>
+                            <td className={compHigh ? "text-down" : "text-up"}>
+                                {((targetHighPrice - currentPrice) / currentPrice * 100).toFixed(2)}%
+                            </td>
+
                         </tr>
                     </tbody>
                 </table>

@@ -49,9 +49,9 @@ const Losers = () => {
                             <tr className="hover cursor-pointer odd:bg-neutral-800 even:bg-neutral-900" key={`gainer-${idx}`}>
                                 <td className="symbol">{loser.symbol}</td>
                                 <td className="name">{truncateText(loser.name)}</td>
-                                <td>{ loser.marketCap}</td>
+                                <td>${ loser.marketCap}</td>
                                 <td>
-                                    <p className="price">{loser.price}</p>
+                                    <p className="price">${loser.price}</p>
                                     <p className="change text-down"><FontAwesomeIcon icon="fa-solid fa-caret-down" /> {loser.percentChange.substring(1)}</p>
                                 </td>
                             </tr>
