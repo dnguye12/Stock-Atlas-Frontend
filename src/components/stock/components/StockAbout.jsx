@@ -29,6 +29,7 @@ const StockAbout = ({ ticker, stockQuote }) => {
             <div>...Loading</div>
         )
     }
+    
     return (
         <div className=" w-full">
             <h2>About {stockQuote.displayName}</h2>

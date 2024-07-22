@@ -19,7 +19,7 @@
 }
 
 .my-analysis .label {
-    @apply mt-2 flex flex-col text-sm leading-3 p-0 ;
+    @apply mt-2 flex flex-col text-sm leading-3 p-0 bg-neutral-800;
 }
 
 .my-analysis .label .price {
@@ -35,7 +35,7 @@
 }
 
 .my-analysis .labelExtend {
-    @apply flex flex-col border border-white rounded pt-0.5 pb-1.5 px-1.5 text-sm leading-3 text-center z-10;
+    @apply flex flex-col border border-white rounded pt-0.5 pb-1.5 px-1.5 text-sm leading-3 text-center z-10 bg-neutral-800;
 }
 
 .my-analysis .labelExtend .price {

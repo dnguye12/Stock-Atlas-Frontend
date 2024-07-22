@@ -1,0 +1,183 @@
+/* eslint-disable react/prop-types */
+import { Bar } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    ChartDataLabels
+);
+import { getMonthFromNumber } from '../../../utils/timeUtils';
+
+const AnalystRec = ({ stockSummary }) => {
+    console.log(stockSummary)
+
+    if (!stockSummary || !stockSummary.recommendationTrend) {
+        return (
+            <div>...Loading</div>
+        )
+    }
+
+    let data = {
+        strongSellData: [],
+        sellData: [],
+        holdData: [],
+        buyData: [],
+        strongBuyData: [],
+        labels: []
+    }
+
+    stockSummary.recommendationTrend.trend.forEach(trend => {
+        data.strongSellData.push(trend.strongSell)
+        data.sellData.push(trend.sell)
+        data.holdData.push(trend.hold)
+        data.buyData.push(trend.buy)
+        data.strongBuyData.push(trend.strongBuy)
+    })
+
+    for (let i = data.strongSellData.length - 1; i >= 0; i--) {
+        data.labels.push(getMonthFromNumber(i))
+    }
+
+    const barData = {
+        labels: data.labels,
+        datasets: [
+            {
+                label: 'Strong Sell',
+                data: data.strongSellData,
+                backgroundColor: '#D60A22',
+                barPercentage: 0.5,
+                datalabels: {
+                    align: 'start',
+                    anchor: 'end'
+                },
+                borderRadius: 5
+            },
+            {
+                label: 'Sell',
+                data: data.sellData,
+                backgroundColor: '#EA7034',
+                barPercentage: 0.5,
+                datalabels: {
+                    align: 'start',
+                    anchor: 'end'
+                },
+                borderRadius: 5
+            },
+            {
+                label: 'Hold',
+                data: data.holdData,
+                backgroundColor: '#FFD747',
+                barPercentage: 0.5,
+                datalabels: {
+                    align: 'start',
+                    anchor: 'end'
+                },
+                borderRadius: 5
+            },
+            {
+                label: 'Buy',
+                data: data.buyData,
+                backgroundColor: '#81A949',
+                barPercentage: 0.5,
+                datalabels: {
+                    align: 'start',
+                    anchor: 'end'
+                },
+                borderRadius: 5
+            },
+            {
+                label: 'Strong Buy',
+                data: data.strongBuyData,
+                backgroundColor: '#037B66',
+                barPercentage: 0.5,
+                datalabels: {
+                    align: 'start',
+                    anchor: 'end'
+                },
+                borderRadius: 5
+            }
+        ]
+    }
+    let delayed;
+    const barOptions = {
+        animation: {
+            onComplete: () => {
+                delayed = true;
+            },
+            delay: (context) => {
+                let delay = 0;
+                if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                    delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                }
+                return delay;
+            },
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: `Recommendations trend past ${data.strongBuyData.length} months`,
+                font: {
+                    size: 14,
+                    weight: "bold"
+                },
+                color: "#A6ADBB"
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false,
+            },
+            legend: {
+                position: 'bottom',
+                labels: {
+                    color: "#A6ADBB"
+                }
+            },
+            datalabels: {
+                color: 'white',
+                display: function (context) {
+                    return context.dataset.data[context.dataIndex] > 2;
+                },
+                font: {
+                    weight: 'number',
+                },
+                formatter: Math.round
+            }
+        },
+        responsive: true,
+        scales: {
+            x: {
+                stacked: true,
+                ticks: { color: '#A6ADBB' }
+            },
+            y: {
+                stacked: true,
+                ticks: { color: '#A6ADBB' }
+            },
+        },
+    };
+
+    return (
+        <div className="my-analysis bg-neutral-800 border border-neutral-700 rounded p-4">
+            <h3 className="font-semibold text-white mb-3">Analyst Recommendations</h3>
+            <div className='relative w-full h-full'>
+                <Bar className='h-full' data={barData} options={barOptions} />
+            </div>
+        </div>
+    )
+}
+
+export default AnalystRec

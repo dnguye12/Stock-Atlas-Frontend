@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const getCurrentConvertTime = edtOffset => {
     let now = new Date()
     let utc = now.getTime() + (now.getTimezoneOffset() * 60000)
@@ -166,5 +168,13 @@ export const RangeMax = (firstDate) => {
     return {
         period1,
         period2
+    }
+}
+
+export const getMonthFromNumber = (n) => {
+    if(n === 0) {
+        return moment().format('MMM')
+    }else {
+        return moment().subtract(n, 'months').format('MMM')
     }
 }
