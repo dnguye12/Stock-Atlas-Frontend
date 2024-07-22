@@ -147,12 +147,13 @@ const AnalystRec = ({ stockSummary }) => {
                 }
             },
             datalabels: {
-                color: 'white',
+                color: 'rgb(38,38,38)',
                 display: function (context) {
                     return context.dataset.data[context.dataIndex] > 2;
                 },
                 font: {
-                    weight: 'number',
+                    weight: 'bold',
+                    size: 14,
                 },
                 formatter: Math.round
             }
