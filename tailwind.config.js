@@ -9,7 +9,8 @@ export default {
     extend: {
       colors: {
         up: '#26A69A',
-        down: '#EF5350'
+        down: '#EF5350',
+        hold: '#FFD747'
       }
     },
   },

@@ -47,7 +47,7 @@ const UpgradesDowngrades = ({ stockSummary }) => {
     let helper1 = 0
     let helper2 = []
 
-    while (helper2.length < 10) {
+    while (helper2.length < 10 && helper2.length < stockSummary.upgradeDowngradeHistory.history.length) {
         const grade = stockSummary.upgradeDowngradeHistory.history[helper1]
         helper2.push(grade)
         helper1++

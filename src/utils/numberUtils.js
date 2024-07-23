@@ -21,3 +21,7 @@ export const myToLocaleString = (n) => {
         maximumFractionDigits: 2
       })
 }
+
+export const percentageDiff = (n1, n2) => {
+    return ((n2 / n1) * 100 - 100)
+}

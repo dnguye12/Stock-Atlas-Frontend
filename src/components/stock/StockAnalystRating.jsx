@@ -7,6 +7,8 @@ import StockHeader from "./components/StockHeader"
 import PriceTargets from "./components/PriceTargets"
 import AnalystRec from "./components/AnalystRec"
 import UpgradesDowngrades from "./components/UpgradesDowngrades"
+import BuyConsensus from "./components/BuyConsensus "
+import AnalystOverview from "./components/AnalystOverview"
 
 const StockAnalystRating = () => {
     const ticker = useParams().ticker
@@ -40,7 +42,7 @@ const StockAnalystRating = () => {
         fetchData()
     }, [ticker])
 
-    if(!stockQuote || !stockSummary) {
+    if (!stockQuote || !stockSummary) {
         return (
             <div>...Loading</div>
         )
@@ -52,11 +54,13 @@ const StockAnalystRating = () => {
                 <StockHeader ticker={ticker} stockQuote={stockQuote} />
 
                 <div className="flex flex-col">
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-                        <PriceTargets stockSummary={stockSummary}/>
-                        <AnalystRec stockSummary={stockSummary}/>
-                        <UpgradesDowngrades stockSummary={stockSummary} />
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
+                        <BuyConsensus ticker={ticker} stockSummary={stockSummary} />
+                        <AnalystOverview ticker={ticker} stockSummary={stockSummary}/>
+                        <PriceTargets stockSummary={stockSummary} />
+                        <AnalystRec stockSummary={stockSummary} />
                     </div>
+                    <UpgradesDowngrades stockSummary={stockSummary} />
                 </div>
             </div>
             <div className="w-1/3 p-3">

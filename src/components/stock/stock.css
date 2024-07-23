@@ -61,3 +61,31 @@
 .my-analysis .table tbody tr td {
     @apply border-l border-l-neutral-700 font-semibold
 }
+
+.my-buyconsensus table tr td {
+    @apply px-3 pb-3
+}
+
+.my-buyconsensus table tr td p span {
+    @apply font-semibold
+}
+
+.my-analystoverview .grid .detail .detail-title {
+    @apply  font-semibold
+}
+
+.my-analystoverview .grid .detail .detail-count {
+    @apply font-semibold text-sm
+}
+
+.my-analystoverview .grid .detail .modal .modal-box {
+    @apply bg-neutral-800 text-center
+}
+
+.my-analystoverview .grid .detail .modal .modal-box h3 {
+    @apply text-white
+}
+
+.my-analystoverview .grid .detail .modal .modal-box p span{
+    @apply font-semibold
+}

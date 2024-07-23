@@ -23,8 +23,6 @@ ChartJS.register(
 import { getMonthFromNumber } from '../../../utils/timeUtils';
 
 const AnalystRec = ({ stockSummary }) => {
-    console.log(stockSummary)
-
     if (!stockSummary || !stockSummary.recommendationTrend) {
         return (
             <div>...Loading</div>

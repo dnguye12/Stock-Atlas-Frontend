@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef } from "react"
-import { createChart, ColorType, CrosshairMode, LineStyle } from 'lightweight-charts';
+import { createChart, ColorType, LineStyle } from 'lightweight-charts';
 
 const StockChart = ({ data, prevClose, chartInterval }) => {
     const chartContainerRef = useRef()
