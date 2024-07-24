@@ -15,6 +15,7 @@ import StockStatistics from './components/stock/StockStatistics'
 import MobileMenu from './components/mobileMenu/mobileMenu'
 import Footer from './components/footer/Footer'
 import StockAnalystRating from './components/stock/StockAnalystRating'
+import StockDividend from './components/stock/StockDividend'
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -31,6 +32,7 @@ function App() {
             <Route path='/stock/:ticker' element={<Stock />} />
             <Route path='/stock/:ticker/statistics' element={<StockStatistics />} />
             <Route path='/stock/:ticker/analyst-ratings' element={<StockAnalystRating />} />
+            <Route path='/stock/:ticker/dividends' element={<StockDividend />} />
           </Routes>
         </div>
         <Footer/>

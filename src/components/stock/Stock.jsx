@@ -7,7 +7,6 @@ import RangeButtons from "./components/RangeButtons"
 import StockChart from "./components/StockChart"
 import StockHeader from "./components/StockHeader"
 import StockAbout from "./components/StockAbout"
-import StockAnalystRating from "./StockAnalystRating"
 
 const Stock = () => {
     const ticker = useParams().ticker

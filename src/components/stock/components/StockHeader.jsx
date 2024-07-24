@@ -59,6 +59,7 @@ const StockHeader = ({ ticker, stockQuote }) => {
                 <Link to={`/stock/${ticker}`} className="btn btn-ghost text-xl">Overview</Link>
                 <Link to={`/stock/${ticker}/statistics`} className="btn btn-ghost text-xl">Statistics</Link>
                 <Link to={`/stock/${ticker}/analyst-ratings`} className="btn btn-ghost text-xl">Analyst Ratings</Link>
+                <Link to={`/stock/${ticker}/dividends`} className="btn btn-ghost text-xl">Dividends</Link>
             </div>
             <div className="divider my-2"></div>
         </div>

@@ -35,8 +35,23 @@ The current price is at or above the high target.
 Indicates high optimism or potential overvaluation.
 Can be good if the stock continues to perform well, but also signals a risk if expectations are not met.
 */
-const ptds = (currentPrice, lowTarget, highTarget) => {
-    return (Math.min(Math.max((currentPrice - lowTarget) / (highTarget - lowTarget), 0), 1) * 50)
+const ptds = (currentPrice, lowTarget, meanTarget, highTarget) => {
+    let score = 50; // Starting score
+
+    if (currentPrice < lowTarget) {
+        score -= 50 * (lowTarget - currentPrice) / lowTarget; // Heavy penalty
+    } else if (currentPrice > highTarget) {
+        score -= 50 * (currentPrice - highTarget) / highTarget; // Heavy penalty
+    } else if (currentPrice >= lowTarget && currentPrice < meanTarget) {
+        score += 25 * (currentPrice - lowTarget) / (meanTarget - lowTarget); // Buff
+    } else if (currentPrice > meanTarget && currentPrice <= highTarget) {
+        score -= 25 * (currentPrice - meanTarget) / (highTarget - meanTarget); // Slight nerf
+    }
+
+    // Ensure score is within 0-100 range
+    score = Math.max(0, Math.min(100, score));
+
+    return score / 2;
 }
 
 const Rate_ptds = ({ currentPrice, lowTarget, meanTarget, highTarget }) => {
@@ -240,7 +255,7 @@ const BuyConsensus = ({ ticker, stockSummary }) => {
         )
     }
 
-    const score_ptds = ptds(stockSummary.financialData.currentPrice, stockSummary.financialData.targetLowPrice, stockSummary.financialData.targetHighPrice)
+    const score_ptds = ptds(stockSummary.financialData.currentPrice, stockSummary.financialData.targetLowPrice, stockSummary.financialData.targetMeanPrice,stockSummary.financialData.targetHighPrice)
     const score_acs = acs(stockSummary.recommendationTrend.trend[0])
     const score = score_ptds + score_acs
     return (
