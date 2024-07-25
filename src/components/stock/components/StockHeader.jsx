@@ -31,6 +31,8 @@ const StockHeader = ({ ticker, stockQuote }) => {
         )
     }
 
+    console.log(stockQuote)
+
     return (
         <div className="flex justify-center flex-col">
             <div className="flex items-center px-5">
@@ -48,10 +50,10 @@ const StockHeader = ({ ticker, stockQuote }) => {
                 <p className=" font-bold text-xl leading-5 text-white mr-2">{myToLocaleString(stockQuote.regularMarketPrice)}</p>
                 {
                     stockQuote.regularMarketChange < 0
-                    ?
-                    <p className="text-down font-semibold"><FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-1"/>{stockQuote.regularMarketChange.toFixed(2).substring(1)} (<FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-1"/>{stockQuote.regularMarketChangePercent.toFixed(2).substring(1)}%)</p>
-                    : 
-                    <p className="text-up font-semibold"><FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1"/>{stockQuote.regularMarketChange.toFixed(2)} (<FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1"/>{stockQuote.regularMarketChangePercent.toFixed(2)}%)</p>
+                        ?
+                        <p className="text-down font-semibold"><FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-1" />{stockQuote.regularMarketChange.toFixed(2).substring(1)} (<FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-1" />{stockQuote.regularMarketChangePercent.toFixed(2).substring(1)}%)</p>
+                        :
+                        <p className="text-up font-semibold"><FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1" />{stockQuote.regularMarketChange.toFixed(2)} (<FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1" />{stockQuote.regularMarketChangePercent.toFixed(2)}%)</p>
                 }
             </div>
             <div className="divider my-2"></div>
@@ -59,7 +61,9 @@ const StockHeader = ({ ticker, stockQuote }) => {
                 <Link to={`/stock/${ticker}`} className="btn btn-ghost text-xl">Overview</Link>
                 <Link to={`/stock/${ticker}/statistics`} className="btn btn-ghost text-xl">Statistics</Link>
                 <Link to={`/stock/${ticker}/analyst-ratings`} className="btn btn-ghost text-xl">Analyst Ratings</Link>
-                <Link to={`/stock/${ticker}/dividends`} className="btn btn-ghost text-xl">Dividends</Link>
+                {
+                    stockQuote.dividendDate && <Link to={`/stock/${ticker}/dividends`} className="btn btn-ghost text-xl">Dividends</Link>
+                }
             </div>
             <div className="divider my-2"></div>
         </div>

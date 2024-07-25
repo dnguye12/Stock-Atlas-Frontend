@@ -55,8 +55,7 @@ const ptds = (currentPrice, lowTarget, meanTarget, highTarget) => {
 }
 
 const Rate_ptds = ({ currentPrice, lowTarget, meanTarget, highTarget }) => {
-    let helper = ptds(currentPrice, lowTarget, highTarget)
-
+    let helper = ptds(currentPrice, lowTarget, meanTarget, highTarget)
     return (
         <>
             {
@@ -145,43 +144,73 @@ Predominance of "Hold", "Sell", and "Strong Sell" recommendations.
 Indicates weak or negative sentiment among analysts.
 Suggests lack of confidence in the stock's potential or expectation of decline.
 */
-const acs = (recommendationTrend) => {
+const acs = (recommendationTrends) => {
+    if (recommendationTrends.length === 0) {
+        return -1
+    }
+    let i = 0
+    let recommendationTrend
+    while (i < recommendationTrends.length) {
+        recommendationTrend = recommendationTrends[i]
+
+        if (recommendationTrend.strongBuy === 0 &&
+            recommendationTrend.buy === 0 &&
+            recommendationTrend.hold === 0 &&
+            recommendationTrend.sell === 0 &&
+            recommendationTrend.strongSell === 0) {
+            i++
+            if (i === recommendationTrends.length) {
+                return -1
+            }
+        } else {
+            break
+        }
+    }
     const total = recommendationTrend.strongBuy + recommendationTrend.buy + recommendationTrend.hold + recommendationTrend.sell + recommendationTrend.strongSell
-    return ((4 * recommendationTrend.strongBuy + 3 * recommendationTrend.buy + 2 * recommendationTrend.hold + 1 * recommendationTrend.sell + 0 * recommendationTrend.strongSell) / (4 * total) * 50)
+    return ((5 * recommendationTrend.strongBuy + 4 * recommendationTrend.buy + 3 * recommendationTrend.hold + 2 * recommendationTrend.sell + 1 * recommendationTrend.strongSell) / (5 * total) * 50)
 }
 
-const Rate_acs = ({score_acs}) => {
+const Rate_acs = ({ score_acs }) => {
     const helper = score_acs
     return (
         <>
             {
-                helper < 20
+                helper === -1
                     ?
                     <tr>
                         <td><FontAwesomeIcon icon="fa-regular fa-circle-xmark" className="text-down" /></td>
                         <td>
-                            <p>Analyst consensus indicates <span className="text-down">Weak</span> or <span className="text-down">negative sentiment</span> among analysts.</p>
-                            <p>Suggests <span className="text-down">lack of confidence</span> in the stock potential or <span className="text-down">expectation of decline</span>.</p>
+                            <p>There is not enough analysts rating for this stock.</p>
                         </td>
                     </tr>
                     :
-                    helper <= 40
+                    helper < 20
                         ?
                         <tr>
-                            <td><FontAwesomeIcon icon="fa-regular fa-circle" className="text-hold" /></td>
+                            <td><FontAwesomeIcon icon="fa-regular fa-circle-xmark" className="text-down" /></td>
                             <td>
-                                <p>Analyst consensus indicates <span className="text-hold">Moderate</span> or <span className="text-hold">mixed sentiment</span> among analysts.</p>
-                                <p>Reflects a <span className="text-hold">balanced outlook</span> with some reservations about growth.</p>
+                                <p>Analyst consensus indicates <span className="text-down">Weak</span> or <span className="text-down">negative sentiment</span> among analysts.</p>
+                                <p>Suggests <span className="text-down">lack of confidence</span> in the stock potential or <span className="text-down">expectation of decline</span>.</p>
                             </td>
                         </tr>
                         :
-                        <tr>
-                            <td><FontAwesomeIcon icon="fa-regular fa-circle-check" className="text-up" /></td>
-                            <td>
-                                <p>Analyst consensus indicates <span className="text-up">strong positive</span> sentiment among analysts.</p>
-                                <p>Suggests <span className="text-up">confidence</span> in the stock potential for growth.</p>
-                            </td>
-                        </tr>
+                        helper <= 40
+                            ?
+                            <tr>
+                                <td><FontAwesomeIcon icon="fa-regular fa-circle" className="text-hold" /></td>
+                                <td>
+                                    <p>Analyst consensus indicates <span className="text-hold">Moderate</span> or <span className="text-hold">mixed sentiment</span> among analysts.</p>
+                                    <p>Reflects a <span className="text-hold">balanced outlook</span> with some reservations about growth.</p>
+                                </td>
+                            </tr>
+                            :
+                            <tr>
+                                <td><FontAwesomeIcon icon="fa-regular fa-circle-check" className="text-up" /></td>
+                                <td>
+                                    <p>Analyst consensus indicates <span className="text-up">strong positive</span> sentiment among analysts.</p>
+                                    <p>Suggests <span className="text-up">confidence</span> in the stock potential for growth.</p>
+                                </td>
+                            </tr>
             }
         </>
     )
@@ -255,8 +284,8 @@ const BuyConsensus = ({ ticker, stockSummary }) => {
         )
     }
 
-    const score_ptds = ptds(stockSummary.financialData.currentPrice, stockSummary.financialData.targetLowPrice, stockSummary.financialData.targetMeanPrice,stockSummary.financialData.targetHighPrice)
-    const score_acs = acs(stockSummary.recommendationTrend.trend[0])
+    const score_ptds = ptds(stockSummary.financialData.currentPrice, stockSummary.financialData.targetLowPrice, stockSummary.financialData.targetMeanPrice, stockSummary.financialData.targetHighPrice)
+    const score_acs = acs(stockSummary.recommendationTrend.trend)
     const score = score_ptds + score_acs
     return (
         <div className="my-buyconsensus bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
@@ -275,6 +304,7 @@ const BuyConsensus = ({ ticker, stockSummary }) => {
                     <Rate_acs score_acs={score_acs} />
                 </tbody>
             </table>
+            <p>{score_ptds}</p>
         </div>
     )
 }

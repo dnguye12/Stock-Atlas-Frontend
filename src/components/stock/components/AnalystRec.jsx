@@ -28,7 +28,7 @@ const AnalystRec = ({ stockSummary }) => {
             <div>...Loading</div>
         )
     }
-
+    
     let data = {
         strongSellData: [],
         sellData: [],
@@ -38,12 +38,18 @@ const AnalystRec = ({ stockSummary }) => {
         labels: []
     }
 
-    stockSummary.recommendationTrend.trend.forEach(trend => {
+    let maxRec = 0
+    stockSummary.recommendationTrend.trend.reverse().forEach(trend => {
         data.strongSellData.push(trend.strongSell)
         data.sellData.push(trend.sell)
         data.holdData.push(trend.hold)
         data.buyData.push(trend.buy)
         data.strongBuyData.push(trend.strongBuy)
+
+        const helper = trend.strongBuy + trend.buy + trend.hold + trend.sell + trend.strongSell
+        if (helper > maxRec) {
+            maxRec = helper
+        }
     })
 
     for (let i = data.strongSellData.length - 1; i >= 0; i--) {
@@ -59,8 +65,8 @@ const AnalystRec = ({ stockSummary }) => {
                 backgroundColor: '#D60A22',
                 barPercentage: 0.5,
                 datalabels: {
-                    align: 'start',
-                    anchor: 'end'
+                    align: 'center',
+                    anchor: 'center'
                 },
                 borderRadius: 5
             },
@@ -70,8 +76,8 @@ const AnalystRec = ({ stockSummary }) => {
                 backgroundColor: '#EA7034',
                 barPercentage: 0.5,
                 datalabels: {
-                    align: 'start',
-                    anchor: 'end'
+                    align: 'center',
+                    anchor: 'center'
                 },
                 borderRadius: 5
             },
@@ -81,8 +87,8 @@ const AnalystRec = ({ stockSummary }) => {
                 backgroundColor: '#FFD747',
                 barPercentage: 0.5,
                 datalabels: {
-                    align: 'start',
-                    anchor: 'end'
+                    align: 'center',
+                    anchor: 'center'
                 },
                 borderRadius: 5
             },
@@ -92,8 +98,8 @@ const AnalystRec = ({ stockSummary }) => {
                 backgroundColor: '#81A949',
                 barPercentage: 0.5,
                 datalabels: {
-                    align: 'start',
-                    anchor: 'end'
+                    align: 'center',
+                    anchor: 'center'
                 },
                 borderRadius: 5
             },
@@ -103,8 +109,8 @@ const AnalystRec = ({ stockSummary }) => {
                 backgroundColor: '#037B66',
                 barPercentage: 0.5,
                 datalabels: {
-                    align: 'start',
-                    anchor: 'end'
+                    align: 'center',
+                    anchor: 'center'
                 },
                 borderRadius: 5
             }
@@ -147,7 +153,7 @@ const AnalystRec = ({ stockSummary }) => {
             datalabels: {
                 color: 'rgb(38,38,38)',
                 display: function (context) {
-                    return context.dataset.data[context.dataIndex] > 2;
+                    return context.dataset.data[context.dataIndex] > (maxRec / 10 + 1);
                 },
                 font: {
                     weight: 'bold',
