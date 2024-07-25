@@ -28,7 +28,7 @@ const AnalystRec = ({ stockSummary }) => {
             <div>...Loading</div>
         )
     }
-    
+
     let data = {
         strongSellData: [],
         sellData: [],
@@ -39,7 +39,8 @@ const AnalystRec = ({ stockSummary }) => {
     }
 
     let maxRec = 0
-    stockSummary.recommendationTrend.trend.reverse().forEach(trend => {
+    const trend = [...stockSummary.recommendationTrend.trend].reverse()
+    trend.forEach(trend => {
         data.strongSellData.push(trend.strongSell)
         data.sellData.push(trend.sell)
         data.holdData.push(trend.hold)

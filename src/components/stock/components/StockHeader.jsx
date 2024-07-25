@@ -31,8 +31,6 @@ const StockHeader = ({ ticker, stockQuote }) => {
         )
     }
 
-    console.log(stockQuote)
-
     return (
         <div className="flex justify-center flex-col">
             <div className="flex items-center px-5">

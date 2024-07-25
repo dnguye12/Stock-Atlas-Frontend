@@ -289,7 +289,7 @@ const BuyConsensus = ({ ticker, stockSummary }) => {
     const score = score_ptds + score_acs
     return (
         <div className="my-buyconsensus bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
-            <h3 className="font-semibold text-white mb-3">Stock score</h3>
+            <h3 className="font-semibold text-white mb-3">Analyst ratings score</h3>
             <div className="flex flex-col items-center mb-3">
                 <div className={`radial-progress font-bold mb-6 ${score >= 60 ? 'text-up' : score >= 40 ? 'text-hold' : 'text-down'
                     }`} style={{ '--value': score }} role="progressbar">
@@ -302,9 +302,13 @@ const BuyConsensus = ({ ticker, stockSummary }) => {
                     <Rate_score score={score} />
                     <Rate_ptds currentPrice={stockSummary.financialData.currentPrice} lowTarget={stockSummary.financialData.targetLowPrice} meanTarget={stockSummary.financialData.targetMeanPrice} highTarget={stockSummary.financialData.targetHighPrice} />
                     <Rate_acs score_acs={score_acs} />
+                    <tr>
+                        <td><FontAwesomeIcon className="text-hold" icon="fa-solid fa-triangle-exclamation" /></td>
+                        <td><p className="text-hold text-sm italic font-semibold">This score is based entirely on Analyst recommendations.</p></td>
+                    </tr>
                 </tbody>
             </table>
-            <p>{score_ptds}</p>
+
         </div>
     )
 }
