@@ -1,40 +1,55 @@
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { getYahooQuote } from "../../services/stock"
+import { getYahooDividendHistory, getYahooQuote } from "../../services/stock"
 
 import StockHeader from "./components/StockHeader"
 import StockAbout from "./components/StockAbout"
+import DividendOverview from "./components/DividendOverview"
+import DividendGrowth from "./components/DividendGrowth"
+import { process_div } from "./utils/dividendUtils"
 
 const StockDividend = () => {
     const ticker = useParams().ticker
 
     const [stockQuote, setStockQuote] = useState(null)
+    const [stockChart, setStockChart] = useState(null)
+    const [divData, setDivData] = useState(null)
 
     useEffect(() => {
-        const fetchQuote = async () => {
+        const fetchData = async () => {
             try {
-                const quote = await getYahooQuote(ticker)
-                setStockQuote(quote)
+                const [quote, chart] = await Promise.all([
+                    getYahooQuote(ticker),
+                    getYahooDividendHistory(ticker)
+                ]);
+                setStockQuote(quote);
+                setStockChart(chart);
+                setDivData(process_div(chart));
             } catch (error) {
-                console.log("Stock getting quote error: ", error)
+                console.log("Error fetching data: ", error);
             }
-        }
+        };
 
-        fetchQuote()
-    }, [ticker])
+        fetchData();
+    }, [ticker]);
 
-    if(!stockQuote) {
-        return (
-            <div>...Loading</div>
-        )
+    if (!stockQuote || !stockChart || !divData) {
+        return <div>...Loading</div>;
     }
 
+    console.log(stockQuote)
+
     return (
-        <div className="w-full flex">
-            <div className="w-full my-5 p-5 border-r border-r-neutral-700">
+        <div className="stock-dividend w-full flex">
+            <div className="w-full lg:w-3/4 my-5 p-5 border-r border-r-neutral-700">
                 <StockHeader ticker={ticker} stockQuote={stockQuote} />
+                <div className="grid grid-cols-1 gap-4">
+                    <DividendOverview ticker={ticker} stockQuote={stockQuote} divData={divData}/>
+                    <DividendGrowth divData={divData} />
+                </div>
+
             </div>
-            <div className="w-1/3 p-3">
+            <div className="hidden lg:block w-1/4 p-3">
                 <StockAbout ticker={ticker} stockQuote={stockQuote} />
             </div>
         </div>

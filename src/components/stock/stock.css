@@ -89,3 +89,19 @@
 .my-analystoverview .grid .detail .modal .modal-box p span{
     @apply font-semibold
 }
+
+.stock-dividend .dividend-growth .dividend-growth-percent p {
+    @apply text-white font-semibold mt-1
+}
+
+.stock-dividend .dividend-growth .dividend-growth-percent p span {
+    @apply font-normal text-neutral-content text-sm
+}
+
+.stock-dividend .dividend-overview .flex .flex-1 h5 {
+    @apply text-sm
+}
+
+.stock-dividend .dividend-overview .flex .flex-1 p {
+    @apply font-semibold text-white
+}
