@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -34,7 +35,8 @@ const gradeNumber = (action) => {
     }
 }
 
-const UpgradesDowngrades = ({ stockSummary }) => {
+const AnalystUpgradesDowngrades = ({ stockSummary }) => {
+    const { t, i18n } = useTranslation();
     const [loadMore, setLoadMore] = useState(false)
     const [loadMoreData, setLoadMoreData] = useState([])
 
@@ -65,7 +67,7 @@ const UpgradesDowngrades = ({ stockSummary }) => {
 
     return (
         <div className="my-analysis bg-neutral-800 border border-neutral-700 rounded p-4">
-            <h3 className="font-semibold text-white mb-3">Upgrades & Downgrades</h3>
+            <h3 className="font-semibold text-white mb-3">{t('stock.upgrades_downgrades.Upgrades & Downgrades')}</h3>
             <div className="w-full flex flex-col justify-center">
                 {
                     !loadMore
@@ -73,10 +75,10 @@ const UpgradesDowngrades = ({ stockSummary }) => {
                         <table className="table mb-5">
                             <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Firm</th>
-                                    <th>Action</th>
-                                    <th>Rating</th>
+                                    <th>{t('stock.upgrades_downgrades.Date')}</th>
+                                    <th>{t('stock.upgrades_downgrades.Firm')}</th>
+                                    <th>{t('stock.upgrades_downgrades.Action')}</th>
+                                    <th>{t('stock.upgrades_downgrades.Rating')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -144,11 +146,11 @@ const UpgradesDowngrades = ({ stockSummary }) => {
 
                 }
                 {
-                    !loadMore && <button className="btn" onClick={() => { setLoadMore(true) }}><FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-2" />More Upgrades & Downgrades</button>
+                    !loadMore && <button className="btn" onClick={() => { setLoadMore(true) }}><FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-2" />{t('stock.upgrades_downgrades.More Upgrades & Downgrades')}</button>
                 }
             </div>
         </div>
     )
 }
 
-export default UpgradesDowngrades
+export default AnalystUpgradesDowngrades

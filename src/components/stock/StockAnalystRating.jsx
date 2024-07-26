@@ -4,10 +4,10 @@ import { getYahooQuote, getYahooQuoteSummary } from "../../services/stock"
 
 import StockAbout from "./components/StockAbout"
 import StockHeader from "./components/StockHeader"
-import PriceTargets from "./components/PriceTargets"
+import AnalystPriceTargets from "./components/AnalystPriceTargets"
 import AnalystRec from "./components/AnalystRec"
-import UpgradesDowngrades from "./components/UpgradesDowngrades"
-import BuyConsensus from "./components/BuyConsensus "
+import AnalystUpgradesDowngrades from "./components/AnalystUpgradesDowngrades"
+import AnalystBuyConsensus from "./components/AnalystBuyConsensus "
 import AnalystOverview from "./components/AnalystOverview"
 
 const StockAnalystRating = () => {
@@ -50,20 +50,20 @@ const StockAnalystRating = () => {
 
     return (
         <div className="w-full flex">
-            <div className="w-full my-5 p-5 border-r border-r-neutral-700">
+            <div className="w-full lg:w-3/4 my-5 p-5 border-r border-r-neutral-700">
                 <StockHeader ticker={ticker} stockQuote={stockQuote} />
 
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
-                        <BuyConsensus ticker={ticker} stockSummary={stockSummary} />
+                        <AnalystBuyConsensus ticker={ticker} stockSummary={stockSummary} />
                         <AnalystOverview ticker={ticker} stockSummary={stockSummary}/>
-                        <PriceTargets stockSummary={stockSummary} />
+                        <AnalystPriceTargets stockSummary={stockSummary} />
                         <AnalystRec stockSummary={stockSummary} />
                     </div>
-                    <UpgradesDowngrades stockSummary={stockSummary} />
+                    <AnalystUpgradesDowngrades stockSummary={stockSummary} />
                 </div>
             </div>
-            <div className="w-1/3 p-3">
+            <div className="hidden lg:block w-1/4 p-3">
                 <StockAbout ticker={ticker} stockQuote={stockQuote} />
             </div>
         </div>

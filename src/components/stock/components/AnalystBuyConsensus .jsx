@@ -276,7 +276,7 @@ const Rate_score = ({ score }) => {
         </>
     )
 }
-const BuyConsensus = ({ ticker, stockSummary }) => {
+const AnalystBuyConsensus = ({ ticker, stockSummary }) => {
 
     if (!stockSummary) {
         return (
@@ -313,4 +313,4 @@ const BuyConsensus = ({ ticker, stockSummary }) => {
     )
 }
 
-export default BuyConsensus 
+export default AnalystBuyConsensus

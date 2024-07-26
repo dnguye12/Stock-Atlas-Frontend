@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useTranslation } from 'react-i18next';
 import { Bar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -23,6 +24,7 @@ ChartJS.register(
 import { getMonthFromNumber } from '../../../utils/timeUtils';
 
 const AnalystRec = ({ stockSummary }) => {
+    const { t, i18n } = useTranslation();
     if (!stockSummary || !stockSummary.recommendationTrend) {
         return (
             <div>...Loading</div>
@@ -178,7 +180,7 @@ const AnalystRec = ({ stockSummary }) => {
 
     return (
         <div className="my-analysis bg-neutral-800 border border-neutral-700 rounded p-4">
-            <h3 className="font-semibold text-white mb-3">Analyst Recommendations</h3>
+            <h3 className="font-semibold text-white mb-3">{t('stock.analyst_recommendations.Analyst Recommendations')}</h3>
             <div className='relative w-full h-full'>
                 <Bar className='h-full' data={barData} options={barOptions} />
             </div>

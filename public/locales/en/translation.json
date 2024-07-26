@@ -1,3 +1,36 @@
 {
-  "Welcome to React": "dqdzqdq"
+  "stock": {
+    "Strong Buy": "Strong Buy",
+    "analyst_rating": {
+      "Analysts Overview": "Analysts Overview",
+      "Total Analyst": "Total Analyst",
+      "Total Analyst desc": "The total number of analyst who provided a rating in the past 12 months.",
+      "Consensus Rating": "Consensus Rating",
+      "Consensus Rating desc": "The average analyst rating for <1>{{ticker}}</1> is standardized to align with categories: <3>Strong Buy</3>, <5>Buy</5>, <7>Hold</7>, <9>Sell</9>, and <11>Strong Sell</11>.",
+      "Price Target": "Price Target",
+      "Price Target desc": "The average 12-month price targets.",
+      "Upside": "Upside",
+      "Upside desc": "The average price target's percentage difference from the current stock price."
+    },
+    "analyst_price_targets": {
+      "Analyst Price Targets": "Analyst Price Targets",
+      "Low": "Low",
+      "Current": "Current",
+      "Average": "Average",
+      "High": "High",
+      "Percentage diff": "Percentage differences to Current Price",
+      "Current Price": "Current Price"
+    },
+    "analyst_recommendations": {
+      "Analyst Recommendations": "Analyst Recommendations"
+    },
+    "upgrades_downgrades": {
+      "Upgrades & Downgrades": "Upgrades & Downgrades",
+      "Date": "Date",
+      "Firm": "Firm",
+      "Action": "Action",
+      "Rating": "Rating",
+      "More Upgrades & Downgrades": "More Upgrades & Downgrades"
+    }
+  }
 }

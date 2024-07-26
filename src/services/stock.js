@@ -28,6 +28,15 @@ export const getYahooChart = async (input_ticker, input_period1, input_period2, 
     return request.data
 }
 
+export const getYahooDividendHistory = async(input_ticker) => {
+    let query = baseUrl + chartUrl
+
+    query += `/${input_ticker}/div`
+    const request = await dailyAxios.get(query)
+    const helper = [...request.data.events.dividends]
+    return helper
+}
+
 export const getYahooDailyGainers = async (count, region) => {
     let query = baseUrl + dailyUrl + '/gainers';
 
