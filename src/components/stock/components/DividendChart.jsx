@@ -22,6 +22,8 @@ const DividendChart = ({ data, grow }) => {
                 },
                 textColor: 'white',
             },
+            handleScroll: false,
+            handleScale: false,
             width: chartContainerRef.current.clientWidth,
             height: 400,
             grid: {

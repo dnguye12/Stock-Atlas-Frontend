@@ -1,30 +1,8 @@
 /* eslint-disable react/prop-types */
 import moment from 'moment';
 import { capitalizeWord } from '../../../utils/textUtils';
-import { useEffect, useState } from 'react';
-import { getYahooQuoteSummary } from '../../../services/stock';
 
-const DividendOverview = ({ ticker, stockQuote, divData }) => {
-    const [stockSummary, setStockSummary] = useState(null)
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getYahooQuoteSummary(ticker, ["summaryDetail"])
-                setStockSummary(data)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-
-        fetchData()
-    }, [ticker])
-
-    if (!stockSummary) {
-        return (
-            <div>...Loading</div>
-        )
-    }
+const DividendOverview = ({ stockQuote, divData, stockSummary }) => {
 
     return (
         <div className="dividend-overview bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
