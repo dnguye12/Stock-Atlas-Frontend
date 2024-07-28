@@ -28,26 +28,32 @@ export const process_div = (data, summary) => {
         let current_streak = 0
         let grow_streak = 0
         let cut_count = 0
+
         for (let i = data.length - 1; i >= 0; i--) {
-            let helper1 = data[i]
+            helper1 = data[i]
             helper1.date = moment(helper1.date)
-            if (!current_year.date.isSame(helper1.date, 'year')) {
-                if(cut_count === 0 && yearly_data.length > 0 && yearly_data[0].amount > current_year.amount) {
-                    grow_streak++
+            if (current_year.date.isSame(helper1.date, 'year')) {
+                current_year.amount += helper1.amount
+            } else {
+                if (yearly_data.length > 1) {
+                    if (yearly_data[0].amount < current_year.amount) {
+                        cut_count++
+                    }
+                    if (cut_count === 0 && yearly_data[0].amount >= current_year.amount) {
+                        grow_streak++
+                    }
                 }
                 yearly_data.unshift({ ...current_year })
                 helper2 = current_year.date.diff(helper1.date, 'days')
                 if (helper2 >= 380) {
                     cut_count++
-                } else {
-                    if (cut_count === 0) {
-                        current_streak++
-                    }
+                }
+                if (cut_count === 0) {
+                    current_streak++
                 }
                 current_year.date = helper1.date
                 current_year.amount = helper1.amount
-            } else {
-                current_year.amount += helper1.amount
+
             }
         }
         yearly_data.unshift({ ...current_year })
