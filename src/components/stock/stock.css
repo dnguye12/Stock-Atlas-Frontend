@@ -91,7 +91,7 @@
 }
 
 .stock-dividend .dividend-growth .dividend-growth-percent p {
-    @apply text-white font-semibold mt-1
+    @apply font-semibold mt-1
 }
 
 .stock-dividend .dividend-growth .dividend-growth-percent p span {
@@ -103,5 +103,17 @@
 }
 
 .stock-dividend .dividend-overview .flex .flex-1 p {
-    @apply font-semibold text-white
+    @apply font-semibold
+}
+
+.stock-dividend .dividend-overview .table td.bad span {
+    @apply text-down font-semibold
+}
+
+.stock-dividend .dividend-overview .table td.med span {
+    @apply text-hold font-semibold
+}
+
+.stock-dividend .dividend-overview .table td.good span {
+    @apply text-up font-semibold
 }

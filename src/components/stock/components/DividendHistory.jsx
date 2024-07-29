@@ -12,13 +12,21 @@ const DividendHistory = ({ stockChart }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            [...stockChart].reverse().map((event, idx) => (
-                                <tr className="hover" key={idx}>
-                                    <td>{event.date.format("MMM Do YYYY")}</td>
-                                    <td className="text-white font-semibold">${event.amount}</td>
-                                </tr>
-                            ))
+                        {stockChart.length > 1
+                            ?
+                            [...stockChart].reverse().map((event, idx) => 
+                                (
+                                    <tr className="hover" key={idx}>
+                                        <td>{event.date.format("MMM Do YYYY")}</td>
+                                        <td className="text-white font-semibold">${event.amount}</td>
+                                    </tr>
+                                )
+                            )
+                            :
+                            <tr className="hover">
+                                <td>{stockChart[0].date.format("MMM Do YYYY")}</td>
+                                <td className="text-white font-semibold">${stockChart[0].amount}</td>
+                            </tr>
                         }
                     </tbody>
                 </table>

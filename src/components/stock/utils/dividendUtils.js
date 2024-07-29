@@ -63,7 +63,8 @@ export const process_div = (data, summary) => {
         result.cut_count = cut_count
     } else {
         if (data.length === 1) {
-            yearly_data.push({ amount: data[0].amount, date: moment(data[0].date) })
+            data[0].date = moment(data[0].date)
+            yearly_data.push({ amount: data[0].amount, date: data[0].date })
         }
     }
     result.yearly_data = yearly_data

@@ -27,7 +27,7 @@ const DividendGrowth = ({ divData }) => {
                     <>
                         <div className="py-5">
                             <h5>Last Full Year</h5>
-                            <p>{divData.growth_1y.toFixed(2)}%</p>
+                            <p className={`${divData.growth_1y >= 0 ? 'text-up' : 'text-down'}`}>{divData.growth_1y.toFixed(2)}%</p>
                         </div>
                         <div className="divider divider-horizontal"></div>
                     </>
@@ -36,7 +36,7 @@ const DividendGrowth = ({ divData }) => {
                     <>
                         <div className="py-5">
                             <h5>Last 5 Years</h5>
-                            <p>{divData.growth_5y.toFixed(2)}% <span>per year</span></p>
+                            <p className={`${divData.growth_5y >= 0 ? 'text-up' : 'text-down'}`}>{divData.growth_5y.toFixed(2)}% <span>per year</span></p>
                         </div>
                         <div className="divider divider-horizontal"></div>
                     </>
@@ -45,7 +45,7 @@ const DividendGrowth = ({ divData }) => {
                     <>
                         <div className="py-5">
                             <h5>Last 20 Years</h5>
-                            <p>{divData.growth_20y.toFixed(2)}% <span>per year</span></p>
+                            <p className={`${divData.growth_20y >= 0 ? 'text-up' : 'text-down'}`}>{divData.growth_20y.toFixed(2)}% <span>per year</span></p>
                         </div>
                         <div className="divider divider-horizontal"></div>
                     </>
@@ -54,7 +54,7 @@ const DividendGrowth = ({ divData }) => {
                     divData.growth_total &&
                     <div className="py-5">
                         <h5>Since start</h5>
-                        <p>{divData.growth_total.toFixed(2)}% <span>per year</span></p>
+                        <p className={`${divData.growth_total >= 0 ? 'text-up' : 'text-down'}`}>{divData.growth_total.toFixed(2)}% <span>per year</span></p>
                     </div>
                 }
             </div>
@@ -72,7 +72,7 @@ const DividendGrowth = ({ divData }) => {
                     <>
                         <div className="py-5">
                             <h5>Uninterrupted Dividend Streak</h5>
-                            <p>{divData.current_streak} years</p>
+                            <p className="text-white">{divData.current_streak} years</p>
                             <span>without a dividend cut</span>
                         </div>
                         <div className="divider divider-horizontal"></div>
@@ -84,7 +84,7 @@ const DividendGrowth = ({ divData }) => {
                     <>
                         <div className="py-5">
                             <h5>Dividend Growth Streak</h5>
-                            <p>{divData.grow_streak} years</p>
+                            <p className="text-white">{divData.grow_streak} years</p>
                             <span>of consecutive increases</span>
                         </div>
                         <div className="divider divider-horizontal"></div>
@@ -95,7 +95,7 @@ const DividendGrowth = ({ divData }) => {
                     &&
                         <div className="py-5">
                             <h5>Number of Dividend Cut</h5>
-                            <p>{divData.cut_count}</p>
+                            <p className={`${divData.cut_count > 0 ? 'text-down' : 'text-up'}`}>{divData.cut_count}</p>
                             <span>cut in the last 30 years</span>
                         </div>
                 }
