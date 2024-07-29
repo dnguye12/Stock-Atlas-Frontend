@@ -177,12 +177,63 @@ const AnalystRec = ({ stockSummary }) => {
             },
         },
     };
-
+    
     return (
         <div className="my-analysis bg-neutral-800 border border-neutral-700 rounded p-4">
             <h3 className="font-semibold text-white mb-3">{t('stock.analyst_recommendations.Analyst Recommendations')}</h3>
-            <div className='relative w-full h-full'>
-                <Bar className='h-full' data={barData} options={barOptions} />
+            <div className='hidden sm:block relative w-full h-full'>
+                <Bar className=' h-full' data={barData} options={barOptions} />
+            </div>
+            <div className='sm:hidden block relative w-full h-full'>
+                <table className='table'>
+                    <thead>
+                        <tr>
+                            <th>Ratings</th>
+                            {
+                                barData.labels.map(label => (
+                                    <th key={label}>{label}</th>
+                                ))
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Strong Buy</th>
+                            <td>{barData.datasets[4].data[0]}</td>
+                            <td>{barData.datasets[4].data[1]}</td>
+                            <td>{barData.datasets[4].data[2]}</td>
+                            <td>{barData.datasets[4].data[3]}</td>
+                        </tr>
+                        <tr>
+                            <th>Buy</th>
+                            <td>{barData.datasets[3].data[0]}</td>
+                            <td>{barData.datasets[3].data[1]}</td>
+                            <td>{barData.datasets[3].data[2]}</td>
+                            <td>{barData.datasets[3].data[3]}</td>
+                        </tr>
+                        <tr>
+                            <th>Hold</th>
+                            <td>{barData.datasets[2].data[0]}</td>
+                            <td>{barData.datasets[2].data[1]}</td>
+                            <td>{barData.datasets[2].data[2]}</td>
+                            <td>{barData.datasets[2].data[3]}</td>
+                        </tr>
+                        <tr>
+                            <th>Sell</th>
+                            <td>{barData.datasets[1].data[0]}</td>
+                            <td>{barData.datasets[1].data[1]}</td>
+                            <td>{barData.datasets[1].data[2]}</td>
+                            <td>{barData.datasets[1].data[3]}</td>
+                        </tr>
+                        <tr>
+                            <th>Strong Sell</th>
+                            <td>{barData.datasets[0].data[0]}</td>
+                            <td>{barData.datasets[0].data[1]}</td>
+                            <td>{barData.datasets[0].data[2]}</td>
+                            <td>{barData.datasets[0].data[3]}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     )

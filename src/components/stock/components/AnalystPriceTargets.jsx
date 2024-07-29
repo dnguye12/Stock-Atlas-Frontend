@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useTranslation } from 'react-i18next';
+import { myToLocaleString } from '../../../utils/numberUtils';
 
 const AnalystPriceTargets = ({ stockSummary }) => {
     const { t, i18n } = useTranslation();
@@ -25,9 +26,9 @@ const AnalystPriceTargets = ({ stockSummary }) => {
     let helper2 = ((targetMeanPrice - targetLowPrice) / (targetHighPrice - targetLowPrice)) * 100
 
     return (
-        <div className="my-analysis bg-neutral-800 border border-neutral-700 rounded p-4 min-w-96">
+        <div className="my-analysis bg-neutral-800 border border-neutral-700 rounded p-4 sm:min-w-96">
             <h3 className="font-semibold text-white mb-3">{t('stock.analyst_price_targets.Analyst Price Targets')}</h3>
-            <div className="w-full relative min-h-32 mb-5">
+            <div className="hidden sm:block w-full relative min-h-32 mb-5">
                 <div className="my-bar"></div>
                 <div className="priceContainer priceContainerLow left-0">
                     <div className="dot lowdot ">
@@ -87,7 +88,7 @@ const AnalystPriceTargets = ({ stockSummary }) => {
                     </thead>
                     <tbody>
                         <tr>
-                            <th>{currentPrice}</th>
+                            <th>${myToLocaleString(currentPrice)}</th>
                             <td className={compLow ? "text-down" : "text-up"}>{targetLowPrice.toFixed(2)}</td>
                             <td className={compMean ? "text-down" : "text-up"}>{targetMeanPrice.toFixed(2)}</td>
                             <td className={compHigh ? "text-down" : "text-up"}>{targetHighPrice.toFixed(2)}</td>

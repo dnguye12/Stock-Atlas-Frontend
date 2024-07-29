@@ -22,7 +22,7 @@ const AnalystOverview = ({ ticker, stockSummary }) => {
             <h3 className="font-semibold text-white mb-3">{t("stock.analyst_rating.Analysts Overview")}</h3>
             <div className="grid grid-cols-2 gap-5">
                 <div className="detail">
-                    <button onClick={() => document.getElementById('my-analystoverview-totalAnalyst').showModal()}><h4 className="detail-title">{t("stock.analyst_rating.Total Analyst")}<FontAwesomeIcon icon="fa-regular fa-circle-question" className="ms-2" /></h4></button>
+                    <button onClick={() => document.getElementById('my-analystoverview-totalAnalyst').showModal()}><h4 className="detail-title">{t("stock.analyst_rating.Total Analyst")}<FontAwesomeIcon icon="fa-regular fa-circle-question" className="ms-1 sm:ms-2" /></h4></button>
                     <p className="detail-count">{totalAnalyst}</p>
                     <dialog id="my-analystoverview-totalAnalyst" className="modal">
                         <div className="modal-box">
@@ -36,7 +36,7 @@ const AnalystOverview = ({ ticker, stockSummary }) => {
                 </div>
 
                 <div className="detail">
-                    <button onClick={() => document.getElementById('my-analystoverview-consensusrating').showModal()}><h4 className="detail-title">{t("stock.analyst_rating.Consensus Rating")}<FontAwesomeIcon icon="fa-regular fa-circle-question" className="ms-2" /></h4></button>
+                    <button onClick={() => document.getElementById('my-analystoverview-consensusrating').showModal()}><h4 className="detail-title">{t("stock.analyst_rating.Consensus Rating")}<FontAwesomeIcon icon="fa-regular fa-circle-question" className="ms-1 sm:ms-2" /></h4></button>
                     <p className={`detail-count ${recommendationKey === "strongBuy" ? 'text-up' :
                         recommendationKey === "buy" ? 'text-up' :
                             recommendationKey === "strongSell" ? 'text-down' :
@@ -70,7 +70,7 @@ const AnalystOverview = ({ ticker, stockSummary }) => {
                     </dialog>
                 </div>
                 <div className="detail">
-                    <button onClick={() => document.getElementById('my-analystoverview-priceTarget').showModal()}><h4 className="detail-title">Price Target<FontAwesomeIcon icon="fa-regular fa-circle-question" className="ms-2" /></h4></button>
+                    <button onClick={() => document.getElementById('my-analystoverview-priceTarget').showModal()}><h4 className="detail-title">Price Target<FontAwesomeIcon icon="fa-regular fa-circle-question" className="ms-1 sm:ms-2" /></h4></button>
                     <p className="detail-count">${stockSummary.financialData.targetMeanPrice}</p>
                     <dialog id="my-analystoverview-priceTarget" className="modal">
                         <div className="modal-box">
@@ -86,7 +86,7 @@ const AnalystOverview = ({ ticker, stockSummary }) => {
 
 
                 <div className="detail">
-                    <button onClick={() => document.getElementById('my-analystoverview-upside').showModal()}><h4 className="detail-title">Upside<FontAwesomeIcon icon="fa-regular fa-circle-question" className="ms-2" /></h4></button>
+                    <button onClick={() => document.getElementById('my-analystoverview-upside').showModal()}><h4 className="detail-title">Upside<FontAwesomeIcon icon="fa-regular fa-circle-question" className="ms-1 sm:ms-2" /></h4></button>
                     <p className={`detail-count ${upside > 0 ? 'text-up' : 'text-down'}`}>{upside.toFixed(2)}%</p>
                     <dialog id="my-analystoverview-upside" className="modal">
                         <div className="modal-box">
