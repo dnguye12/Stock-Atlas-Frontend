@@ -92,6 +92,27 @@ const StockChart = ({ data, prevClose, chartInterval }) => {
                     }
                 })
             })
+        } else if (chartInterval === '1M') {
+            chart.applyOptions({
+                timeScale: {
+                    tickMarkFormatter: (time) => {
+                        const date = new Date(time);
+                        const day = date.getUTCDate().toString().padStart(2, '0');
+                        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+                        return `${day}/${month}`;
+                    }
+                },
+                localization: ({
+                    timeFormatter: (time) => {
+                        const date = new Date(time);
+                        const day = date.getUTCDate().toString().padStart(2, '0');
+                        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+                        const hours = date.getUTCHours().toString().padStart(2, '0');
+                        const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+                        return `${day}/${month} ${hours}:${minutes}`;
+                    }
+                })
+            })
         } else if (chartInterval === 'YTD') {
             chart.applyOptions({
                 timeScale: {

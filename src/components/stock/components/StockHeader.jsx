@@ -54,7 +54,7 @@ const StockHeader = ({ ticker, stockQuote }) => {
                         <p className="text-up font-semibold"><FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1" />{stockQuote.regularMarketChange.toFixed(2)} (<FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1" />{stockQuote.regularMarketChangePercent.toFixed(2)}%)</p>
                 }
             </div>
-            <div className="divider my-2"></div>
+            <div className="divider my-3"></div>
             <div className="navbar bg-base-100">
                 <Link to={`/stock/${ticker}`} className="btn btn-ghost text-xl">Overview</Link>
                 <Link to={`/stock/${ticker}/statistics`} className="btn btn-ghost text-xl">Statistics</Link>
@@ -62,8 +62,9 @@ const StockHeader = ({ ticker, stockQuote }) => {
                 {
                     stockQuote.dividendDate && <Link to={`/stock/${ticker}/dividends`} className="btn btn-ghost text-xl">Dividends</Link>
                 }
+                <Link to={`/stock/${ticker}/profile`} className="btn btn-ghost text-xl">Profile</Link>
             </div>
-            <div className="divider my-2"></div>
+            <div className="divider my-3"></div>
         </div>
     )
 }

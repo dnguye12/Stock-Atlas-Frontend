@@ -6,7 +6,7 @@ const RangeButtons = ({ setChartInterval }) => {
             {
                 intervals.map(interval =>
                 (
-                    <button className="btn" key={interval} onClick={() => setChartInterval(interval)}>{interval}</button>
+                    <button className="my-btn" key={interval} onClick={() => setChartInterval(interval)}>{interval}</button>
                 )
                 )
             }</>

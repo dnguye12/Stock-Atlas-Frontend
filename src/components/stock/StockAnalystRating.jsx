@@ -50,7 +50,7 @@ const StockAnalystRating = () => {
 
     return (
         <div className="w-full flex">
-            <div className="w-full lg:w-3/4 my-5 p-5 border-r border-r-neutral-700">
+            <div className="w-full xl:w-3/4 my-5 p-5 border-r border-r-neutral-700">
                 <StockHeader ticker={ticker} stockQuote={stockQuote} />
 
                 <div className="flex flex-col">
@@ -63,7 +63,7 @@ const StockAnalystRating = () => {
                     <AnalystUpgradesDowngrades stockSummary={stockSummary} />
                 </div>
             </div>
-            <div className="hidden lg:block w-1/4 p-3">
+            <div className="hidden xl:block w-1/4 p-3">
                 <StockAbout ticker={ticker} stockQuote={stockQuote} />
             </div>
         </div>

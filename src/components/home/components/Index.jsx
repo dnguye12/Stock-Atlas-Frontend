@@ -49,14 +49,16 @@ const Index = ({ name, ticker }) => {
     }
 
     const myData = [];
-    quotes.quotes.forEach(quote => {
-        if (quote.open) {
-            myData.push({
-                time: new Date(quote.date).getTime(),
-                value: quote.open
-            });
-        }
-    })
+    if (quotes && quotes.quotes) {
+        quotes.quotes.forEach(quote => {
+            if (quote.open) {
+                myData.push({
+                    time: new Date(quote.date).getTime(),
+                    value: quote.open
+                });
+            }
+        })
+    }
 
     let startValue, endValue;
     if (myData.length > 0) {
@@ -65,7 +67,7 @@ const Index = ({ name, ticker }) => {
     }
 
     return (
-        <div className="flex items-center justify-between space-x-2 rounded border p-3 cursor-pointer border-neutral-700 shadow-sm bg-neutral-800 hover:bg-neutral-700 hover:scale-105" style={{transition: "transform 350ms, background-color 350ms"}}>
+        <div className="flex items-center justify-between space-x-2 rounded border p-3 cursor-pointer border-neutral-700 shadow-sm bg-neutral-800 hover:bg-neutral-700 hover:scale-105" style={{ transition: "transform 350ms, background-color 350ms" }}>
             <div className="flex flex-col items-start justify-start">
                 <p className=" whitespace-nowrap text-sm font-semibold leading-tight text-white" to={`/stock/${ticker}`}>{name}</p>
                 <p className=" whitespace-nowrap text-sm leading-tight my-1">${myToLocaleString(quotes.meta.regularMarketPrice)}</p>

@@ -44,7 +44,7 @@ const StockDividend = () => {
 
     return (
         <div className="stock-dividend w-full flex">
-            <div className="w-full lg:w-3/4 my-5 p-5 border-r border-r-neutral-700">
+            <div className="w-full xl:w-3/4 my-5 p-5 border-r border-r-neutral-700">
                 <StockHeader ticker={ticker} stockQuote={stockQuote} />
                 <div className="grid grid-cols-1 gap-4">
                     <DividendScore ticker={ticker} stockQuote={stockQuote} divData={divData} stockSummary={stockSummary}/>
@@ -54,7 +54,7 @@ const StockDividend = () => {
                 </div>
 
             </div>
-            <div className="hidden lg:block w-1/4 p-3">
+            <div className="hidden xl:block w-1/4 p-3">
                 <StockAbout ticker={ticker} stockQuote={stockQuote} />
             </div>
         </div>

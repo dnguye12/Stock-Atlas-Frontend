@@ -1,3 +1,7 @@
+.my-btn {
+    @apply btn bg-neutral-800 hover:bg-neutral-700 hover:text-white border border-neutral-700
+}
+
 .my-analysis .my-bar {
     @apply w-full top-2/4 h-[6px] bg-neutral-500 rounded-full absolute
 }
@@ -116,4 +120,24 @@
 
 .stock-dividend .dividend-overview .table td.good span {
     @apply text-up font-semibold
+}
+
+.stock-profile .table thead th {
+    @apply text-white text-sm
+}
+
+.stock-profile .table tbody th {
+    @apply text-white text-sm font-semibold
+}
+
+.stock-profile .table tbody .name {
+    @apply text-white text-sm
+}
+
+.stock-profile .my-address {
+    @apply px-3 pb-2
+}
+
+.stock-profile .my-address h4 {
+    @apply text-white font-semibold mb-2
 }

@@ -5,7 +5,7 @@ const Header = () => {
     return (
         <div className="navbar w-full top-0 z-50 sticky bg-neutral-800 min-h-16 items-center shadow border-b border-b-neutral-700">
             <div className="container mx-auto w-full h-full">
-                <div className="flex-none lg:hidden">
+                <div className="flex-none xl:hidden">
                     <label htmlFor="my-drawer-1" aria-label="open sidebar" className="btn btn-square btn-ghost">
                         <FontAwesomeIcon icon="fa-solid fa-bars" />
                     </label>
