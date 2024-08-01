@@ -1,0 +1,79 @@
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react"
+
+import { getStockLogo, getYahooQuote } from "../../../services/stock"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { myToLocaleString } from "../../../utils/numberUtils"
+import { currToSymbol } from "../../../utils/moneyUtils"
+import { truncateText } from "../../../utils/textUtils"
+
+const AboutSimilar = ({ ticker }) => {
+    const [stockQuote, setStockQuote] = useState('')
+    const [logoImg, setLogoImage] = useState('')
+
+    useEffect(() => {
+        const fetchLogo = async () => {
+            try {
+                const logo = await getStockLogo(ticker)
+
+                if (logo) {
+                    setLogoImage(`data:image/png;base64,${logo}`)
+                }
+            } catch (error) {
+                setLogoImage('')
+            }
+        }
+
+        fetchLogo()
+    }, [ticker])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getYahooQuote(ticker)
+
+                if (data) {
+                    setStockQuote(data)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData()
+    }, [ticker])
+
+    if (!logoImg || !stockQuote) {
+        return (
+            <tr>...Loading</tr>
+        )
+    }
+
+    return (
+        <tr className="hover">
+            <td>
+                <div className="flex items-center">
+                    <div className="avatar mr-2">
+                        <div className="w-6 h-6 rounded-full">
+                            <img src={logoImg} alt={ticker} className="drop-shadow-lg"/>
+                        </div>
+                    </div>
+                    <div className="flex flex-col">
+                        <p className="text-blue-500 font-semibold">{ticker}</p>
+                        <p>{truncateText(stockQuote.displayName, 10)}</p>
+                    </div>
+                </div>
+
+            </td>
+            <td className="font-bold text-sm text-white">{currToSymbol(stockQuote.currency)}{myToLocaleString(stockQuote.regularMarketPrice)}</td>
+            {
+                stockQuote.regularMarketChangePercent >= 0
+                    ?
+                    <td className="font-semibold text-sm text-up"><FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1" />{stockQuote.regularMarketChangePercent.toFixed(2)}%</td>
+                    :
+                    <td className="font-semibold text-sm text-down"><FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-1" />{stockQuote.regularMarketChangePercent.toFixed(2).slice(1)}%</td>
+            }
+        </tr>
+    )
+}
+
+export default AboutSimilar

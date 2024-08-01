@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useTranslation } from 'react-i18next';
 import { myToLocaleString } from '../../../utils/numberUtils';
+import { currToSymbol } from '../../../utils/moneyUtils';
 
-const AnalystPriceTargets = ({ stockSummary }) => {
+const AnalystPriceTargets = ({ stockQuote, stockSummary }) => {
     const { t, i18n } = useTranslation();
     if (!stockSummary) {
         return (
@@ -88,7 +89,7 @@ const AnalystPriceTargets = ({ stockSummary }) => {
                     </thead>
                     <tbody>
                         <tr>
-                            <th>${myToLocaleString(currentPrice)}</th>
+                            <th>{currToSymbol(stockQuote.currency)}{myToLocaleString(currentPrice)}</th>
                             <td className={compLow ? "text-down" : "text-up"}>{targetLowPrice.toFixed(2)}</td>
                             <td className={compMean ? "text-down" : "text-up"}>{targetMeanPrice.toFixed(2)}</td>
                             <td className={compHigh ? "text-down" : "text-up"}>{targetHighPrice.toFixed(2)}</td>

@@ -42,7 +42,7 @@ const StockProfile = () => {
 
     return (
         <div className="stock-profile w-full flex">
-            <div className="w-full xl:w-3/4 my-5 p-5 border-r border-r-neutral-700">
+            <div className="w-full xl:w-2/3 my-5 p-5 border-r border-r-neutral-700">
                 <StockHeader ticker={ticker} stockQuote={stockQuote} />
                 <div className="flex flex-col">
                     <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
@@ -52,7 +52,7 @@ const StockProfile = () => {
                         </div>
 
                         <h3 className="font-semibold text-white mb-3">Company Description</h3>
-                        {stockSummary.assetProfile.longBusinessSummary.trim().split('.').map((para, index) => <p className="text-sm" key={index}>{para}</p>)}
+                        {stockSummary.assetProfile.longBusinessSummary.trim().split('.').map((para, index) => <p className="text-base" key={index}>{para}</p>)}
                     </div>
 
                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-4">
@@ -70,7 +70,7 @@ const StockProfile = () => {
                                     </tr>
                                     <tr>
                                         <th>Reporting Currency</th>
-                                        <td>{stockQuote.financialCurrency}</td>
+                                        <td>{stockQuote.currency}</td>
                                     </tr>
                                     <tr>
                                         <th>First trading date</th>
@@ -100,57 +100,62 @@ const StockProfile = () => {
                                 </tbody>
                             </table>
                         </div>
-                        <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
-                            <h3 className="font-semibold text-white mb-3">{stockQuote.displayName} Employees</h3>
-                            <table className="table table-sm">
-                                <tbody>
-                                    <tr>
-                                        <th>Employees</th>
-                                        <td>{formatNumber(stockSummary.assetProfile.fullTimeEmployees)}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Revenue / Employee</th>
-                                        <td>{formatMarketCap(stockSummary.incomeStatementHistory.incomeStatementHistory[0].totalRevenue / stockSummary.assetProfile.fullTimeEmployees)}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Profits / Employee</th>
-                                        <td>{formatMarketCap(stockSummary.incomeStatementHistory.incomeStatementHistory[0].netIncome / stockSummary.assetProfile.fullTimeEmployees)}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Market Cap</th>
-                                        <td>{formatMarketCap(stockQuote.marketCap)}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
-                            <h3 className="font-semibold text-white mb-3">Corporate Governance</h3>
-                            <p className="text-sm px-3"><span className="text-white font-semibold">{stockQuote.displayName}</span>'s ISS Governance QualityScore as of <span className="font-semibold text-white">{moment(stockSummary.assetProfile.governanceEpochDate).format("MMM Do YYYY")}</span> is <span className={`font-semibold ${stockSummary.assetProfile.overallRisk > 6 ? "text-down" : stockSummary.assetProfile.overallRisk < 4 ? "text-up" : "text-hold"}`}>{stockSummary.assetProfile.overallRisk}</span>.</p>
-                            <p className="text-sm mb-3 px-3">The pillar scores are:</p>
-                            <table className="table table-sm">
-                                <tbody>
-                                    <tr>
-                                        <th>Audit Risk</th>
-                                        <td className={`font-semibold ${stockSummary.assetProfile.auditRisk > 6 ? "text-down" : stockSummary.assetProfile.auditRisk < 4 ? "text-up" : "text-hold"}`}>{stockSummary.assetProfile.auditRisk}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Board Risk</th>
-                                        <td className={`font-semibold ${stockSummary.assetProfile.boardRisk > 6 ? "text-down" : stockSummary.assetProfile.boardRisk < 4 ? "text-up" : "text-hold"}`}>{stockSummary.assetProfile.boardRisk}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Compensation Risk</th>
-                                        <td className={`font-semibold ${stockSummary.assetProfile.compensationRisk > 6 ? "text-down" : stockSummary.assetProfile.compensationRisk < 4 ? "text-up" : "text-hold"}`}>{stockSummary.assetProfile.compensationRisk}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Shareholder Rights Risk</th>
-                                        <td className={`font-semibold ${stockSummary.assetProfile.shareHolderRightsRisk > 6 ? "text-down" : stockSummary.assetProfile.shareHolderRightsRisk < 4 ? "text-up" : "text-hold"}`}>{stockSummary.assetProfile.shareHolderRightsRisk}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div className="divider px-3 mb-3"></div>
-                            <p className="text-sm px-3">Corporate governance scores courtesy of <a href="https://www.issgovernance.com/esg/ratings/governance-qualityscore/" className="text-blue-500" target="_blank">Institutional Shareholder Services (ISS)</a> Scores indicate decile rank relative to index or region.
-                                A decile score of 1 indicates lower governance risk, while a 10 indicates higher governance risk.</p>
-                        </div>
+                        {
+                            stockSummary.assetProfile.fullTimeEmployees &&
+                            <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
+                                <h3 className="font-semibold text-white mb-3">{stockQuote.displayName} Employees</h3>
+                                <table className="table table-sm">
+                                    <tbody>
+                                        <tr>
+                                            <th>Employees</th>
+                                            <td>{formatNumber(stockSummary.assetProfile.fullTimeEmployees)}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Revenue / Employee</th>
+                                            <td>{formatMarketCap(stockSummary.incomeStatementHistory.incomeStatementHistory[0].totalRevenue / stockSummary.assetProfile.fullTimeEmployees, stockQuote.currency)}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Profits / Employee</th>
+                                            <td>{formatMarketCap(stockSummary.incomeStatementHistory.incomeStatementHistory[0].netIncome / stockSummary.assetProfile.fullTimeEmployees, stockQuote.currency)}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Market Cap</th>
+                                            <td>{formatMarketCap(stockQuote.marketCap, stockQuote.currency)}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        {stockSummary.assetProfile.overallRisk &&
+                            <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
+                                <h3 className="font-semibold text-white mb-3">Corporate Governance</h3>
+                                <p className="text-sm px-3"><span className="text-white font-semibold">{stockQuote.displayName}</span>'s ISS Governance QualityScore as of <span className="font-semibold text-white">{moment(stockSummary.assetProfile.governanceEpochDate).format("MMM Do YYYY")}</span> is <span className={`font-semibold ${stockSummary.assetProfile.overallRisk > 6 ? "text-down" : stockSummary.assetProfile.overallRisk < 4 ? "text-up" : "text-hold"}`}>{stockSummary.assetProfile.overallRisk}</span>.</p>
+                                <p className="text-sm mb-3 px-3">The pillar scores are:</p>
+                                <table className="table table-sm">
+                                    <tbody>
+                                        <tr>
+                                            <th>Audit Risk</th>
+                                            <td className={`font-semibold ${stockSummary.assetProfile.auditRisk > 6 ? "text-down" : stockSummary.assetProfile.auditRisk < 4 ? "text-up" : "text-hold"}`}>{stockSummary.assetProfile.auditRisk}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Board Risk</th>
+                                            <td className={`font-semibold ${stockSummary.assetProfile.boardRisk > 6 ? "text-down" : stockSummary.assetProfile.boardRisk < 4 ? "text-up" : "text-hold"}`}>{stockSummary.assetProfile.boardRisk}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Compensation Risk</th>
+                                            <td className={`font-semibold ${stockSummary.assetProfile.compensationRisk > 6 ? "text-down" : stockSummary.assetProfile.compensationRisk < 4 ? "text-up" : "text-hold"}`}>{stockSummary.assetProfile.compensationRisk}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Shareholder Rights Risk</th>
+                                            <td className={`font-semibold ${stockSummary.assetProfile.shareHolderRightsRisk > 6 ? "text-down" : stockSummary.assetProfile.shareHolderRightsRisk < 4 ? "text-up" : "text-hold"}`}>{stockSummary.assetProfile.shareHolderRightsRisk}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div className="divider px-3 mb-3"></div>
+                                <p className="text-sm px-3">Corporate governance scores courtesy of <a href="https://www.issgovernance.com/esg/ratings/governance-qualityscore/" className="text-blue-500" target="_blank">Institutional Shareholder Services (ISS)</a> Scores indicate decile rank relative to index or region.
+                                    A decile score of 1 indicates lower governance risk, while a 10 indicates higher governance risk.</p>
+                            </div>
+                        }
                     </div>
 
                     <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10 mt-4">
@@ -180,7 +185,7 @@ const StockProfile = () => {
                     </div>
                 </div>
             </div>
-            <div className="hidden xl:block w-1/4 p-3">
+            <div className="hidden xl:block w-1/3 p-3">
                 <StockAbout ticker={ticker} stockQuote={stockQuote} />
             </div>
         </div>

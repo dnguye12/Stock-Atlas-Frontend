@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import moment from 'moment';
 import { capitalizeWord } from '../../../utils/textUtils';
+import { currToSymbol } from '../../../utils/moneyUtils';
 
 const DividendOverview = ({ stockQuote, divData, stockSummary }) => {
     return (
@@ -15,7 +16,7 @@ const DividendOverview = ({ stockQuote, divData, stockSummary }) => {
                     <div className="divider divider-horizontal"></div>
                     <div className="py-5 text-center flex-1">
                         <h5>Annual Dividend</h5>
-                        <p className='text-white'>${stockQuote.dividendRate}</p>
+                        <p className='text-white'>{currToSymbol(stockQuote.currency)}{stockQuote.dividendRate}</p>
                     </div>
                     <div className="divider divider-horizontal"></div>
                     <div className="py-5 text-center flex-1">
@@ -58,7 +59,7 @@ const DividendOverview = ({ stockQuote, divData, stockSummary }) => {
                     <div className="divider divider-horizontal"></div>
                     <div className="py-5 text-center flex-1">
                         <h5>Annual Dividend</h5>
-                        <p className='text-white'>${stockQuote.dividendRate}</p>
+                        <p className='text-white'>{currToSymbol(stockQuote.currency)}{stockQuote.dividendRate}</p>
                     </div>
                 </div>
                 <div className="flex justify-evenly mt-4">

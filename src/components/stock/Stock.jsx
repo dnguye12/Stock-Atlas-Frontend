@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { getYahooChart, getYahooQuote } from "../../services/stock"
+import { getYahooChart, getYahooQuote, getYahooQuoteSummary } from "../../services/stock"
 import { getTradingTime, Range1D, Range1W, Range1M, Range1Y, Range5Y, RangeYTD, RangeMax } from "../../utils/timeUtils"
 import { useParams } from "react-router-dom"
 
@@ -7,6 +7,9 @@ import RangeButtons from "./components/RangeButtons"
 import StockChart from "./components/StockChart"
 import StockHeader from "./components/StockHeader"
 import StockAbout from "./components/StockAbout"
+import { formatMarketCap } from "../../utils/moneyUtils"
+import moment from "moment"
+import { formatNumber } from "../../utils/numberUtils"
 
 const Stock = () => {
     const ticker = useParams().ticker
@@ -19,6 +22,8 @@ const Stock = () => {
 
     // Quotes to make the chart line
     const [chartQuote, setChartQuote] = useState(null)
+
+    const [stockSummary, setStockSummary] = useState(null)
 
     //Get the general detail of the stock first
     useEffect(() => {
@@ -121,25 +126,115 @@ const Stock = () => {
         }
     }, [chartInterval, stockChart])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await getYahooQuoteSummary(ticker, ['financialData', 'summaryDetail'])
+            setStockSummary(data)
+        }
+
+        fetchData()
+    }, [ticker])
+
     if (!stockQuote) {
         return (
             <div>...Loading</div>
         )
     }
 
+    console.log(stockQuote)
+
     return (
         <div className="w-full flex">
-            <div className="w-full lg:w-3/4 my-5 p-5 border-r border-r-neutral-700">
+            <div className="w-full lg:w-2/3 my-5 p-5 border-r border-r-neutral-700">
                 <StockHeader ticker={ticker} stockQuote={stockQuote} />
                 <RangeButtons setChartInterval={setChartInterval} />
                 {
                     chartQuote && stockChart &&
-                    <div className=" w-full">
-                        <StockChart key={`${chartInterval}-${chartQuote.length}`} data={chartQuote} prevClose={stockChart.meta.previousClose} chartInterval={chartInterval} />
-                    </div>
+                    (
+                        <div className=" w-full">
+                            <StockChart key={`${chartInterval}-${chartQuote.length}`} data={chartQuote} prevClose={stockChart.meta.previousClose} chartInterval={chartInterval} />
+
+
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-5 text-xs mt-5">
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>Previous Close</p>
+                                    <p className="font-semibold text-white">{stockQuote.regularMarketPreviousClose}</p>
+                                </div>
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>Day's Range</p>
+                                    <p className="font-semibold text-white">{stockQuote.regularMarketDayLow} - {stockQuote.regularMarketDayHigh}</p>
+                                </div>
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>Open</p>
+                                    <p className="font-semibold text-white">{stockQuote.regularMarketOpen}</p>
+                                </div>
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>52 Week Range</p>
+                                    <p className="font-semibold text-white">{stockQuote.fiftyTwoWeekLow} - {stockQuote.fiftyTwoWeekHigh}</p>
+                                </div>
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>Forward Dividend & Yield</p>
+                                    <p className="font-semibold text-white">{stockQuote.trailingAnnualDividendRate.toFixed(2)}({(stockQuote.trailingAnnualDividendYield * 100).toFixed(2)}%)</p>
+                                </div>
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>Dividend Date</p>
+                                    <p className="font-semibold text-white">{moment(stockQuote.dividendDate).format('MMM Do, yyyy')}</p>
+                                </div>
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>Volume</p>
+                                    <p className="font-semibold text-white">{formatNumber(stockSummary.summaryDetail.volume)}</p>
+                                </div>
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>Avg. Volume</p>
+                                    <p className="font-semibold text-white">{formatNumber(stockQuote.averageDailyVolume3Month)}</p>
+                                </div>
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>PE Ratio (TTM)</p>
+                                    <p className="font-semibold text-white">{stockQuote.trailingPE.toFixed(2)}</p>
+                                </div>
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>Market Cap</p>
+                                    <p className="font-semibold text-white">{formatMarketCap(stockQuote.marketCap, stockQuote.currency)}</p>
+                                </div>
+
+
+                                
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>Earnings Date</p>
+                                    <p className="font-semibold text-white">{moment(stockQuote.earningsTimestamp).format('MMM Do, yyyy')}</p>
+                                </div>
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>Beta (5Y Monthly)</p>
+                                    <p className="font-semibold text-white">{stockSummary.summaryDetail.beta.toFixed(2)}</p>
+                                </div>
+                                
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>Bid</p>
+                                    <p className="font-semibold text-white">{stockQuote.bid} x {stockQuote.bidSize * 100}</p>
+                                </div>
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>Ask</p>
+                                    <p className="font-semibold text-white">{stockQuote.ask} x {stockQuote.askSize * 100}</p>
+                                </div>
+                                
+                                
+                                
+                                
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>EPS (TTM)</p>
+                                    <p className="font-semibold text-white">{stockQuote.epsTrailingTwelveMonths.toFixed(2)}</p>
+                                </div>
+                                <div className="flex justify-between border-b border-b-neutral-700 py-1">
+                                    <p>1y Target Est</p>
+                                    <p className="font-semibold text-white">{stockSummary.financialData.targetMeanPrice}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    )
                 }
             </div>
-            <div className="hidden lg:block w-1/4 p-3">
+            <div className="hidden lg:block w-1/3 p-3">
                 <StockAbout ticker={ticker} stockQuote={stockQuote} />
             </div>
         </div>

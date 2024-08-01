@@ -28,7 +28,7 @@ export const getYahooChart = async (input_ticker, input_period1, input_period2, 
     return request.data
 }
 
-export const getYahooDividendHistory = async(input_ticker) => {
+export const getYahooDividendHistory = async (input_ticker) => {
     let query = baseUrl + chartUrl
 
     query += `/${input_ticker}/div`
@@ -83,30 +83,44 @@ export const getYahooTrending = async (count, region) => {
     return request.data
 }
 
-export const getYahooQuote = async(ticker) => {
+export const getYahooQuote = async (ticker) => {
     let query = baseUrl + quoteUrl + `/${ticker}`
 
     const request = await dailyAxios.get(query)
     return request.data
 }
 
-export const getStockLogo = async(ticker) => {
+export const getStockLogo = async (ticker) => {
     let query = baseUrl + quoteUrl + `/logo/${ticker}`
+
+    try {
+        const request = await dailyAxios.get(query)
+        return request.data
+    } catch (error) {
+        if (error.response && error.response.status === 404) {
+            return ''
+        }
+        console.log(error)
+    }
+}
+
+export const getYahooQuoteSummary = async (ticker, modules) => {
+    let query = baseUrl + quoteUrl + `/summary/${ticker}/`
+
+    modules.forEach((module, index) => {
+        if (index === 0) {
+            query += `${module}`
+        } else {
+            query += `&${module}`
+        }
+    })
 
     const request = await dailyAxios.get(query)
     return request.data
 }
 
-export const getYahooQuoteSummary = async(ticker, modules) => {
-    let query = baseUrl + quoteUrl + `/summary/${ticker}/`
-
-    modules.forEach((module, index) => {
-        if(index === 0) {
-            query += `${module}`
-        }else {
-            query += `&${module}`
-        }
-    })
+export const getYahooRecommendationBySymbol = async (ticker) => {
+    let query = baseUrl + quoteUrl + `/recommendationsBySymbol/${ticker}`
 
     const request = await dailyAxios.get(query)
     return request.data

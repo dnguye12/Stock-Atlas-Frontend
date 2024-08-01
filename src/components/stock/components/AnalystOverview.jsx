@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useTranslation, Trans } from 'react-i18next';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { currToSymbol } from '../../../utils/moneyUtils';
 
-const AnalystOverview = ({ ticker, stockSummary }) => {
+const AnalystOverview = ({ ticker, stockQuote, stockSummary }) => {
     const { t, i18n } = useTranslation();
     if (!stockSummary) {
         return (
@@ -37,11 +38,9 @@ const AnalystOverview = ({ ticker, stockSummary }) => {
 
                 <div className="detail">
                     <button onClick={() => document.getElementById('my-analystoverview-consensusrating').showModal()}><h4 className="detail-title">{t("stock.analyst_rating.Consensus Rating")}<FontAwesomeIcon icon="fa-regular fa-circle-question" className="ms-1 sm:ms-2" /></h4></button>
-                    <p className={`detail-count ${recommendationKey === "strongBuy" ? 'text-up' :
-                        recommendationKey === "buy" ? 'text-up' :
-                            recommendationKey === "strongSell" ? 'text-down' :
-                                recommendationKey === "sell" ? 'text-down' :
-                                    'text-hold'
+                    <p className={`detail-count ${recommendationKey.toLowerCase().includes('buy') ? 'text-up' :
+                        recommendationKey.toLowerCase().includes('sell') ? 'text-down' :
+                            'text-hold'
                         }`}>
                         {recommendationKey.toUpperCase()}
                     </p>
@@ -71,7 +70,7 @@ const AnalystOverview = ({ ticker, stockSummary }) => {
                 </div>
                 <div className="detail">
                     <button onClick={() => document.getElementById('my-analystoverview-priceTarget').showModal()}><h4 className="detail-title">Price Target<FontAwesomeIcon icon="fa-regular fa-circle-question" className="ms-1 sm:ms-2" /></h4></button>
-                    <p className="detail-count">${stockSummary.financialData.targetMeanPrice}</p>
+                    <p className="detail-count">{currToSymbol(stockQuote.currency)}{stockSummary.financialData.targetMeanPrice}</p>
                     <dialog id="my-analystoverview-priceTarget" className="modal">
                         <div className="modal-box">
                             <h3 className="text-lg font-bold">{t("stock.analyst_rating.Price Target")}</h3>

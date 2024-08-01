@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { percentageDiff } from "../../../utils/numberUtils"
+import { currToSymbol } from "../../../utils/moneyUtils";
 /*
 Price Target Deviation Score (PTDS)
 PTDS=min(max( 
@@ -54,7 +55,7 @@ const ptds = (currentPrice, lowTarget, meanTarget, highTarget) => {
     return score / 2;
 }
 
-const Rate_ptds = ({ currentPrice, lowTarget, meanTarget, highTarget }) => {
+const Rate_ptds = ({ currentPrice, lowTarget, meanTarget, highTarget, curr }) => {
     let helper = ptds(currentPrice, lowTarget, meanTarget, highTarget)
     return (
         <>
@@ -63,13 +64,13 @@ const Rate_ptds = ({ currentPrice, lowTarget, meanTarget, highTarget }) => {
                     ?
                     <tr>
                         <td><FontAwesomeIcon icon="fa-regular fa-circle-check" className="text-up" /></td>
-                        <td><p>Analysts have set a mean price target forecast of <span className="text-white">${meanTarget}</span>. This target is <span className="text-up">{percentageDiff(currentPrice, meanTarget).toFixed(2)}%</span> above the current price.</p></td>
+                        <td><p>Analysts have set a mean price target forecast of <span className="text-white">{curr}{meanTarget}</span>. This target is <span className="text-up">{percentageDiff(currentPrice, meanTarget).toFixed(2)}%</span> above the current price.</p></td>
                     </tr>
 
                     :
                     <tr>
                         <td><FontAwesomeIcon icon="fa-regular fa-circle-xmark" className="text-down" /></td>
-                        <td><p>Analysts have set a mean price target forecast of <span className="text-white">${meanTarget}</span>. This target is <span className="text-down">{percentageDiff(currentPrice, meanTarget).toFixed(2)}%</span> below the current price.</p></td>
+                        <td><p>Analysts have set a mean price target forecast of <span className="text-white">{curr}{meanTarget}</span>. This target is <span className="text-down">{percentageDiff(currentPrice, meanTarget).toFixed(2)}%</span> below the current price.</p></td>
                     </tr>
 
             }
@@ -276,7 +277,7 @@ const Rate_score = ({ score }) => {
         </>
     )
 }
-const AnalystBuyConsensus = ({ ticker, stockSummary }) => {
+const AnalystBuyConsensus = ({ ticker, stockQuote, stockSummary }) => {
 
     if (!stockSummary) {
         return (
@@ -286,6 +287,7 @@ const AnalystBuyConsensus = ({ ticker, stockSummary }) => {
 
     const score_ptds = ptds(stockSummary.financialData.currentPrice, stockSummary.financialData.targetLowPrice, stockSummary.financialData.targetMeanPrice, stockSummary.financialData.targetHighPrice)
     const score_acs = acs(stockSummary.recommendationTrend.trend)
+    const curr = currToSymbol(stockQuote.currency)
     const score = score_ptds + score_acs
     return (
         <div className="my-buyconsensus bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
@@ -300,7 +302,7 @@ const AnalystBuyConsensus = ({ ticker, stockSummary }) => {
             <table className="table">
                 <tbody>
                     <Rate_score score={score} />
-                    <Rate_ptds currentPrice={stockSummary.financialData.currentPrice} lowTarget={stockSummary.financialData.targetLowPrice} meanTarget={stockSummary.financialData.targetMeanPrice} highTarget={stockSummary.financialData.targetHighPrice} />
+                    <Rate_ptds currentPrice={stockSummary.financialData.currentPrice} lowTarget={stockSummary.financialData.targetLowPrice} meanTarget={stockSummary.financialData.targetMeanPrice} highTarget={stockSummary.financialData.targetHighPrice} curr={curr}/>
                     <Rate_acs score_acs={score_acs} />
                     <tr>
                         <td><FontAwesomeIcon className="text-hold" icon="fa-solid fa-triangle-exclamation" /></td>

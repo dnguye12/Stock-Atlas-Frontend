@@ -38,7 +38,7 @@ const Score_Dividend_History = (current_streak, grow_streak, cut_count) => {
         dc = -2 * cut_count
     }
 
-    return (ds + dgs + dc) / 2
+    return (ds + dgs + dc)
 }
 
 const Rate_Dividend_History = ({ score }) => {
@@ -88,17 +88,17 @@ Low yield (<2%): 4
 Unsustainable: 0
 */
 const Score_Dividend_Yield = (dividendYield) => {
-    let res
-    if (4 < dividendYield <= 6) {
-        res = 10
+    let res;
+    if (dividendYield > 4 && dividendYield <= 6) {
+        res = 10;
     } else if (dividendYield >= 2 && dividendYield <= 4) {
-        res = 7
+        res = 7;
     } else if (dividendYield >= 0 && dividendYield < 2) {
-        res = 4
+        res = 4;
     } else {
-        res = 0
+        res = 0;
     }
-    return res
+    return res;
 }
 
 const Rate_Dividend_Yield = ({ score }) => {
@@ -291,15 +291,15 @@ Interpretation: Indicates very high financial risk, dividends at significant ris
 */
 const Score_Debt_Ratio = (debtToEquity) => {
     if (debtToEquity < 50) {
-        return 10
-    } else if (50 <= debtToEquity < 100) {
-        return 8
-    } else if (100 <= debtToEquity < 200) {
-        return 5
-    } else if (200 <= debtToEquity < 300) {
-        return 3
+        return 10;
+    } else if (debtToEquity >= 50 && debtToEquity < 100) {
+        return 8;
+    } else if (debtToEquity >= 100 && debtToEquity < 200) {
+        return 5;
+    } else if (debtToEquity >= 200 && debtToEquity < 300) {
+        return 3;
     } else {
-        return 0
+        return 0;
     }
 }
 
@@ -364,31 +364,32 @@ Score: 0
 Interpretation: The stock is likely overvalued, posing a higher risk for investors.
 */
 const Score_Valuation_Ratios = (stockQuote, stockSummary) => {
-    const PE = stockQuote.trailingPE
-    const EVEBITDA = stockSummary.defaultKeyStatistics.enterpriseValue / stockSummary.financialData.ebitda
+    const PE = stockQuote.trailingPE;
+    const EVEBITDA = stockSummary.defaultKeyStatistics.enterpriseValue / stockSummary.financialData.ebitda;
 
     let score_PE, score_EVEBITDA;
+
     if (PE < 15) {
-        score_PE = 10
-    } else if (15 <= PE < 25) {
-        score_PE = 7
-    } else if (25 <= PE < 35) {
-        score_PE = 4
+        score_PE = 10;
+    } else if (PE >= 15 && PE < 25) {
+        score_PE = 7;
+    } else if (PE >= 25 && PE < 35) {
+        score_PE = 4;
     } else {
-        score_PE = 0
+        score_PE = 0;
     }
 
     if (EVEBITDA < 8) {
-        score_EVEBITDA = 10
-    } else if (8 <= EVEBITDA < 12) {
-        score_EVEBITDA = 7
-    } else if (12 <= EVEBITDA < 15) {
-        score_EVEBITDA = 4
+        score_EVEBITDA = 10;
+    } else if (EVEBITDA >= 8 && EVEBITDA < 12) {
+        score_EVEBITDA = 7;
+    } else if (EVEBITDA >= 12 && EVEBITDA < 15) {
+        score_EVEBITDA = 4;
     } else {
-        score_EVEBITDA = 0
+        score_EVEBITDA = 0;
     }
 
-    return (score_PE + score_EVEBITDA) / 2
+    return (score_PE + score_EVEBITDA) / 2;
 }
 
 const Rate_Valuation_Ratios = ({ score }) => {
@@ -431,7 +432,7 @@ Sell: 2
 Strong Sell: 0
 */
 const Score_Analyst_Recommendations = (recommendationKey) => {
-    if (recommendationKey === 'strongBuy') {
+    if (recommendationKey === 'strongBuy' || recommendationKey === 'strong_buy') {
         return 10
     } else if (recommendationKey === 'buy') {
         return 8
@@ -439,7 +440,7 @@ const Score_Analyst_Recommendations = (recommendationKey) => {
         return 5
     } else if (recommendationKey === 'sell') {
         return 2
-    } else if (recommendationKey === 'strongSell') {
+    } else if (recommendationKey === 'strongSell' ||recommendationKey === 'strong_sell') {
         return 0
     } else {
         return 99
@@ -579,6 +580,7 @@ const DividendScore = ({ ticker, stockQuote, divData, stockSummary }) => {
     if (divData.yearly_data.length <= 5) {
         score_div -= 25
     }
+
     //const score_div = (score_Dividend_History + score_Dividend_Yield + score_Payout_Ratio + score_Debt_Ratio + score_Valuation_Ratios + score_Analyst_Recommendations) / 6 * 10
 
     return (

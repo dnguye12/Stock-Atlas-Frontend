@@ -141,3 +141,7 @@
 .stock-profile .my-address h4 {
     @apply text-white font-semibold mb-2
 }
+
+.stock-about .table th {
+    @apply font-semibold text-white
+}
