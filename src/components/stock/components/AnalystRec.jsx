@@ -179,7 +179,7 @@ const AnalystRec = ({ stockSummary }) => {
     };
     
     return (
-        <div className="my-analysis bg-neutral-800 border border-neutral-700 rounded p-4">
+        <div className="my-analysis bg-neutral-950 border border-neutral-700 rounded p-4">
             <h3 className="font-semibold text-white mb-3">{t('stock.analyst_recommendations.Analyst Recommendations')}</h3>
             <div className='hidden sm:block relative w-full h-full'>
                 <Bar className=' h-full' data={barData} options={barOptions} />

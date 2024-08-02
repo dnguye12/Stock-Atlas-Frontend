@@ -57,7 +57,7 @@ const StockAbout = ({ ticker, stockQuote }) => {
 
     return (
         <div className=" w-full stock-about">
-            <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10 mt-7">
+            <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10 mt-7">
                 <h2 className="text-white text-lg font-bold mb-3">About {stockQuote.displayName}</h2>
 
                 <table className="table">
@@ -97,7 +97,7 @@ const StockAbout = ({ ticker, stockQuote }) => {
                 </div>
             </div>
 
-            <div className="bg-neutral-800 border border-neutral-700 rounded p-4 mt-4">
+            <div className="bg-neutral-950 border border-neutral-700 rounded p-4 mt-4">
                 <h2 className="text-white text-lg font-bold mb-3">Analyst Rating</h2>
                 <div className="flex justify-between mb-3">
                     <div>
@@ -143,7 +143,7 @@ const StockAbout = ({ ticker, stockQuote }) => {
                 <Link className="my-btn w-full mt-5" to={`/stock/${ticker}/analyst-ratings`}>Analyst Ratings</Link>
             </div>
 
-            <div className="bg-neutral-800 border border-neutral-700 rounded p-4 mt-4">
+            <div className="bg-neutral-950 border border-neutral-700 rounded p-4 mt-4">
                 <h2 className="text-white text-lg font-bold mb-3">Similar Stocks</h2>
                 <table className="table">
                     <thead>

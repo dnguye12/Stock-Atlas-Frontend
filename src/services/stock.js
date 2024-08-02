@@ -125,3 +125,10 @@ export const getYahooRecommendationBySymbol = async (ticker) => {
     const request = await dailyAxios.get(query)
     return request.data
 }
+
+export const getYahooSearch = async (input) => {
+    let query = baseUrl + quoteUrl + `/search/${input}`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}

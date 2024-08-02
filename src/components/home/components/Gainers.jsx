@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from 'react-router-dom';
+
 import { getYahooDailyGainers } from "../../../services/stock"
 import { formatMarketCap } from "../../../utils/moneyUtils"
+import { truncateText } from "../../../utils/textUtils"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { truncateText } from "../../../utils/textUtils"
 
 const Gainers = () => {
     const [gainers, setGainers] = useState()
     const [isLoading, setIsLoading] = useState(true)
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,7 +51,7 @@ const Gainers = () => {
                 <tbody>
                     {
                         gainers.map((gainer, idx) => (
-                            <tr className="hover cursor-pointer odd:bg-neutral-800 even:bg-neutral-900" key={`gainer-${idx}`}>
+                            <tr onClick={() => navigate(`/stock/${gainer.symbol}`)} className="hover transition duration-300 cursor-pointer odd:bg-neutral-950 even:bg-neutral-900" key={`gainer-${idx}`}>
                                 <td className="symbol">{gainer.symbol}</td>
                                 {gainer.displayName
                                     ? <td className="name">{truncateText(gainer.displayName)}</td>

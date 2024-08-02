@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from 'react-router-dom';
+
 import { getYahooDailyActives } from "../../../services/stock"
+import { truncateText } from "../../../utils/textUtils"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { truncateText } from "../../../utils/textUtils"
 
 const Active = () => {
     const [actives, setActives] = useState()
     const [isLoading, setIsLoading] = useState(true)
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,7 +52,7 @@ const Active = () => {
                 <tbody>
                     {
                         actives.map((active, idx) => (
-                            <tr className="hover cursor-pointer odd:bg-neutral-800 even:bg-neutral-900" key={`gainer-${idx}`}>
+                            <tr onClick={() => navigate(`/stock/${active.symbol}`)} className="hover transition duration-300 cursor-pointer odd:bg-neutral-950 even:bg-neutral-900" key={`gainer-${idx}`}>
                                 <td className="symbol">{active.symbol}</td>
                                 <td className="name">{truncateText(active.name)}</td>
                                 <td>{active.volume}</td>

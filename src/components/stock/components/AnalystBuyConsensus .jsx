@@ -290,7 +290,7 @@ const AnalystBuyConsensus = ({ ticker, stockQuote, stockSummary }) => {
     const curr = currToSymbol(stockQuote.currency)
     const score = score_ptds + score_acs
     return (
-        <div className="my-buyconsensus bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
+        <div className="my-buyconsensus bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
             <h3 className="font-semibold text-white mb-3">Analyst ratings score</h3>
             <div className="flex flex-col items-center mb-3">
                 <div className={`radial-progress font-bold mb-6 ${score >= 60 ? 'text-up' : score >= 40 ? 'text-hold' : 'text-down'

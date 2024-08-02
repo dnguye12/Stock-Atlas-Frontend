@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react"
 
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { getStockLogo } from "../../../services/stock"
 import { myToLocaleString } from "../../../utils/numberUtils"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const StockHeader = ({ ticker, stockQuote }) => {
     const [logoImg, setLogoImage] = useState('')
+    const location = useLocation();
 
     useEffect(() => {
         const fetchLogo = async () => {
@@ -32,13 +33,22 @@ const StockHeader = ({ ticker, stockQuote }) => {
     }
 
     return (
-        <div className="flex justify-center flex-col">
+        <div className="stock-header flex justify-center flex-col">
             <div className="flex items-center px-5">
-                <div className="avatar mr-2">
-                    <div className="w-6 h-6 rounded-full ">
-                        <img src={logoImg} alt={ticker} />
-                    </div>
-                </div>
+                {
+                    logoImg
+                        ?
+                        <div className="avatar mr-2">
+                            <div className="w-8 h-8 rounded-full ">
+                                <img className="bg-neutral-900 drop-shadow-lg" src={logoImg} alt={ticker} />
+                            </div>
+                        </div>
+                        :
+                        <div className="avatar placeholder mr-2">
+                            <div className="bg-neutral-900 w-8 h-8 rounded-full">
+                            </div>
+                        </div>
+                }
                 <div>
                     <p className=" font-bold text-lg leading-5 text-white">{stockQuote.longName} ({ticker})</p>
                     <p className=" text-sm">{stockQuote.quoteSourceName} - {stockQuote.currency}</p>
@@ -55,14 +65,14 @@ const StockHeader = ({ ticker, stockQuote }) => {
                 }
             </div>
             <div className="divider my-3"></div>
-            <div className="navbar bg-base-100">
-                <Link to={`/stock/${ticker}`} className="btn btn-ghost text-xl">Overview</Link>
-                <Link to={`/stock/${ticker}/statistics`} className="btn btn-ghost text-xl">Statistics</Link>
-                <Link to={`/stock/${ticker}/analyst-ratings`} className="btn btn-ghost text-xl">Analyst Ratings</Link>
+            <div className="navbar">
+                <Link to={`/stock/${ticker}`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}` ? 'active' : ''}`}>Overview</Link>
+                <Link to={`/stock/${ticker}/statistics`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}/statistics` ? 'active' : ''}`}>Statistics</Link>
+                <Link to={`/stock/${ticker}/analyst-ratings`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}/analyst-ratings` ? 'active' : ''}`}>Analyst Ratings</Link>
                 {
-                    stockQuote.dividendDate && <Link to={`/stock/${ticker}/dividends`} className="btn btn-ghost text-xl">Dividends</Link>
+                    stockQuote.dividendDate && <Link to={`/stock/${ticker}/dividends`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}/dividends` ? 'active' : ''}`}>Dividends</Link>
                 }
-                <Link to={`/stock/${ticker}/profile`} className="btn btn-ghost text-xl">Profile</Link>
+                <Link to={`/stock/${ticker}/profile`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}/profile` ? 'active' : ''}`}>Profile</Link>
             </div>
             <div className="divider my-3"></div>
         </div>

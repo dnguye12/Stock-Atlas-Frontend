@@ -19,7 +19,7 @@ const DividendGrowth = ({ divData }) => {
     ))
 
     return (
-        <div className="dividend-growth bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
+        <div className="dividend-growth bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
             <h3 className="font-semibold text-white mb-3">Dividend Growth</h3>
 
             <div className="dividend-growth-percent hidden sm:flex justify-evenly text-center">

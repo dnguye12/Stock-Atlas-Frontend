@@ -26,7 +26,7 @@ function App() {
       <input id="my-drawer-1" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content min-h-screen">
         <Header />
-        <div className='flex mx-auto h-full bg-neutral-900'>
+        <div className='flex mx-auto h-full bg-neutral-950'>
           <Menu />
           <Routes>
             <Route path='/' element={<Home />} />

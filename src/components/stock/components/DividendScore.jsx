@@ -584,15 +584,15 @@ const DividendScore = ({ ticker, stockQuote, divData, stockSummary }) => {
     //const score_div = (score_Dividend_History + score_Dividend_Yield + score_Payout_Ratio + score_Debt_Ratio + score_Valuation_Ratios + score_Analyst_Recommendations) / 6 * 10
 
     return (
-        <div className="dividend-overview bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
+        <div className="dividend-overview bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
             <h3 className="font-semibold text-white mb-3">Dividends Score</h3>
 
             <div className="px-5">
                 <div className="flex flex-col items-center justify-center mb-3">
-                    <div className={`radial-progress font-bold mb-6 ${score_div < 40 ? "text-down" : score_div >= 80 ? "text-up" : "text-hold"}`} style={{ "--value": score_div }} role="progressbar">
+                    <div className={`radial-progress font-bold mb-6 ${score_div < 40 ? "text-down" : score_div >= 60 ? "text-up" : "text-hold"}`} style={{ "--value": score_div }} role="progressbar">
                         {score_div.toFixed(2)}
                     </div>
-                    <p>We assigns a score of <span className={`font-semibold ${score_div >= 80 ? 'text-up' : score_div >= 40 ? 'text-hold' : 'text-down'}`}>{score_div.toFixed(2)}</span><span className="text-white font-semibold">/100</span> to <span className="text-white font-semibold">{ticker}</span></p>
+                    <p>We assigns a score of <span className={`font-semibold ${score_div >= 60 ? 'text-up' : score_div >= 40 ? 'text-hold' : 'text-down'}`}>{score_div.toFixed(2)}</span><span className="text-white font-semibold">/100</span> to <span className="text-white font-semibold">{ticker}</span></p>
                 </div>
                 <table className="table">
                     <tbody>

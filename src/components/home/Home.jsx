@@ -10,7 +10,7 @@ const Home = () => {
     const [showingGainers, setShowingGainers] = useState(true)
 
     return (
-        <div className="home w-full max-w-7xl sm:px-5 mx-auto mt-20 bg-neutral-900">
+        <div className="home w-full max-w-7xl sm:px-5 mx-auto mt-20 bg-neutral-950">
             <div className="flex w-full flex-col justify-center mx-auto">
                 <Indexes />
 

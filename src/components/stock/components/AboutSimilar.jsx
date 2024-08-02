@@ -20,7 +20,7 @@ const AboutSimilar = ({ ticker }) => {
                     setLogoImage(`data:image/png;base64,${logo}`)
                 }
             } catch (error) {
-                setLogoImage('')
+                setLogoImage(null)
             }
         }
 
@@ -42,7 +42,7 @@ const AboutSimilar = ({ ticker }) => {
         fetchData()
     }, [ticker])
 
-    if (!logoImg || !stockQuote) {
+    if (!stockQuote) {
         return (
             <tr>...Loading</tr>
         )
@@ -52,10 +52,10 @@ const AboutSimilar = ({ ticker }) => {
         <tr className="hover">
             <td>
                 <div className="flex items-center">
-                    <div className="avatar mr-2">
-                        <div className="w-6 h-6 rounded-full">
-                            <img src={logoImg} alt={ticker} className="drop-shadow-lg"/>
-                        </div>
+                    <div className="rounded-full w-10 h-10 relative bg-neutral-950 border border-neutral-700 flex items-center justify-center mr-2">
+                        {logoImg &&
+                            <img className="w-8 h-8" src={logoImg} loading="lazy" style={{ clipPath: "circle(50%)" }} />
+                        }
                     </div>
                     <div className="flex flex-col">
                         <p className="text-blue-500 font-semibold">{ticker}</p>

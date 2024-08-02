@@ -2,6 +2,14 @@
     @apply btn bg-neutral-800 hover:bg-neutral-700 hover:text-white border border-neutral-700
 }
 
+.stock-header .navbar .btn {
+    @apply text-base rounded-none transition duration-300 border-b-2 border-b-neutral-950
+}
+
+.stock-header .navbar .btn.active {
+    @apply text-white border-b-2 border-b-up
+}
+
 .my-analysis .my-bar {
     @apply w-full top-2/4 h-[6px] bg-neutral-500 rounded-full absolute
 }

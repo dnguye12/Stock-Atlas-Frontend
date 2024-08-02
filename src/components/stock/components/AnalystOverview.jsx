@@ -19,7 +19,7 @@ const AnalystOverview = ({ ticker, stockQuote, stockSummary }) => {
     const meanPrice = stockSummary.financialData.targetMeanPrice
     const upside = (meanPrice - currentPrice) / currentPrice * 100
     return (
-        <div className="my-analystoverview bg-neutral-800 border border-neutral-700 rounded p-4">
+        <div className="my-analystoverview bg-neutral-950 border border-neutral-700 rounded p-4">
             <h3 className="font-semibold text-white mb-3">{t("stock.analyst_rating.Analysts Overview")}</h3>
             <div className="grid grid-cols-2 gap-5">
                 <div className="detail">

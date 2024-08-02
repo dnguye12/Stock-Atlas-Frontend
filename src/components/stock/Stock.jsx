@@ -37,7 +37,7 @@ const Stock = () => {
         }
 
         fetchQuote()
-    }, [])
+    }, [ticker])
 
     //Once we have the detail of the stock, search up the ticker using Yahoo.chart
     //'1D', '1W', '1M', 'YTD', '1Y', '5Y', 'Max
@@ -141,13 +141,11 @@ const Stock = () => {
         )
     }
 
-    console.log(stockQuote)
-
     return (
         <div className="w-full flex">
             <div className="w-full lg:w-2/3 my-5 p-5 border-r border-r-neutral-700">
                 <StockHeader ticker={ticker} stockQuote={stockQuote} />
-                <RangeButtons setChartInterval={setChartInterval} />
+                <RangeButtons chartInterval={chartInterval} setChartInterval={setChartInterval} />
                 {
                     chartQuote && stockChart &&
                     (

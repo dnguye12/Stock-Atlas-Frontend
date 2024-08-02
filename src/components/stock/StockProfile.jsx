@@ -34,7 +34,7 @@ const StockProfile = () => {
         fetchData();
     }, [ticker]);
 
-    if (!stockQuote || !stockSummary || !logoImg) {
+    if (!stockQuote || !stockSummary) {
         return (
             <div>...Loading</div>
         )
@@ -45,7 +45,7 @@ const StockProfile = () => {
             <div className="w-full xl:w-2/3 my-5 p-5 border-r border-r-neutral-700">
                 <StockHeader ticker={ticker} stockQuote={stockQuote} />
                 <div className="flex flex-col">
-                    <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
+                    <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
                         <div className="flex flex-col items-center">
                             <h2 className="font-semibold text-white mb-3 text-2xl">{stockSummary.quoteType.longName}</h2>
                             <img className="w-32 drop-shadow-lg hover:scale-105 transition-transform duration-300 mb-3" src={logoImg} alt={`${ticker} logo`} />
@@ -56,7 +56,7 @@ const StockProfile = () => {
                     </div>
 
                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-4">
-                        <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
+                        <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
                             <h3 className="font-semibold text-white mb-3">Stock Details</h3>
                             <table className="table table-sm">
                                 <tbody>
@@ -79,7 +79,7 @@ const StockProfile = () => {
                                 </tbody>
                             </table>
                         </div>
-                        <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
+                        <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
                             <h3 className="font-semibold text-white mb-3">Contact Details</h3>
                             <table className="table table-sm">
                                 <tbody>
@@ -102,7 +102,7 @@ const StockProfile = () => {
                         </div>
                         {
                             stockSummary.assetProfile.fullTimeEmployees &&
-                            <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
+                            <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
                                 <h3 className="font-semibold text-white mb-3">{stockQuote.displayName} Employees</h3>
                                 <table className="table table-sm">
                                     <tbody>
@@ -127,7 +127,7 @@ const StockProfile = () => {
                             </div>
                         }
                         {stockSummary.assetProfile.overallRisk &&
-                            <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10">
+                            <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
                                 <h3 className="font-semibold text-white mb-3">Corporate Governance</h3>
                                 <p className="text-sm px-3"><span className="text-white font-semibold">{stockQuote.displayName}</span>'s ISS Governance QualityScore as of <span className="font-semibold text-white">{moment(stockSummary.assetProfile.governanceEpochDate).format("MMM Do YYYY")}</span> is <span className={`font-semibold ${stockSummary.assetProfile.overallRisk > 6 ? "text-down" : stockSummary.assetProfile.overallRisk < 4 ? "text-up" : "text-hold"}`}>{stockSummary.assetProfile.overallRisk}</span>.</p>
                                 <p className="text-sm mb-3 px-3">The pillar scores are:</p>
@@ -158,7 +158,7 @@ const StockProfile = () => {
                         }
                     </div>
 
-                    <div className="bg-neutral-800 border border-neutral-700 rounded p-4 border-spacing-10 mt-4">
+                    <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10 mt-4">
                         <h3 className="font-semibold text-white mb-3">Key Executives</h3>
                         <table className="table">
                             <thead>

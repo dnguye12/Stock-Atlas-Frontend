@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from 'react-router-dom';
+
 import { getYahooDailyLosers } from "../../../services/stock"
+import { truncateText } from "../../../utils/textUtils"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { truncateText } from "../../../utils/textUtils"
 
 const Losers = () => {
     const [losers, setLosers] = useState()
     const [isLoading, setIsLoading] = useState(true)
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -46,7 +50,7 @@ const Losers = () => {
                 <tbody>
                     {
                         losers.map((loser, idx) => (
-                            <tr className="hover cursor-pointer odd:bg-neutral-800 even:bg-neutral-900" key={`gainer-${idx}`}>
+                            <tr onClick={() => navigate(`/stock/${loser.symbol}`)} className="hover transition duration-300 cursor-pointer odd:bg-neutral-950 even:bg-neutral-900" key={`gainer-${idx}`}>
                                 <td className="symbol">{loser.symbol}</td>
                                 <td className="name">{truncateText(loser.name)}</td>
                                 <td>${ loser.marketCap}</td>
