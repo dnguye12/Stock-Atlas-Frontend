@@ -12,7 +12,6 @@ import { myToLocaleString } from "../../../utils/numberUtils";
 
 const Index = ({ name, ticker }) => {
     const [quotes, setQuotes] = useState()
-    const [isLoading, setIsLoading] = useState(true)
 
     const { day, hour } = getTradingTime('US')
 
@@ -34,15 +33,13 @@ const Index = ({ name, ticker }) => {
                 setQuotes(data)
             } catch (error) {
                 console.log("Index: ", error)
-            } finally {
-                setIsLoading(false)
-            }
+            } 
         }
 
         fetchData()
     }, [ticker, period1, period2])
 
-    if (isLoading) {
+    if (!quotes) {
         return (
             <div className="skeleton w-full rounded border border-neutral-800 bg-neutral-900" style={{ height: 90 }}></div>
         )

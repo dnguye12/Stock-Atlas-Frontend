@@ -156,75 +156,95 @@ const Stock = () => {
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-x-5 text-xs mt-5">
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Previous Close</p>
-                                    <p className="font-semibold text-white">{stockQuote.regularMarketPreviousClose}</p>
+                                    <p className="font-semibold text-white">{stockQuote.regularMarketPreviousClose || '-'}</p>
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Day's Range</p>
-                                    <p className="font-semibold text-white">{stockQuote.regularMarketDayLow} - {stockQuote.regularMarketDayHigh}</p>
+                                    {(stockQuote.regularMarketDayLow && stockQuote.regularMarketDayHigh)
+                                        ? <p className="font-semibold text-white">{stockQuote.regularMarketDayLow} - {stockQuote.regularMarketDayHigh}</p>
+                                        : <p className="font-semibold text-white">-</p>
+                                    }
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Open</p>
-                                    <p className="font-semibold text-white">{stockQuote.regularMarketOpen}</p>
+                                    <p className="font-semibold text-white">{stockQuote.regularMarketOpen || '-'}</p>
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>52 Week Range</p>
-                                    <p className="font-semibold text-white">{stockQuote.fiftyTwoWeekLow} - {stockQuote.fiftyTwoWeekHigh}</p>
+                                    {
+                                        (stockQuote.fiftyTwoWeekLow && stockQuote.fiftyTwoWeekHigh)
+                                            ?
+                                            <p className="font-semibold text-white">{stockQuote.fiftyTwoWeekLow} - {stockQuote.fiftyTwoWeekHigh}</p>
+                                            :
+                                            <p className="font-semibold text-white">-</p>
+                                    }
+
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Forward Dividend & Yield</p>
-                                    <p className="font-semibold text-white">{stockQuote.trailingAnnualDividendRate.toFixed(2)}({(stockQuote.trailingAnnualDividendYield * 100).toFixed(2)}%)</p>
+                                    <p className="font-semibold text-white">{stockQuote.trailingAnnualDividendRate ? stockQuote.trailingAnnualDividendRate.toFixed(2) : '-'}({stockQuote.trailingAnnualDividendYield && (stockQuote.trailingAnnualDividendYield * 100).toFixed(2)}%)</p>
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Dividend Date</p>
-                                    <p className="font-semibold text-white">{moment(stockQuote.dividendDate).format('MMM Do, yyyy')}</p>
+                                    <p className="font-semibold text-white">{stockQuote.dividendDate ? moment(stockQuote.dividendDate).format('MMM Do, yyyy') : "-"}</p>
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Volume</p>
-                                    <p className="font-semibold text-white">{formatNumber(stockSummary.summaryDetail.volume)}</p>
+                                    <p className="font-semibold text-white">{stockSummary.summaryDetail.volume ? formatNumber(stockSummary.summaryDetail.volume) : "-"}</p>
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Avg. Volume</p>
-                                    <p className="font-semibold text-white">{formatNumber(stockQuote.averageDailyVolume3Month)}</p>
+                                    <p className="font-semibold text-white">{stockQuote.averageDailyVolume3Month ? formatNumber(stockQuote.averageDailyVolume3Month) : "-"}</p>
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>PE Ratio (TTM)</p>
-                                    <p className="font-semibold text-white">{stockQuote.trailingPE.toFixed(2)}</p>
+                                    <p className="font-semibold text-white">{stockQuote.trailingPE ? stockQuote.trailingPE.toFixed(2) : "-"}</p>
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Market Cap</p>
-                                    <p className="font-semibold text-white">{formatMarketCap(stockQuote.marketCap, stockQuote.currency)}</p>
+                                    <p className="font-semibold text-white">{stockQuote.marketCap ? formatMarketCap(stockQuote.marketCap, stockQuote.currency) : "-"}</p>
                                 </div>
 
 
-                                
+
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Earnings Date</p>
-                                    <p className="font-semibold text-white">{moment(stockQuote.earningsTimestamp).format('MMM Do, yyyy')}</p>
+                                    <p className="font-semibold text-white">{stockQuote.earningsTimestamp ? moment(stockQuote.earningsTimestamp).format('MMM Do, yyyy') : "-"}</p>
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Beta (5Y Monthly)</p>
-                                    <p className="font-semibold text-white">{stockSummary.summaryDetail.beta.toFixed(2)}</p>
+                                    <p className="font-semibold text-white">{stockSummary.summaryDetail.beta ? stockSummary.summaryDetail.beta.toFixed(2) : "-"}</p>
                                 </div>
-                                
+
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Bid</p>
-                                    <p className="font-semibold text-white">{stockQuote.bid} x {stockQuote.bidSize * 100}</p>
+                                    {
+                                        (stockQuote.bid && stockQuote.bidSize)
+                                        ? <p className="font-semibold text-white">{stockQuote.bid} x {stockQuote.bidSize * 100}</p>
+                                        : <p className="font-semibold text-white">-</p>
+                                    }
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Ask</p>
-                                    <p className="font-semibold text-white">{stockQuote.ask} x {stockQuote.askSize * 100}</p>
+                                    {
+                                        (stockQuote.ask && stockQuote.askSize)
+                                        ?
+                                        <p className="font-semibold text-white">{stockQuote.ask} x {stockQuote.askSize * 100}</p>
+                                        :
+                                        <p className="font-semibold text-white">-</p>
+                                    }
                                 </div>
-                                
-                                
-                                
-                                
+
+
+
+
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>EPS (TTM)</p>
-                                    <p className="font-semibold text-white">{stockQuote.epsTrailingTwelveMonths.toFixed(2)}</p>
+                                    <p className="font-semibold text-white">{stockQuote.epsTrailingTwelveMonths ? stockQuote.epsTrailingTwelveMonths.toFixed(2) : "-"}</p>
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>1y Target Est</p>
-                                    <p className="font-semibold text-white">{stockSummary.financialData.targetMeanPrice}</p>
+                                    <p className="font-semibold text-white">{stockSummary.financialData.targetMeanPrice || '-'}</p>
                                 </div>
                             </div>
 

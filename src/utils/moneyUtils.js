@@ -1,6 +1,6 @@
 export const formatMarketCap = (marketCap, curr = 'USD') => {
     if (isNaN(marketCap)) {
-        return "invalid"
+        return marketCap
     }
 
     let formattedCap = "";
