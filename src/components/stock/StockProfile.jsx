@@ -36,7 +36,12 @@ const StockProfile = () => {
 
     if (!stockQuote || !stockSummary) {
         return (
-            <div>...Loading</div>
+            <div className="w-full flex">
+                <div className="w-full lg:w-2/3 m-5 skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
+                <div className="divider divider-horizontal py-5"></div>
+                <div className="hidden lg:block skeleton w-1/3 m-5 border border-neutral-700 bg-neutral-950 rounded">
+                </div>
+            </div>
         )
     }
 
@@ -48,7 +53,7 @@ const StockProfile = () => {
                     <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
                         <div className="flex flex-col items-center">
                             <h2 className="font-semibold text-white mb-3 text-2xl">{stockSummary.quoteType.longName}</h2>
-                            <img className="w-32 drop-shadow-lg hover:scale-105 transition-transform duration-300 mb-3" src={logoImg} alt={`${ticker} logo`} />
+                            <img className="w-32 drop-shadow-lg hover:scale-105 transition-transform duration-300 mb-3 rounded" src={logoImg} alt={`${ticker} logo`} />
                         </div>
 
                         <h3 className="font-semibold text-white mb-3">Company Description</h3>

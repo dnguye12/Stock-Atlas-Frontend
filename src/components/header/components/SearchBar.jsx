@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { act, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getYahooSearch, getYahooDailyActives } from '../../../services/stock'
 import SearchBarStock from './SearchBarStock'
+import SearchBarStockSkeleton from './SearchBarStockSkeleton'
 
-const SearchBar = () => {
+const SearchBar = ({setSearchBarLoading}) => {
     const [searchInput, setSearchInput] = useState('')
     const [search, setSearch] = useState(null)
     const [actives, setActives] = useState()
@@ -38,11 +39,14 @@ const SearchBar = () => {
         fetchData()
     }, [])
 
-    if (!search || !actives) {
+    if (!actives) {
+        setSearchBarLoading(true)
         return (
-            <div>...Loading</div>
+            <></>
         )
     }
+    
+    setSearchBarLoading(false)
 
     return (
         <dialog id="my_search_modal" className="modal">
@@ -61,7 +65,7 @@ const SearchBar = () => {
                                 <tbody>
                                     {
                                         actives.map((active, idx) => (
-                                            <SearchBarStock key={idx} ticker={active.symbol} />
+                                            <SearchBarStock key={idx} ticker={active.symbol} setSearchInput={setSearchInput}/>
                                         ))
                                     }
                                 </tbody>
@@ -73,15 +77,28 @@ const SearchBar = () => {
                             <table className='table'>
                                 <tbody>
                                     {
-                                        search.quotes.length > 0
+                                        search
                                             ?
-                                            search.quotes.map((active, idx) => (
-                                                active.symbol &&
-                                                <SearchBarStock key={idx} ticker={active.symbol} />
-                                            ))
+                                            (
+                                                search.quotes.length > 0
+                                                    ?
+                                                    search.quotes.map((active, idx) => (
+                                                        active.symbol &&
+                                                        <SearchBarStock key={idx} ticker={active.symbol} setSearchInput={setSearchInput}/>
+                                                    ))
+                                                    :
+                                                    <p>..Loading</p>
+                                            )
                                             :
-                                            <p>..Loading</p>
-
+                                            (
+                                                <>
+                                                    <SearchBarStockSkeleton setSearchInput={setSearchInput}/>
+                                                    <SearchBarStockSkeleton setSearchInput={setSearchInput}/>
+                                                    <SearchBarStockSkeleton setSearchInput={setSearchInput}/>
+                                                    <SearchBarStockSkeleton setSearchInput={setSearchInput}/>
+                                                    <SearchBarStockSkeleton setSearchInput={setSearchInput}/>
+                                                </>
+                                            )
                                     }
                                 </tbody>
                             </table>

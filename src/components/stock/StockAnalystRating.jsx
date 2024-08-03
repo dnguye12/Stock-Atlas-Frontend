@@ -44,7 +44,12 @@ const StockAnalystRating = () => {
 
     if (!stockQuote || !stockSummary) {
         return (
-            <div>...Loading</div>
+            <div className="w-full flex">
+                <div className="w-full lg:w-2/3 m-5 skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
+                <div className="divider divider-horizontal py-5"></div>
+                <div className="hidden lg:block skeleton w-1/3 m-5 border border-neutral-700 bg-neutral-950 rounded">
+                </div>
+            </div>
         )
     }
 
@@ -56,7 +61,7 @@ const StockAnalystRating = () => {
                 <div className="flex flex-col">
                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
                         <AnalystBuyConsensus ticker={ticker} stockQuote={stockQuote} stockSummary={stockSummary} />
-                        <AnalystOverview ticker={ticker} stockQuote={stockQuote} stockSummary={stockSummary}/>
+                        <AnalystOverview ticker={ticker} stockQuote={stockQuote} stockSummary={stockSummary} />
                         <AnalystPriceTargets stockQuote={stockQuote} stockSummary={stockSummary} />
                         <AnalystRec stockSummary={stockSummary} />
                     </div>

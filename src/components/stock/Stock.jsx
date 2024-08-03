@@ -137,7 +137,12 @@ const Stock = () => {
 
     if (!stockQuote) {
         return (
-            <div>...Loading</div>
+            <div className="w-full flex">
+                <div className="w-full lg:w-2/3 m-5 skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
+                <div className="divider divider-horizontal py-5"></div>
+                <div className="hidden lg:block skeleton w-1/3 m-5 border border-neutral-700 bg-neutral-950 rounded">
+                </div>
+            </div>
         )
     }
 
@@ -220,18 +225,18 @@ const Stock = () => {
                                     <p>Bid</p>
                                     {
                                         (stockQuote.bid && stockQuote.bidSize)
-                                        ? <p className="font-semibold text-white">{stockQuote.bid} x {stockQuote.bidSize * 100}</p>
-                                        : <p className="font-semibold text-white">-</p>
+                                            ? <p className="font-semibold text-white">{stockQuote.bid} x {stockQuote.bidSize * 100}</p>
+                                            : <p className="font-semibold text-white">-</p>
                                     }
                                 </div>
                                 <div className="flex justify-between border-b border-b-neutral-700 py-1">
                                     <p>Ask</p>
                                     {
                                         (stockQuote.ask && stockQuote.askSize)
-                                        ?
-                                        <p className="font-semibold text-white">{stockQuote.ask} x {stockQuote.askSize * 100}</p>
-                                        :
-                                        <p className="font-semibold text-white">-</p>
+                                            ?
+                                            <p className="font-semibold text-white">{stockQuote.ask} x {stockQuote.askSize * 100}</p>
+                                            :
+                                            <p className="font-semibold text-white">-</p>
                                     }
                                 </div>
 

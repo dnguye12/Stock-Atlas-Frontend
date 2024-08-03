@@ -24,7 +24,7 @@ const StockDividend = () => {
                 const [quote, chart, summary] = await Promise.all([
                     getYahooQuote(ticker),
                     getYahooDividendHistory(ticker),
-                    getYahooQuoteSummary(ticker, ['assetProfile', "summaryDetail",  "financialData", "defaultKeyStatistics"])
+                    getYahooQuoteSummary(ticker, ['assetProfile', "summaryDetail", "financialData", "defaultKeyStatistics"])
                 ]);
                 setStockQuote(quote);
                 setStockChart(chart);
@@ -39,7 +39,14 @@ const StockDividend = () => {
     }, [ticker]);
 
     if (!stockQuote || !stockChart || !divData || !stockSummary) {
-        return <div>...Loading</div>;
+        return (
+            <div className="w-full flex">
+                <div className="w-full lg:w-2/3 m-5 skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
+                <div className="divider divider-horizontal py-5"></div>
+                <div className="hidden lg:block skeleton w-1/3 m-5 border border-neutral-700 bg-neutral-950 rounded">
+                </div>
+            </div>
+        )
     }
 
     return (
@@ -47,10 +54,10 @@ const StockDividend = () => {
             <div className="w-full xl:w-2/3 my-5 p-5 border-r border-r-neutral-700">
                 <StockHeader ticker={ticker} stockQuote={stockQuote} />
                 <div className="grid grid-cols-1 gap-4">
-                    <DividendScore ticker={ticker} stockQuote={stockQuote} divData={divData} stockSummary={stockSummary}/>
-                    <DividendOverview stockQuote={stockQuote} divData={divData} stockSummary={stockSummary}/>
+                    <DividendScore ticker={ticker} stockQuote={stockQuote} divData={divData} stockSummary={stockSummary} />
+                    <DividendOverview stockQuote={stockQuote} divData={divData} stockSummary={stockSummary} />
                     <DividendGrowth divData={divData} />
-                    <DividendHistory stockChart={stockChart} stockQuote={stockQuote}/>
+                    <DividendHistory stockChart={stockChart} stockQuote={stockQuote} />
                 </div>
 
             </div>
