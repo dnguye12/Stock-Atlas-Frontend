@@ -2,6 +2,14 @@
     @apply btn bg-neutral-800 hover:bg-neutral-700 hover:text-white border border-neutral-700
 }
 
+.my-menu li {
+    @apply text-white text-sm font-semibold
+}
+
+.my-menu li svg {
+    @apply mr-0
+}
+
 .stock-header .navbar .btn {
     @apply text-base rounded-none transition duration-300 border-b-2 border-b-neutral-950
 }
@@ -39,7 +47,7 @@
 }
 
 .my-analysis .line {
-    @apply w-[3px] h-6 border-r border-r-white z-10 
+    @apply w-[3px] h-6 border-r border-r-white z-10
 }
 
 .my-analysis .lineAverage {
@@ -83,7 +91,7 @@
 }
 
 .my-analystoverview .grid .detail .detail-title {
-    @apply  font-semibold text-sm sm:text-base
+    @apply font-semibold text-sm sm:text-base
 }
 
 .my-analystoverview .grid .detail .detail-count {
@@ -98,7 +106,7 @@
     @apply text-white
 }
 
-.my-analystoverview .grid .detail .modal .modal-box p span{
+.my-analystoverview .grid .detail .modal .modal-box p span {
     @apply font-semibold
 }
 
