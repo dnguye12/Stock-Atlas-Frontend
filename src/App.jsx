@@ -30,14 +30,16 @@ function App() {
           <Menu />
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/stock/:ticker' element={<Stock />} />
+            <Route path='/stock/:ticker/*' element={<Stock />} />
+            {/*
             <Route path='/stock/:ticker/statistics' element={<StockStatistics />} />
             <Route path='/stock/:ticker/analyst-ratings' element={<StockAnalystRating />} />
             <Route path='/stock/:ticker/dividends' element={<StockDividend />} />
             <Route path='/stock/:ticker/profile' element={<StockProfile />} />
+            */}
           </Routes>
         </div>
-        <Footer/>
+        <Footer />
       </div>
       <MobileMenu />
     </div>

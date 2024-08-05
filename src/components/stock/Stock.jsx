@@ -1,16 +1,24 @@
 import { useState, useEffect } from "react"
 import { getYahooChart, getYahooQuote, getYahooQuoteSummary } from "../../services/stock"
 import { getTradingTime, Range1D, Range1W, Range1M, Range1Y, Range5Y, RangeYTD, RangeMax } from "../../utils/timeUtils"
-import { useParams } from "react-router-dom"
+import { useParams, useLocation, Routes, Route } from "react-router-dom"
 
 import RangeButtons from "./components/RangeButtons"
 import StockChart from "./components/StockChart"
 import StockHeader from "./components/StockHeader"
 import StockAbout from "./components/StockAbout"
 import StockStat from "./components/StockStat"
+import StockUpSell from "./components/StockUpSell"
+
+import StockStatistics from './StockStatistics';
+import StockAnalystRating from './StockAnalystRating';
+import StockDividend from './StockDividend';
+import StockProfile from './StockProfile';
+import StockHome from "./StockHome"
 
 const Stock = () => {
     const ticker = useParams().ticker
+    const location = useLocation();
     // Stock general data
     const [stockQuote, setStockQuote] = useState(null)
     const [stockChart, setStockChart] = useState(null)
@@ -109,9 +117,9 @@ const Stock = () => {
                 if (quote.open) {
                     let pusher = {}
                     pusher.time = new Date(quote.date).getTime()
-                    if(quote.close) {
+                    if (quote.close) {
                         pusher.value = quote.close
-                    }else {
+                    } else {
                         pusher.value = quote.open
                     }
                     helper.push(pusher)
@@ -130,7 +138,7 @@ const Stock = () => {
         fetchData()
     }, [ticker])
 
-    if (!stockQuote) {
+    if (!stockQuote ||!stockSummary || !chartInterval || !chartQuote || !stockChart) {
         return (
             <div className="w-full flex">
                 <div className="w-full lg:w-2/3 m-5 skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
@@ -145,16 +153,14 @@ const Stock = () => {
         <div className="w-full flex">
             <div className="w-full lg:w-2/3 my-5 p-5 border-r border-r-neutral-700">
                 <StockHeader chartInterval={chartInterval} chartQuote={chartQuote} ticker={ticker} stockChart={stockChart} stockQuote={stockQuote} />
-                <RangeButtons chartInterval={chartInterval} setChartInterval={setChartInterval} />
-                {
-                    chartQuote && stockChart &&
-                    (
-                        <div className=" w-full">
-                            <StockChart key={`${chartInterval}-${chartQuote.length}`} data={chartQuote} prevClose={stockChart.meta.previousClose} chartInterval={chartInterval} />
-                            <StockStat stockQuote={stockQuote} stockSummary={stockSummary} />
-                        </div>
-                    )
-                }
+
+                <Routes>
+                    <Route path='/' element={<StockHome chartInterval={chartInterval} chartQuote={chartQuote}  stockChart={stockChart} setChartInterval={setChartInterval} stockQuote={stockQuote} stockSummary={stockSummary} ticker={ticker}/>} />
+                    <Route path='statistics' element={<StockStatistics stockQuote={stockQuote}/>} />
+                    <Route path='analyst-ratings' element={<StockAnalystRating ticker={ticker} stockQuote={stockQuote}/>} />
+                    <Route path='dividends' element={<StockDividend ticker={ticker} stockQuote={stockQuote}/>} />
+                    <Route path='profile' element={<StockProfile ticker={ticker} stockQuote={stockQuote}/>} />
+                </Routes>
             </div>
             <div className="hidden lg:block w-1/3 p-3">
                 <StockAbout ticker={ticker} stockQuote={stockQuote} />

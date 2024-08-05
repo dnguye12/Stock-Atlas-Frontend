@@ -1,19 +1,15 @@
-import { useParams } from "react-router-dom"
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react"
-import { getYahooDividendHistory, getYahooQuote, getYahooQuoteSummary } from "../../services/stock"
+import { getYahooDividendHistory, getYahooQuoteSummary } from "../../services/stock"
 
-import StockHeader from "./components/StockHeader"
-import StockAbout from "./components/StockAbout"
 import DividendOverview from "./components/DividendOverview"
 import DividendGrowth from "./components/DividendGrowth"
 import { process_div } from "./utils/dividendUtils"
 import DividendHistory from "./components/DividendHistory"
 import DividendScore from "./components/DividendScore"
 
-const StockDividend = () => {
-    const ticker = useParams().ticker
+const StockDividend = ({ticker, stockQuote}) => {
 
-    const [stockQuote, setStockQuote] = useState(null)
     const [stockChart, setStockChart] = useState(null)
     const [stockSummary, setStockSummary] = useState(null)
     const [divData, setDivData] = useState(null)
@@ -21,12 +17,10 @@ const StockDividend = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [quote, chart, summary] = await Promise.all([
-                    getYahooQuote(ticker),
+                const [chart, summary] = await Promise.all([
                     getYahooDividendHistory(ticker),
                     getYahooQuoteSummary(ticker, ['assetProfile', "summaryDetail", "financialData", "defaultKeyStatistics"])
                 ]);
-                setStockQuote(quote);
                 setStockChart(chart);
                 setDivData(process_div(chart, summary));
                 setStockSummary(summary)
@@ -38,32 +32,18 @@ const StockDividend = () => {
         fetchData();
     }, [ticker]);
 
-    if (!stockQuote || !stockChart || !divData || !stockSummary) {
+    if (!stockChart || !divData || !stockSummary) {
         return (
-            <div className="w-full flex">
-                <div className="w-full lg:w-2/3 m-5 skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
-                <div className="divider divider-horizontal py-5"></div>
-                <div className="hidden lg:block skeleton w-1/3 m-5 border border-neutral-700 bg-neutral-950 rounded">
-                </div>
-            </div>
+            <div className="w-full lg:w-2/3 m-5 skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
         )
     }
 
     return (
-        <div className="stock-dividend w-full flex">
-            <div className="w-full xl:w-2/3 my-5 p-5 border-r border-r-neutral-700">
-                <StockHeader ticker={ticker} stockQuote={stockQuote} />
-                <div className="grid grid-cols-1 gap-4">
-                    <DividendScore ticker={ticker} stockQuote={stockQuote} divData={divData} stockSummary={stockSummary} />
-                    <DividendOverview stockQuote={stockQuote} divData={divData} stockSummary={stockSummary} />
-                    <DividendGrowth divData={divData} />
-                    <DividendHistory stockChart={stockChart} stockQuote={stockQuote} />
-                </div>
-
-            </div>
-            <div className="hidden xl:block w-1/3 p-3">
-                <StockAbout ticker={ticker} stockQuote={stockQuote} />
-            </div>
+        <div className="stock-dividend grid grid-cols-1 gap-4">
+            <DividendScore ticker={ticker} stockQuote={stockQuote} divData={divData} stockSummary={stockSummary} />
+            <DividendOverview stockQuote={stockQuote} divData={divData} stockSummary={stockSummary} />
+            <DividendGrowth divData={divData} />
+            <DividendHistory stockChart={stockChart} stockQuote={stockQuote} />
         </div>
     )
 }

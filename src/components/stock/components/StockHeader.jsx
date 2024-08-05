@@ -34,7 +34,6 @@ const StockHeader = ({ chartInterval, chartQuote,  stockQuote, ticker }) => {
 
     let startValue = chartQuote[0].value
     let endValue = chartQuote[chartQuote.length - 1].value
-    console.log(chartQuote)
 
     return (
         <div className="stock-header flex justify-center flex-col">

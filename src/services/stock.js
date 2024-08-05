@@ -5,6 +5,7 @@ const baseUrl = import.meta.env.VITE_API_URL
 const chartUrl = import.meta.env.VITE_CHART_API_URL
 const dailyUrl = import.meta.env.VITE_DAILY_API_URL
 const quoteUrl = import.meta.env.VITE_QUOTE_API_URL
+const insightsUrl = import.meta.env.VITE_INSIGHTS_API_URL
 
 const chartAxios = setupCache(axios.create(), {
     ttl: 60000, // 1 minute cache for chart data
@@ -128,6 +129,13 @@ export const getYahooRecommendationBySymbol = async (ticker) => {
 
 export const getYahooSearch = async (input) => {
     let query = baseUrl + quoteUrl + `/search/${input}`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}
+
+export const getYahooInsights = async (ticker, count = 10) => {
+    let query = baseUrl + insightsUrl + `/${ticker}/${count}`
 
     const request = await dailyAxios.get(query)
     return request.data
