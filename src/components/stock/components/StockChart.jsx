@@ -212,14 +212,22 @@ const StockChart = ({ data, prevClose, chartInterval }) => {
 
             chart.remove();
         };
-    }, [prevClose])
+    }, [prevClose, chartInterval, data])
 
     useEffect(() => {
-        if (chartRef.current) {
-            seriesRef.current.setData(data)
+        if (chartRef.current && seriesRef.current) {
+            seriesRef.current.setData(data);
             chartRef.current.timeScale().fitContent();
         }
     }, [data]);
+
+    useEffect(() => {
+        if (seriesRef.current) {
+            seriesRef.current.applyOptions({
+                baseValue: { type: "price", price: chartInterval === "1D" ? prevClose : data[0].value }
+            });
+        }
+    }, [prevClose, chartInterval, data]);
 
 
     return (

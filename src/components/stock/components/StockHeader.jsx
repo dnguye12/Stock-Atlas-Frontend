@@ -3,10 +3,10 @@ import { useEffect, useState } from "react"
 
 import { Link, useLocation } from 'react-router-dom'
 import { getStockLogo } from "../../../services/stock"
-import { myToLocaleString } from "../../../utils/numberUtils"
+import { myToLocaleString, percentageDiff } from "../../../utils/numberUtils"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-const StockHeader = ({ ticker, stockQuote }) => {
+const StockHeader = ({ chartInterval, chartQuote,  stockQuote, ticker }) => {
     const [logoImg, setLogoImage] = useState('')
     const location = useLocation();
 
@@ -26,11 +26,15 @@ const StockHeader = ({ ticker, stockQuote }) => {
         fetchLogo()
     }, [ticker])
 
-    if (!stockQuote) {
+    if (!stockQuote || !chartQuote) {
         return (
             <div>...Loading</div>
         )
     }
+
+    let startValue = chartQuote[0].value
+    let endValue = chartQuote[chartQuote.length - 1].value
+    console.log(chartQuote)
 
     return (
         <div className="stock-header flex justify-center flex-col">
@@ -57,11 +61,23 @@ const StockHeader = ({ ticker, stockQuote }) => {
             <div className="flex items-center px-5 mt-2">
                 <p className=" font-bold text-xl leading-5 text-white mr-2">{myToLocaleString(stockQuote.regularMarketPrice)}</p>
                 {
-                    stockQuote.regularMarketChange < 0
+                    chartInterval === '1D'
                         ?
-                        <p className="text-down font-semibold"><FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-1" />{stockQuote.regularMarketChange.toFixed(2).substring(1)} (<FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-1" />{stockQuote.regularMarketChangePercent.toFixed(2).substring(1)}%)</p>
+                        (
+                            stockQuote.regularMarketChange < 0
+                                ?
+                                <p className="text-down font-semibold"><FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-1" />{stockQuote.regularMarketChange.toFixed(2).substring(1)} (<FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-1" />{stockQuote.regularMarketChangePercent.toFixed(2).substring(1)}%)</p>
+                                :
+                                <p className="text-up font-semibold"><FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1" />{stockQuote.regularMarketChange.toFixed(2)} (<FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1" />{stockQuote.regularMarketChangePercent.toFixed(2)}%)</p>
+                        )
                         :
-                        <p className="text-up font-semibold"><FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1" />{stockQuote.regularMarketChange.toFixed(2)} (<FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1" />{stockQuote.regularMarketChangePercent.toFixed(2)}%)</p>
+                        (
+                            endValue < startValue
+                                ?
+                                <p className="text-down font-semibold"><FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-1" />{(startValue - endValue).toFixed(2)} (<FontAwesomeIcon icon="fa-solid fa-caret-down" className="mr-1" />{percentageDiff(startValue, endValue).toFixed(2).substring(1)}%)</p>
+                                :
+                                <p className="text-up font-semibold"><FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1" />{(endValue - startValue).toFixed(2)} (<FontAwesomeIcon icon="fa-solid fa-caret-up" className="mr-1" />{percentageDiff(startValue, endValue).toFixed(2)}%)</p>
+                        )
                 }
             </div>
             <div className="divider my-3"></div>
