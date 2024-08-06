@@ -26,7 +26,7 @@ const StockStat = ({ stockQuote, stockSummary }) => {
                 {
                     (stockQuote.fiftyTwoWeekLow && stockQuote.fiftyTwoWeekHigh)
                         ?
-                        <p className="font-semibold text-white">{stockQuote.fiftyTwoWeekLow} - {stockQuote.fiftyTwoWeekHigh}</p>
+                        <p className="font-semibold text-white">{stockQuote.fiftyTwoWeekLow.toFixed(2)} - {stockQuote.fiftyTwoWeekHigh.toFixed(2)}</p>
                         :
                         <p className="font-semibold text-white">-</p>
                 }
@@ -42,7 +42,7 @@ const StockStat = ({ stockQuote, stockSummary }) => {
             </div>
             <div className="flex justify-between border-b border-b-neutral-700 py-1">
                 <p>Volume</p>
-                <p className="font-semibold text-white">{stockSummary.summaryDetail.volume ? formatNumber(stockSummary.summaryDetail.volume) : "-"}</p>
+                <p className="font-semibold text-white">{stockSummary && (stockSummary.summaryDetail.volume ? formatNumber(stockSummary.summaryDetail.volume) : "-")}</p>
             </div>
             <div className="flex justify-between border-b border-b-neutral-700 py-1">
                 <p>Avg. Volume</p>
@@ -65,7 +65,7 @@ const StockStat = ({ stockQuote, stockSummary }) => {
             </div>
             <div className="flex justify-between border-b border-b-neutral-700 py-1">
                 <p>Beta (5Y Monthly)</p>
-                <p className="font-semibold text-white">{stockSummary.summaryDetail.beta ? stockSummary.summaryDetail.beta.toFixed(2) : "-"}</p>
+                <p className="font-semibold text-white">{stockSummary && (stockSummary.summaryDetail.beta ? stockSummary.summaryDetail.beta.toFixed(2) : "-")}</p>
             </div>
 
             <div className="flex justify-between border-b border-b-neutral-700 py-1">
@@ -96,7 +96,7 @@ const StockStat = ({ stockQuote, stockSummary }) => {
             </div>
             <div className="flex justify-between border-b border-b-neutral-700 py-1">
                 <p>1y Target Est</p>
-                <p className="font-semibold text-white">{stockSummary.financialData.targetMeanPrice || '-'}</p>
+                <p className="font-semibold text-white">{stockSummary && (stockSummary.financialData.targetMeanPrice || '-')}</p>
             </div>
         </div>
     )

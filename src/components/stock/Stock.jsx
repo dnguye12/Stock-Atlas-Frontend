@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react"
 import { getYahooChart, getYahooQuote, getYahooQuoteSummary } from "../../services/stock"
 import { getTradingTime, Range1D, Range1W, Range1M, Range1Y, Range5Y, RangeYTD, RangeMax } from "../../utils/timeUtils"
-import { useParams, useLocation, Routes, Route } from "react-router-dom"
+import { useParams, Routes, Route } from "react-router-dom"
 
-import RangeButtons from "./components/RangeButtons"
-import StockChart from "./components/StockChart"
 import StockHeader from "./components/StockHeader"
 import StockAbout from "./components/StockAbout"
-import StockStat from "./components/StockStat"
-import StockUpSell from "./components/StockUpSell"
 
 import StockStatistics from './StockStatistics';
 import StockAnalystRating from './StockAnalystRating';
@@ -18,7 +14,6 @@ import StockHome from "./StockHome"
 
 const Stock = () => {
     const ticker = useParams().ticker
-    const location = useLocation();
     // Stock general data
     const [stockQuote, setStockQuote] = useState(null)
     const [stockChart, setStockChart] = useState(null)
@@ -138,7 +133,7 @@ const Stock = () => {
         fetchData()
     }, [ticker])
 
-    if (!stockQuote ||!stockSummary || !chartInterval || !chartQuote || !stockChart) {
+    if (!stockQuote || !chartInterval || !chartQuote || !stockChart) {
         return (
             <div className="w-full flex">
                 <div className="w-full lg:w-2/3 m-5 skeleton border border-neutral-700 bg-neutral-950 rounded"></div>

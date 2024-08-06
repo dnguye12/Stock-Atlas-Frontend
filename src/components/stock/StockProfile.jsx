@@ -6,7 +6,7 @@ import { getStockLogo, getYahooQuoteSummary } from "../../services/stock"
 import { formatMarketCap } from "../../utils/moneyUtils"
 import { formatNumber } from "../../utils/numberUtils";
 
-const StockProfile = ({ticker, stockQuote}) => {
+const StockProfile = ({ ticker, stockQuote }) => {
 
     const [logoImg, setLogoImage] = useState('')
     const [stockSummary, setStockSummary] = useState(null)
@@ -30,7 +30,7 @@ const StockProfile = ({ticker, stockQuote}) => {
 
     if (!stockSummary) {
         return (
-            <div className="w-full lg:w-2/3 m-5 skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
+            <div className="w-full skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
         )
     }
 
@@ -39,11 +39,24 @@ const StockProfile = ({ticker, stockQuote}) => {
             <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
                 <div className="flex flex-col items-center">
                     <h2 className="font-semibold text-white mb-3 text-2xl">{stockSummary.quoteType.longName}</h2>
-                    <img className="w-32 drop-shadow-lg hover:scale-105 transition-transform duration-300 mb-3 rounded" src={logoImg} alt={`${ticker} logo`} />
+                    {
+                        (logoImg && !logoImg.toLowerCase().includes('undefined'))
+                            ?
+                            <img className="w-32 drop-shadow-lg hover:scale-105 transition-transform duration-300 mb-3 rounded" src={logoImg} alt={`${ticker} logo`} />
+                            :
+                            <div className="avatar placeholder mb-3">
+                                <div className="w-32 drop-shadow-lg hover:scale-105 transition-transform duration-300 rounded-full bg-neutral-900">
+                                </div>
+                            </div>
+                    }
                 </div>
 
                 <h3 className="font-semibold text-white mb-3">Company Description</h3>
-                {stockSummary.assetProfile.longBusinessSummary.trim().split('.').map((para, index) => <p className="text-base" key={index}>{para}</p>)}
+                {
+                (stockSummary.assetProfile && stockSummary.assetProfile.longBusinessSummary) 
+                ? stockSummary.assetProfile.longBusinessSummary.trim().split('.').map((para, index) => <p className="text-base" key={index}>{para}</p>)
+                : <p>Company description data is currently not available for {ticker}.</p>
+            }
             </div>
 
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-4">
@@ -76,23 +89,33 @@ const StockProfile = ({ticker, stockQuote}) => {
                         <tbody>
                             <div className="flex flex-col my-address">
                                 <h4>Address</h4>
-                                <p>{stockSummary.assetProfile.address1}</p>
-                                <p>{stockSummary.assetProfile.city}, {stockSummary.assetProfile.state} {stockSummary.assetProfile.zip}</p>
-                                <p>{stockSummary.assetProfile.country}</p>
+                                <p>{(stockSummary.assetProfile && stockSummary.assetProfile.address1) && stockSummary.assetProfile.address1}</p>
+                                {
+                                    (stockSummary.assetProfile && stockSummary.assetProfile.city && stockSummary.assetProfile.state && stockSummary.assetProfile.zip)
+                                    && <p>{stockSummary.assetProfile.city}, {stockSummary.assetProfile.state} {stockSummary.assetProfile.zip}</p>
+                                }
+                                <p>{(stockSummary.assetProfile && stockSummary.assetProfile.country) ? stockSummary.assetProfile.country : '-'}</p>
                             </div>
                             <tr style={{ borderTop: "1px solid rgb(25, 30, 36)" }}>
                                 <th>Phone</th>
-                                <td>{stockSummary.assetProfile.phone}</td>
+                                <td>{(stockSummary.assetProfile && stockSummary.assetProfile.phone) ? stockSummary.assetProfile.phone : '-'}</td>
                             </tr>
                             <tr>
                                 <th>Website</th>
-                                <td><a className="text-blue-500" href={`${stockSummary.assetProfile.website}`} target="_blank">{stockSummary.assetProfile.website}</a></td>
+                                {
+                                    stockSummary.assetProfile && stockSummary.assetProfile.website
+                                        ?
+                                        <td><a className="text-blue-500" href={`${stockSummary.assetProfile.website}`} target="_blank">{stockSummary.assetProfile.website}</a></td>
+                                        :
+                                        <td>-</td>
+                                }
+
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 {
-                    stockSummary.assetProfile.fullTimeEmployees &&
+                    stockSummary.assetProfile && stockSummary.assetProfile.fullTimeEmployees &&
                     <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
                         <h3 className="font-semibold text-white mb-3">{stockQuote.displayName} Employees</h3>
                         <table className="table table-sm">
@@ -117,7 +140,7 @@ const StockProfile = ({ticker, stockQuote}) => {
                         </table>
                     </div>
                 }
-                {stockSummary.assetProfile.overallRisk &&
+                {stockSummary.assetProfile && stockSummary.assetProfile.overallRisk &&
                     <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
                         <h3 className="font-semibold text-white mb-3">Corporate Governance</h3>
                         <p className="text-sm px-3"><span className="text-white font-semibold">{stockQuote.displayName}</span>'s ISS Governance QualityScore as of <span className="font-semibold text-white">{moment(stockSummary.assetProfile.governanceEpochDate).format("MMM Do YYYY")}</span> is <span className={`font-semibold ${stockSummary.assetProfile.overallRisk > 6 ? "text-down" : stockSummary.assetProfile.overallRisk < 4 ? "text-up" : "text-hold"}`}>{stockSummary.assetProfile.overallRisk}</span>.</p>
@@ -151,28 +174,33 @@ const StockProfile = ({ticker, stockQuote}) => {
 
             <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10 mt-4">
                 <h3 className="font-semibold text-white mb-3">Key Executives</h3>
-                <table className="table">
-                    <thead>
-                        <th></th>
-                        <th>Name</th>
-                        <th>Title</th>
-                        <th className=" lg:table-cell hidden">Age</th>
-                        <th>Total Pay</th>
-                    </thead>
-                    <tbody>
-                        {
-                            stockSummary.assetProfile.companyOfficers.map((off, idx) => (
-                                <tr className="hover" key={idx}>
-                                    <th>{idx + 1}</th>
-                                    <td className="name">{off.name}</td>
-                                    <td>{off.title}</td>
-                                    <td className="text-center lg:table-cell hidden">{off.age || '-'}</td>
-                                    <td className="text-center">{off.totalPay ? formatMarketCap(off.totalPay) : '-'}</td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+                {
+                    (stockSummary.assetProfile && stockSummary.assetProfile.companyOfficers)
+                        ? <table className="table">
+                            <thead>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Title</th>
+                                <th className=" lg:table-cell hidden">Age</th>
+                                <th>Total Pay</th>
+                            </thead>
+                            <tbody>
+                                {
+                                    stockSummary.assetProfile.companyOfficers.map((off, idx) => (
+                                        <tr className="hover" key={idx}>
+                                            <th>{idx + 1}</th>
+                                            <td className="name">{off.name}</td>
+                                            <td>{off.title}</td>
+                                            <td className="text-center lg:table-cell hidden">{off.age || '-'}</td>
+                                            <td className="text-center">{off.totalPay ? formatMarketCap(off.totalPay) : '-'}</td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </table>
+                        :
+                        <p className="text-sm">Key Executives data is currently not available for {ticker}.</p>
+                }
             </div>
         </div>
     )

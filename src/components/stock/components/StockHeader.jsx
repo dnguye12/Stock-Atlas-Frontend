@@ -35,6 +35,8 @@ const StockHeader = ({ chartInterval, chartQuote,  stockQuote, ticker }) => {
     let startValue = chartQuote[0].value
     let endValue = chartQuote[chartQuote.length - 1].value
 
+    console.log(stockQuote)
+
     return (
         <div className="stock-header flex justify-center flex-col">
             <div className="flex items-center px-5">
@@ -85,7 +87,7 @@ const StockHeader = ({ chartInterval, chartQuote,  stockQuote, ticker }) => {
                 <Link to={`/stock/${ticker}/statistics`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}/statistics` ? 'active' : ''}`}>Statistics</Link>
                 <Link to={`/stock/${ticker}/analyst-ratings`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}/analyst-ratings` ? 'active' : ''}`}>Analyst Ratings</Link>
                 {
-                    stockQuote.dividendDate && <Link to={`/stock/${ticker}/dividends`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}/dividends` ? 'active' : ''}`}>Dividends</Link>
+                    (stockQuote.dividendDate && stockQuote.trailingAnnualDividendRate) ? <Link to={`/stock/${ticker}/dividends`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}/dividends` ? 'active' : ''}`}>Dividends</Link> : null
                 }
                 <Link to={`/stock/${ticker}/profile`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}/profile` ? 'active' : ''}`}>Profile</Link>
             </div>

@@ -26,7 +26,9 @@ const StockAnalystRating = ({ticker, stockQuote}) => {
 
     if (!stockSummary) {
         return (
-            <div className="w-full lg:w-2/3 m-5 skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
+            <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
+                <p className="text-center text-white text-lg font-semibold">Analyst info is currently not available for {ticker}.</p>
+            </div>
         )
     }
 

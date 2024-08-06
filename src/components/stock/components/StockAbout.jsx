@@ -43,13 +43,16 @@ const StockAbout = ({ ticker, stockQuote }) => {
         fetchData()
     }, [ticker])
 
-    if (!assetProfile || !financialData || !recommendationTrend || !similarStocks) {
+    if (!similarStocks) {
         return (
-            <div>...Loading</div>
+            <div className="skeleton w-full h-full rounded bg-neutral-950 border border-neutral-700 "></div>
         )
     }
 
-    const trend = recommendationTrend.trend[0]
+    let trend
+    if (recommendationTrend && recommendationTrend.trend) {
+        trend = recommendationTrend.trend[0]
+    }
     let totalTrend
     if (trend) {
         totalTrend = trend.strongBuy + trend.buy + trend.hold + trend.sell + trend.strongSell
@@ -65,17 +68,17 @@ const StockAbout = ({ ticker, stockQuote }) => {
                         <th>CEO</th>
                         <td>{assetProfile && assetProfile.companyOfficers && assetProfile.companyOfficers.length > 0 ? assetProfile.companyOfficers[0].name : '-'}</td>
                         <th>Industry</th>
-                        <td>{assetProfile.industry || '-'}</td>
+                        <td>{assetProfile && (assetProfile.industry || '-')}</td>
                     </tr>
                     <tr>
                         <th>Country</th>
                         <td>{stockQuote.region || '-'}</td>
                         <th>Sector</th>
-                        <td>{assetProfile.sector || '-'}</td>
+                        <td>{assetProfile && (assetProfile.sector || '-')}</td>
                     </tr>
                     <tr>
                         <th>Employees</th>
-                        <td>{assetProfile.fullTimeEmployees ? formatNumber(assetProfile.fullTimeEmployees) : '-'}</td>
+                        <td>{assetProfile && (assetProfile.fullTimeEmployees ? formatNumber(assetProfile.fullTimeEmployees) : '-')}</td>
                         <th>Exchange</th>
                         <td>{stockQuote.fullExchangeName || '-'}</td>
                     </tr>
@@ -88,60 +91,67 @@ const StockAbout = ({ ticker, stockQuote }) => {
                 </table>
                 <div className="divider mt-0 mb-3"></div>
                 <h3 className="font-bold text-white my-3">Description</h3>
-                <p className=" line-clamp-3 text-sm">{assetProfile.longBusinessSummary}</p>
+                <p className=" line-clamp-3 text-sm">{(assetProfile && assetProfile.longBusinessSummary) ? assetProfile.longBusinessSummary : `Profile data is currently not available for ${ticker}.`}</p>
                 <div className="flex justify-between items-center mt-5">
                     <Link className="my-btn" to={`/stock/${ticker}/profile`}>Show more</Link>
                     {
-                        assetProfile.website && <a href={assetProfile.website} target="_blank" className="my-btn">Go to website<FontAwesomeIcon icon="fa-solid fa-arrow-up-right-from-square" /></a>
+                        assetProfile && assetProfile.website && <a href={assetProfile.website} target="_blank" className="my-btn">Go to website<FontAwesomeIcon icon="fa-solid fa-arrow-up-right-from-square" /></a>
                     }
                 </div>
             </div>
 
-            <div className="bg-neutral-950 border border-neutral-700 rounded p-4 mt-4">
-                <h2 className="text-white text-lg font-bold mb-3">Analyst Rating</h2>
-                <div className="flex justify-between mb-3">
-                    <div>
-                        <p className="font-semibold mb-1">Signal</p>
-                        <p className={`font-semibold ${financialData.recommendationKey.toLowerCase().includes('buy') ? 'text-up' : financialData.recommendationKey.toLowerCase().includes('sell') ? 'text-down' : 'text-hold'}`}>{capitalizeWord(financialData.recommendationKey)}</p>
+            {financialData ?
+                <div className="bg-neutral-950 border border-neutral-700 rounded p-4 mt-4">
+                    <h2 className="text-white text-lg font-bold mb-3">Analyst Rating</h2>
+                    <div className="flex justify-between mb-3">
+                        <div>
+                            <p className="font-semibold mb-1">Signal</p>
+                            <p className={`font-semibold ${financialData.recommendationKey.toLowerCase().includes('buy') ? 'text-up' : financialData.recommendationKey.toLowerCase().includes('sell') ? 'text-down' : 'text-hold'}`}>{capitalizeWord(financialData.recommendationKey)}</p>
+                        </div>
+                        <div className="text-end">
+                            <p className="font-semibold mb-1">Price Target</p>
+                            <p className="text-white font-semibold">{currToSymbol(stockQuote.currency)}{financialData.targetMeanPrice}</p>
+                        </div>
                     </div>
-                    <div className="text-end">
-                        <p className="font-semibold mb-1">Price Target</p>
-                        <p className="text-white font-semibold">{currToSymbol(stockQuote.currency)}{financialData.targetMeanPrice}</p>
-                    </div>
-                </div>
-                {
-                    financialData.currentPrice <= financialData.targetMeanPrice
-                        ?
-                        <p>The Stock Price has an upside of <span className="font-semibold text-up">{percentageDiff(financialData.currentPrice, financialData.targetMeanPrice).toFixed(2)}%</span> based on <span className="text-white font-semibold">{financialData.numberOfAnalystOpinions}</span> analysts in the past month.</p>
-                        :
-                        <p>The Stock Price has an downside of <span className="font-semibold text-down">{percentageDiff(financialData.targetMeanPrice, financialData.currentPrice).toFixed(2)}%</span> based on <span className="text-white font-semibold">{financialData.numberOfAnalystOpinions}</span> analysts in the past month.</p>
-                }
+                    {
+                        financialData.currentPrice <= financialData.targetMeanPrice
+                            ?
+                            <p>The Stock Price has an upside of <span className="font-semibold text-up">{percentageDiff(financialData.currentPrice, financialData.targetMeanPrice).toFixed(2)}%</span> based on <span className="text-white font-semibold">{financialData.numberOfAnalystOpinions}</span> analysts in the past month.</p>
+                            :
+                            <p>The Stock Price has an downside of <span className="font-semibold text-down">{percentageDiff(financialData.targetMeanPrice, financialData.currentPrice).toFixed(2)}%</span> based on <span className="text-white font-semibold">{financialData.numberOfAnalystOpinions}</span> analysts in the past month.</p>
+                    }
 
-                <div className="my-3">
-                    <div className="flex flex-col mb-3">
-                        <div className="flex justify-between mb-2">
-                            <p className="font-semibold text-white">Buy</p>
-                            <p className="font-semibold text-white">{((trend.strongBuy + trend.buy) / totalTrend * 100).toFixed(2)}%</p>
+                    <div className="my-3">
+                        <div className="flex flex-col mb-3">
+                            <div className="flex justify-between mb-2">
+                                <p className="font-semibold text-white">Buy</p>
+                                <p className="font-semibold text-white">{(trend.strongBuy && trend.buy) ? ((trend.strongBuy + trend.buy) / totalTrend * 100).toFixed(2) + '%' : "-"}</p>
+                            </div>
+                            <progress className="progress progress-success w-full" value={(trend.strongBuy + trend.buy)} max={totalTrend}></progress>
                         </div>
-                        <progress className="progress progress-success w-full" value={(trend.strongBuy + trend.buy)} max={totalTrend}></progress>
-                    </div>
-                    <div className="flex flex-col mb-3">
-                        <div className="flex justify-between mb-2">
-                            <p className="font-semibold text-white">Hold</p>
-                            <p className="font-semibold text-white">{((trend.hold) / totalTrend * 100).toFixed(2)}%</p>
+                        <div className="flex flex-col mb-3">
+                            <div className="flex justify-between mb-2">
+                                <p className="font-semibold text-white">Hold</p>
+                                <p className="font-semibold text-white">{trend.hold ? ((trend.hold) / totalTrend * 100).toFixed(2) + '%' : "-"}</p>
+                            </div>
+                            <progress className="progress progress-warning w-full" value={(trend.hold)} max={totalTrend}></progress>
                         </div>
-                        <progress className="progress progress-warning w-full" value={(trend.hold)} max={totalTrend}></progress>
-                    </div>
-                    <div className="flex flex-col mb-3">
-                        <div className="flex justify-between mb-2">
-                            <p className="font-semibold text-white">Sell</p>
-                            <p className="font-semibold text-white">{((trend.strongSell + trend.sell) / totalTrend * 100).toFixed(2)}%</p>
+                        <div className="flex flex-col mb-3">
+                            <div className="flex justify-between mb-2">
+                                <p className="font-semibold text-white">Sell</p>
+                                <p className="font-semibold text-white">{(trend.strongSell && trend.sell) ? ((trend.strongSell + trend.sell) / totalTrend * 100).toFixed(2) + '%' : "-"}</p>
+                            </div>
+                            <progress className="progress progress-error w-full" value={(trend.strongSell + trend.sell)} max={totalTrend}></progress>
                         </div>
-                        <progress className="progress progress-error w-full" value={(trend.strongSell + trend.sell)} max={totalTrend}></progress>
                     </div>
+                    <Link className="my-btn w-full mt-5" to={`/stock/${ticker}/analyst-ratings`}>Analyst Ratings</Link>
                 </div>
-                <Link className="my-btn w-full mt-5" to={`/stock/${ticker}/analyst-ratings`}>Analyst Ratings</Link>
-            </div>
+                :
+                <div className="bg-neutral-950 border border-neutral-700 rounded p-4 mt-4">
+                    <h2 className="text-white text-lg font-bold mb-3">Analyst Rating</h2>
+                    <p className=" line-clamp-3 text-sm">Analyst info is currently not available for {ticker}</p>
+                </div>
+            }
 
             <div className="bg-neutral-950 border border-neutral-700 rounded p-4 mt-4">
                 <h2 className="text-white text-lg font-bold mb-3">Similar Stocks</h2>

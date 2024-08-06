@@ -34,7 +34,7 @@ const StockDividend = ({ticker, stockQuote}) => {
 
     if (!stockChart || !divData || !stockSummary) {
         return (
-            <div className="w-full lg:w-2/3 m-5 skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
+            <div className="w-full h-full skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
         )
     }
 
