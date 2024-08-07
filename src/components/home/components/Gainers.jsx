@@ -28,7 +28,7 @@ const Gainers = () => {
         fetchData()
     }, [])
 
-    if (isLoading) {
+    if (isLoading || !gainers) {
         return (
             <div>
                 <div className="skeleton"></div>

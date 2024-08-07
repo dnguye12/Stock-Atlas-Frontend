@@ -61,7 +61,7 @@ const AnalystUpgradesDowngrades = ({ stockSummary }) => {
             const moreItems = stockSummary.upgradeDowngradeHistory.history.slice(loadMoreData.length, loadMoreData.length + 10)
 
             setLoadMoreData(loadMoreData.concat(moreItems));
-        }, 1500);
+        }, 500);
     }
 
 
@@ -108,7 +108,11 @@ const AnalystUpgradesDowngrades = ({ stockSummary }) => {
                             dataLength={loadMoreData.length}
                             next={fetchMoreData}
                             hasMore={loadMoreData.length < stockSummary.upgradeDowngradeHistory.history.length}
-                            loader={<p>...Loading</p>}
+                            loader={
+                                <div className="w-full flex justify-center py-5">
+                                    <span className="loading loading-spinner loading-md"></span>
+                                </div>
+                            }
                         >
                             <table className="table mb-5">
                                 <thead>

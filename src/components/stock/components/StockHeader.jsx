@@ -6,7 +6,7 @@ import { getStockLogo } from "../../../services/stock"
 import { myToLocaleString, percentageDiff } from "../../../utils/numberUtils"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-const StockHeader = ({ chartInterval, chartQuote,  stockQuote, ticker }) => {
+const StockHeader = ({ chartInterval, chartQuote, stockQuote, ticker }) => {
     const [logoImg, setLogoImage] = useState('')
     const location = useLocation();
 
@@ -32,10 +32,14 @@ const StockHeader = ({ chartInterval, chartQuote,  stockQuote, ticker }) => {
         )
     }
 
-    let startValue = chartQuote[0].value
-    let endValue = chartQuote[chartQuote.length - 1].value
-
-    console.log(stockQuote)
+    let startValue, endValue
+    if (chartQuote.length > 0) {
+        startValue = chartQuote[0].value
+        endValue = chartQuote[chartQuote.length - 1].value
+    } else {
+        startValue = stockQuote.regularMarketOpen
+        endValue = stockQuote.regularMarketPrice
+    }
 
     return (
         <div className="stock-header flex justify-center flex-col">
@@ -89,6 +93,7 @@ const StockHeader = ({ chartInterval, chartQuote,  stockQuote, ticker }) => {
                 {
                     (stockQuote.dividendDate && stockQuote.trailingAnnualDividendRate) ? <Link to={`/stock/${ticker}/dividends`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}/dividends` ? 'active' : ''}`}>Dividends</Link> : null
                 }
+                <Link to={`/stock/${ticker}/holderinsider`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}/holderinsider` ? 'active' : ''}`}>Holders & Insiders</Link>
                 <Link to={`/stock/${ticker}/profile`} className={`btn btn-ghost ${location.pathname === `/stock/${ticker}/profile` ? 'active' : ''}`}>Profile</Link>
             </div>
             <div className="divider my-3"></div>

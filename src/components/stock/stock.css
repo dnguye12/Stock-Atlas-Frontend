@@ -39,7 +39,7 @@
 }
 
 .my-analysis .label {
-    @apply mt-2 flex flex-col text-sm leading-3 p-0 bg-neutral-800;
+    @apply mt-2 flex flex-col text-sm leading-3 bg-neutral-800 px-1.5 py-0.5 rounded;
 }
 
 .my-analysis .label .price {
@@ -160,4 +160,20 @@
 
 .stock-about .table th {
     @apply font-semibold text-white
+}
+
+.holderinsider .table thead th, .holderinsider .table thead th {
+    @apply text-xs sm:text-sm font-semibold text-white border-l border-l-neutral-700
+}
+
+.holderinsider .table tr {
+    @apply border-neutral-700
+}
+
+.holderinsider .table tr td {
+    @apply text-xs sm:text-sm border-l border-l-neutral-700
+}
+
+.holderinsider .table tbody .name, .holderinsider .table tbody .pos {
+    @apply text-white font-semibold
 }

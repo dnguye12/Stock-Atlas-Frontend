@@ -22,6 +22,12 @@ const StockProfile = ({ ticker, stockQuote }) => {
                 setLogoImage(`data:image/png;base64,${logo}`)
             } catch (error) {
                 console.log("Error fetching data: ", error);
+
+                return (
+                    <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
+                        <p className="text-center text-white text-lg font-semibold">Stock profile data is currently not available for {ticker}.</p>
+                    </div>
+                )
             }
         };
 
@@ -30,7 +36,7 @@ const StockProfile = ({ ticker, stockQuote }) => {
 
     if (!stockSummary) {
         return (
-            <div className="w-full skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
+            <div className="w-full h-96 skeleton border border-neutral-700 bg-neutral-950 rounded"></div>
         )
     }
 
@@ -54,7 +60,7 @@ const StockProfile = ({ ticker, stockQuote }) => {
                 <h3 className="font-semibold text-white mb-3">Company Description</h3>
                 {
                 (stockSummary.assetProfile && stockSummary.assetProfile.longBusinessSummary) 
-                ? stockSummary.assetProfile.longBusinessSummary.trim().split('.').map((para, index) => <p className="text-base" key={index}>{para}</p>)
+                ? <p className="text-base">{stockSummary.assetProfile.longBusinessSummary.trim()}</p>
                 : <p>Company description data is currently not available for {ticker}.</p>
             }
             </div>

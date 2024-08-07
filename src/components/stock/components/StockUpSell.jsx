@@ -23,7 +23,7 @@ const StockUpSell = ({ ticker }) => {
 
     if (!stockInsights) {
         return (
-            <div>...Loading</div>
+            <div className="skeleton w-full h-96 rounded mt-4 bg-neutral-950 border border-neutral-700"></div>
         )
     }
 

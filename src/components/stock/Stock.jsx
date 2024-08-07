@@ -11,6 +11,7 @@ import StockAnalystRating from './StockAnalystRating';
 import StockDividend from './StockDividend';
 import StockProfile from './StockProfile';
 import StockHome from "./StockHome"
+import StockHolderInsider from "./StockHolderInsider"
 
 const Stock = () => {
     const ticker = useParams().ticker
@@ -154,6 +155,7 @@ const Stock = () => {
                     <Route path='statistics' element={<StockStatistics stockQuote={stockQuote}/>} />
                     <Route path='analyst-ratings' element={<StockAnalystRating ticker={ticker} stockQuote={stockQuote}/>} />
                     <Route path='dividends' element={<StockDividend ticker={ticker} stockQuote={stockQuote}/>} />
+                    <Route path='holderinsider' element={<StockHolderInsider ticker={ticker} />} />
                     <Route path='profile' element={<StockProfile ticker={ticker} stockQuote={stockQuote}/>} />
                 </Routes>
             </div>

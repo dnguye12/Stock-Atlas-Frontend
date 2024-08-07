@@ -223,9 +223,15 @@ const StockChart = ({ data, prevClose, chartInterval }) => {
 
     useEffect(() => {
         if (seriesRef.current) {
-            seriesRef.current.applyOptions({
-                baseValue: { type: "price", price: chartInterval === "1D" ? prevClose : data[0].value }
-            });
+            if (data.length > 0) {
+                seriesRef.current.applyOptions({
+                    baseValue: { type: "price", price: chartInterval === "1D" ? prevClose : data[0].value }
+                });
+            } else {
+                seriesRef.current.applyOptions({
+                    baseValue: { type: "price", price: prevClose }
+                });
+            }
         }
     }, [prevClose, chartInterval, data]);
 

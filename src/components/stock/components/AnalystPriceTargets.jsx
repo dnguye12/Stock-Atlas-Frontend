@@ -54,7 +54,7 @@ const AnalystPriceTargets = ({ stockQuote, stockSummary }) => {
                             <div className="dot dotcurrent"></div>
                             <div className="line lineCurrent"></div>
                             <div className="labelExtend currentLabel" style={{ marginLeft: `calc(6 / 2.3* -1* 1ch)`, minWidth: `calc(6* 1ch)` }}>
-                                <span className="price">{currentPrice}</span>
+                                <span className="price">{currentPrice.toFixed(2)}</span>
                                 <span>{t('stock.analyst_price_targets.Current')}</span>
                             </div>
                         </div>
@@ -63,7 +63,7 @@ const AnalystPriceTargets = ({ stockQuote, stockSummary }) => {
                             <div className="dot dotcurrent"></div>
                             <div className="line lineCurrent"></div>
                             <div className="labelExtend currentLabel" style={{ marginLeft: `calc(0 / 2.3* -1* 1ch)`, minWidth: `calc(6* 1ch)` }}>
-                                <span className="price">{currentPrice}</span>
+                                <span className="price">{currentPrice.toFixed(2)}</span>
                                 <span>{t('stock.analyst_price_targets.Current')}</span>
                             </div>
                         </div>
