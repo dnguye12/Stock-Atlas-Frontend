@@ -86,10 +86,20 @@ const HolderInsiderTransactions = ({ insiderTransactions }) => {
                         <div className="flex justify-between items-center border border-neutral-700 rounded p-4 border-spacing-10">
                             <div>
                                 <p className="text-sm font-semibold">Buy/Sell Ratio</p>
-                                <p className="text-white font-semibold">{(totalBought / totalSold).toFixed(2)}</p>
+                                <p className="text-white font-semibold">{
+                                    totalBought === 0
+                                        ?
+                                        "Sold only"
+                                        :
+                                        totalSold === 0
+                                            ?
+                                            "Bought only"
+                                            :
+                                            (totalBought / totalSold).toFixed(2)
+                                }</p>
                             </div>
                             <div className="radial-progress font-bold text-sm text-up" style={{ "--value": totalBought / (totalBought + totalSold) * 100, }} role="progressbar">
-                                {(totalBought / (totalBought + totalSold) * 100).toFixed(2)}%
+                                {(totalBought / (totalBought + totalSold)).toFixed(2)}
                             </div>
                         </div>
                         <div className="flex justify-between items-center border border-neutral-700 rounded p-4 border-spacing-10">
@@ -139,8 +149,8 @@ const HolderInsiderTransactions = ({ insiderTransactions }) => {
                                                     </div>
                                                 </td>
                                                 <td>{moment(tran.startDate).format("MMM Do, YYYY")}</td>
-                                                <td>{tran.shares.toLocaleString()}</td>
-                                                <td>{(tran.value / tran.shares).toFixed(2)}</td>
+                                                <td>{tran.shares ? tran.shares.toLocaleString() : "-"}</td>
+                                                <td>{(tran.value && tran.shares) ? (tran.value / tran.shares).toFixed(2) : "-"}</td>
                                                 <td>{
                                                     helper === "Bought"
                                                         ?
@@ -216,8 +226,8 @@ const HolderInsiderTransactions = ({ insiderTransactions }) => {
                                                         </div>
                                                     </td>
                                                     <td>{moment(tran.startDate).format("MMM Do, YYYY")}</td>
-                                                    <td>{tran.shares.toLocaleString()}</td>
-                                                    <td>{(tran.value / tran.shares).toFixed(2)}</td>
+                                                    <td>{tran.shares ? tran.shares.toLocaleString() : "-"}</td>
+                                                    <td>{(tran.value && tran.shares) ? (tran.value / tran.shares).toFixed(2) : "-"}</td>
                                                     <td>{
                                                         helper === "Bought"
                                                             ?

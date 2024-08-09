@@ -45,6 +45,8 @@ const SearchBar = ({setSearchBarLoading}) => {
             <></>
         )
     }
+
+    const dontShowSearch = ['option']
     
     setSearchBarLoading(false)
 
@@ -83,7 +85,7 @@ const SearchBar = ({setSearchBarLoading}) => {
                                                 search.quotes.length > 0
                                                     ?
                                                     search.quotes.map((active, idx) => (
-                                                        active.symbol &&
+                                                        active.symbol && active.typeDisp && !dontShowSearch.includes(active.typeDisp.toLowerCase()) &&
                                                         <SearchBarStock key={idx} ticker={active.symbol} setSearchInput={setSearchInput}/>
                                                     ))
                                                     :

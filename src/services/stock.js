@@ -140,3 +140,10 @@ export const getYahooInsights = async (ticker, count = 10) => {
     const request = await dailyAxios.get(query)
     return request.data
 }
+
+export const getYahooNews = async (ticker, count = 10) => {
+    let query = baseUrl + quoteUrl + `/news/${ticker}/${count}`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}
