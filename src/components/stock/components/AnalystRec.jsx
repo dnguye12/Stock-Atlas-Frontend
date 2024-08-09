@@ -185,7 +185,7 @@ const AnalystRec = ({ stockSummary }) => {
                 <Bar className=' h-full' data={barData} options={barOptions} />
             </div>
             <div className='sm:hidden block relative w-full h-full'>
-                <table className='table'>
+                <table className='table table-sm border border-neutral-700 rounded-lg'>
                     <thead>
                         <tr>
                             <th>Ratings</th>

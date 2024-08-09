@@ -83,7 +83,7 @@ const StockHomeNews = ({ ticker }) => {
                     ))
                 }
             </div>
-            <Link className="my-btn w-full" to={``}><FontAwesomeIcon icon="fa-solid fa-newspaper" className="mr-1" />Load more news</Link>
+            <Link className="my-btn w-full" to={`/stock/${ticker}/news`}><FontAwesomeIcon icon="fa-solid fa-newspaper" className="mr-1" />Load more news</Link>
         </div>
     )
 }

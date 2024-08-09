@@ -82,7 +82,7 @@ const HolderInsiderTransactions = ({ insiderTransactions }) => {
                 <div className="holderinsider bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10 mt-4">
                     <h3 className="font-semibold text-white mb-3">Insider Transactions Reported</h3>
 
-                    <div className="w-full grid grid-cols-3 gap-4 mb-8">
+                    <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                         <div className="flex justify-between items-center border border-neutral-700 rounded p-4 border-spacing-10">
                             <div>
                                 <p className="text-sm font-semibold">Buy/Sell Ratio</p>
@@ -123,10 +123,10 @@ const HolderInsiderTransactions = ({ insiderTransactions }) => {
                     </div>
 
                     <div className="w-full flex flex-col justify-center">
-                        <table className={`table mb-5 ${loadMore && "hidden"}`}>
+                        <table className={`table table-sm sm:table-md border border-neutral-700 rounded-lg mb-5 ${loadMore && "hidden"}`}>
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <th className="hidden sm:table-cell"></th>
                                     <th>Person</th>
                                     <th>Date Reported</th>
                                     <th>Shares</th>
@@ -141,7 +141,7 @@ const HolderInsiderTransactions = ({ insiderTransactions }) => {
                                         helper = getType(tran.transactionText)
                                         return (
                                             <tr key={idx} className="hover">
-                                                <td>{idx + 1}</td>
+                                                <td className="hidden sm:table-cell">{idx + 1}</td>
                                                 <td className="name">
                                                     <div className="flex flex-col">
                                                         <p>{tran.filerName}</p>
@@ -201,10 +201,10 @@ const HolderInsiderTransactions = ({ insiderTransactions }) => {
                             }
                             className={`${!loadMore && "hidden"}`}
                         >
-                            <table className="table mb-5">
+                            <table className="table table-sm sm:table-md border border-neutral-700 rounded-lg mb-5">
                                 <thead>
                                     <tr>
-                                        <th></th>
+                                        <th className="hidden sm:table-cell"></th>
                                         <th>Person</th>
                                         <th>Date Reported</th>
                                         <th>Shares</th>
@@ -218,7 +218,7 @@ const HolderInsiderTransactions = ({ insiderTransactions }) => {
                                             helper = getType(tran.transactionText)
                                             return (
                                                 <tr key={idx} className="hover">
-                                                    <td>{idx + 1}</td>
+                                                    <td className="hidden sm:table-cell">{idx + 1}</td>
                                                     <td className="name">
                                                         <div className="flex flex-col">
                                                             <p>{tran.filerName}</p>

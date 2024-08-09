@@ -72,7 +72,7 @@ const AnalystUpgradesDowngrades = ({ stockSummary }) => {
                 {
                     !loadMore
                         ?
-                        <table className="table mb-5">
+                        <table className="table table-sm sm:table-md border border-neutral-700 rounded-lg mb-5">
                             <thead>
                                 <tr>
                                     <th>{t('stock.upgrades_downgrades.Date')}</th>
@@ -114,7 +114,7 @@ const AnalystUpgradesDowngrades = ({ stockSummary }) => {
                                 </div>
                             }
                         >
-                            <table className="table mb-5">
+                            <table className="table table-sm sm:table-md border border-neutral-700 rounded-lg mb-5">
                                 <thead>
                                     <tr>
                                         <th>Date</th>

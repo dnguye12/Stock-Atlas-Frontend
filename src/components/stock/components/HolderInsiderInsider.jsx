@@ -10,10 +10,10 @@ const HolderInsiderInsider = ({ insiderHolders }) => {
                     <h3 className="font-semibold text-white mb-3">Top Insider Holders</h3>
 
                     <p className="text-sm mb-3">Insider roster data is derived solely from the last 24 months of Form 3 & Form 4 SEC filings.</p>
-                    <table className="table">
+                    <table className="table table-sm sm:table-md border border-neutral-700 rounded-lg">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th className="hidden sm:table-cell"></th>
                                 <th>Individual or Entity</th>
                                 <th>Position</th>
                                 <th>Shares Owned</th>
@@ -24,7 +24,7 @@ const HolderInsiderInsider = ({ insiderHolders }) => {
                                 insiderHolders.holders.filter((a) => a.positionDirect).sort((a, b) => b.positionDirect - a.positionDirect).map((holder, idx) => (
                                     idx < 10 &&
                                     <tr key={idx}>
-                                        <td>{idx + 1}</td>
+                                        <td className="hidden sm:table-cell">{idx + 1}</td>
                                         <td className="name">{holder.name || '-'}</td>
                                         <td>{holder.relation || '-'}</td>
                                         <td className="pos">{formatNumber(holder.positionDirect)}</td>
