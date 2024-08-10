@@ -147,3 +147,10 @@ export const getYahooNews = async (ticker, count = 10) => {
     const request = await dailyAxios.get(query)
     return request.data
 }
+
+export const getYahooESG = async (ticker) => {
+    let query = baseUrl + quoteUrl + `/${ticker}/esg`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}

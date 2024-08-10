@@ -1,28 +1,50 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react"
 import moment from 'moment';
-import { getStockLogo, getYahooQuoteSummary } from "../../services/stock"
+import { useNavigate } from 'react-router-dom';
 
+import { getStockLogo, getYahooESG, getYahooQuoteSummary } from "../../services/stock"
 import { formatMarketCap } from "../../utils/moneyUtils"
 import { formatNumber } from "../../utils/numberUtils";
+import { truncateText } from "../../utils/textUtils";
+
+const ESGScore = ({ name, score, percentile, performance }) => {
+    return (
+        <div className="flex flex-col border border-neutral-700 rounded p-4">
+            <h3 className="text-sm text-white font-semibold">{name}</h3>
+            <div className="flex mt-2">
+                <h4 className="text-white font-semibold">{score}</h4>
+                {
+                    percentile !== 'N/A' &&
+                    <>
+                        <div className="divider divider-horizontal"></div>
+                        <span className="text-sm">{percentile}</span>
+                    </>
+                }
+            </div>
+            {
+                performance !== 'N/A' &&
+                <span>{performance}</span>
+            }
+        </div>
+    )
+}
 
 const StockProfile = ({ ticker, stockQuote }) => {
+    const navigate = useNavigate();
 
     const [logoImg, setLogoImage] = useState('')
     const [stockSummary, setStockSummary] = useState(null)
+    const [stockEsg, setStockEsg] = useState(null)
+    const [doneLoadingEsg, setDoneLoadingEsg] = useState(false)
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchSummary = async () => {
             try {
-                const [summary, logo] = await Promise.all([
-                    getYahooQuoteSummary(ticker, ['assetProfile', 'incomeStatementHistory', 'quoteType']),
-                    getStockLogo(ticker)
-                ]);
-                setStockSummary(summary)
-                setLogoImage(`data:image/png;base64,${logo}`)
+                const summary = await getYahooQuoteSummary(ticker, ['assetProfile', 'incomeStatementHistory', 'quoteType']);
+                setStockSummary(summary);
             } catch (error) {
-                console.log("Error fetching data: ", error);
-
+                console.log("Error fetching stock summary: ", error);
                 return (
                     <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
                         <p className="text-center text-white text-lg font-semibold">Stock profile data is currently not available for {ticker}.</p>
@@ -31,7 +53,34 @@ const StockProfile = ({ ticker, stockQuote }) => {
             }
         };
 
-        fetchData();
+        fetchSummary();
+    }, [ticker]);
+
+    useEffect(() => {
+        const fetchLogo = async () => {
+            try {
+                const logo = await getStockLogo(ticker);
+                setLogoImage(`data:image/png;base64,${logo}`);
+            } catch (error) {
+                console.log("Error fetching stock logo: ", error);
+            }
+        };
+
+        fetchLogo();
+    }, [ticker]);
+
+    useEffect(() => {
+        const fetchEsg = async () => {
+            try {
+                const esg = await getYahooESG(ticker);
+                setStockEsg(esg);
+                setDoneLoadingEsg(true)
+            } catch (error) {
+                console.log("Error fetching ESG data: ", error);
+            }
+        };
+
+        fetchEsg();
     }, [ticker]);
 
     if (!stockSummary) {
@@ -59,10 +108,10 @@ const StockProfile = ({ ticker, stockQuote }) => {
 
                 <h3 className="font-semibold text-white mb-3">Company Description</h3>
                 {
-                (stockSummary.assetProfile && stockSummary.assetProfile.longBusinessSummary) 
-                ? <p className="text-base">{stockSummary.assetProfile.longBusinessSummary.trim()}</p>
-                : <p>Company description data is currently not available for {ticker}.</p>
-            }
+                    (stockSummary.assetProfile && stockSummary.assetProfile.longBusinessSummary)
+                        ? <p className="text-base">{stockSummary.assetProfile.longBusinessSummary.trim()}</p>
+                        : <p>Company description data is currently not available for {ticker}.</p>
+                }
             </div>
 
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-4">
@@ -176,6 +225,61 @@ const StockProfile = ({ ticker, stockQuote }) => {
                             A decile score of 1 indicates lower governance risk, while a 10 indicates higher governance risk.</p>
                     </div>
                 }
+                {
+                    stockEsg
+                    &&
+                    <>
+                        <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
+                            <h3 className="font-semibold text-white mb-3">Environment, Social and Governance (ESG) Risk Ratings</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                {
+                                    stockEsg.esgScore.map((esg, idx) => (
+                                        <ESGScore key={idx} name={esg.type} score={esg.score} percentile={esg.percentile} performance={esg.performance} />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                        <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
+                            <h3 className="font-semibold text-white mb-3">ESG Risk Score for Peers</h3>
+                            <table className="table table-sm border border-neutral-700 rounded-lg">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Total</th>
+                                        <th>E</th>
+                                        <th>S</th>
+                                        <th>G</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        stockEsg.peerScore.map((peer, idx) => (
+                                            <tr key={idx}>
+                                                <td>
+                                                    <div className="flex flex-col">
+                                                        <h4 className="font-semibold cursor-pointer text-blue-500 hover:text-blue-400 duration-300" onClick={() => navigate(`/stock/${peer.ticker}`)}>{peer.ticker}</h4>
+                                                        <p className="text-xs font-semibold">{truncateText(peer.name, 22)}</p>
+                                                    </div>
+                                                </td>
+                                                <td>{peer.totalESGScore}</td>
+                                                <td>{peer.environmentalScore}</td>
+                                                <td>{peer.socialScore}</td>
+                                                <td>{peer.governanceScore}</td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </>
+                }
+                {
+                    !doneLoadingEsg &&
+                    <>
+                        <div className="skeleton w-full h-60 bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10"></div>
+                        <div className="skeleton w-full h-60 bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10"></div>
+                    </>
+                }
             </div>
 
             <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10 mt-4">
@@ -208,7 +312,7 @@ const StockProfile = ({ ticker, stockQuote }) => {
                         <p className="text-sm">Key Executives data is currently not available for {ticker}.</p>
                 }
             </div>
-        </div>
+        </div >
     )
 }
 

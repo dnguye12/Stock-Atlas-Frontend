@@ -10,11 +10,19 @@
     @apply mr-0
 }
 
-.stock-header .navbar .btn {
+.stock-header .navbar .btn, .stock-stats .navbar .btn {
     @apply text-base rounded-none transition duration-300 border-b-2 border-b-neutral-950
 }
 
-.stock-header .navbar .btn.active {
+.stock-stats .navbar .btn {
+    @apply text-sm
+}
+
+.stock-stat .navbar .btn {
+    @apply text-sm rounded-none transition duration-300 border-b-2 border-b-neutral-950
+}
+
+.stock-header .navbar .btn.active, .stock-stats .navbar .btn.active {
     @apply text-white border-b-2 border-b-up
 }
 
@@ -139,15 +147,23 @@
 }
 
 .stock-profile .table thead th {
-    @apply text-white text-sm
+    @apply text-xs sm:text-sm font-semibold text-white border border-neutral-700
 }
 
 .stock-profile .table tbody th {
-    @apply text-white text-sm font-semibold
+    @apply text-white text-sm font-semibold border-l border-l-neutral-700
 }
 
 .stock-profile .table tbody .name {
     @apply text-white text-sm
+}
+
+.stock-profile .table tbody tr {
+    @apply border border-neutral-700
+}
+
+.stock-profile .table tbody tr td {
+    @apply text-xs sm:text-sm border-l border-l-neutral-700
 }
 
 .stock-profile .my-address {
