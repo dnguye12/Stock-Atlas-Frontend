@@ -62,7 +62,7 @@ const StockNews = ({ ticker }) => {
     }
 
     return (
-        <div className="bg-neutral-950 border border-neutral-700 rounded p-4 mt-4">
+        <div className="bg-neutral-950 border border-neutral-700 rounded p-4 mt-7">
             <h2 className="text-white text-lg font-bold mb-3">Recent News: {ticker}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                 {

@@ -154,3 +154,17 @@ export const getYahooESG = async (ticker) => {
     const request = await dailyAxios.get(query)
     return request.data
 }
+
+export const getYahooIncomeAnnual = async (ticker) => {
+    let query = baseUrl + quoteUrl + `/${ticker}/income-annual`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}
+
+export const getYahooIncomeQuarter = async (ticker) => {
+    let query = baseUrl + quoteUrl + `/${ticker}/income-quarterly`
+    
+    const request = await dailyAxios.get(query)
+    return request.data
+}

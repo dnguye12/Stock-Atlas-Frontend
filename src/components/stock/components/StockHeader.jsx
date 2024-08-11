@@ -2,12 +2,15 @@
 import { useEffect, useState } from "react"
 
 import { Link, useLocation } from 'react-router-dom'
-import { getStockLogo } from "../../../services/stock"
+import { getStockLogo, getYahooQuoteSummary } from "../../../services/stock"
 import { myToLocaleString, percentageDiff } from "../../../utils/numberUtils"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const StockHeader = ({ chartInterval, chartQuote, stockQuote, ticker }) => {
     const [logoImg, setLogoImage] = useState('')
+
+    const [incomeStatement, setIncomeStatement] = useState(null)
+    const [loadIncomeStatement, setLoadIncomeStatement] = useState(true)
     const location = useLocation();
 
     useEffect(() => {
@@ -17,6 +20,8 @@ const StockHeader = ({ chartInterval, chartQuote, stockQuote, ticker }) => {
 
                 if (logo) {
                     setLogoImage(`data:image/png;base64,${logo}`)
+                } else {
+                    setLogoImage('');
                 }
             } catch (error) {
                 setLogoImage('')
@@ -26,7 +31,24 @@ const StockHeader = ({ chartInterval, chartQuote, stockQuote, ticker }) => {
         fetchLogo()
     }, [ticker])
 
-    if (!stockQuote || !chartQuote) {
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getYahooQuoteSummary(ticker, ['incomeStatementHistory'])
+
+                if (data) {
+                    setIncomeStatement(data)
+                    setLoadIncomeStatement(false)
+                }
+            } catch (error) {
+                console.log(error)
+                setLoadIncomeStatement(false)
+            }
+        }
+        fetchData()
+    }, [ticker])
+
+    if (!stockQuote || !chartQuote || loadIncomeStatement) {
         return (
             <div>...Loading</div>
         )
@@ -89,6 +111,9 @@ const StockHeader = ({ chartInterval, chartQuote, stockQuote, ticker }) => {
             <div className="navbar">
                 <Link to={`/stock/${ticker}`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}` ? 'active' : ''}`}>Overview</Link>
                 <Link to={`/stock/${ticker}/news`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/news` ? 'active' : ''}`}>News</Link>
+                {incomeStatement && !loadIncomeStatement &&
+                    <Link to={`/stock/${ticker}/financials`} className={`btn btn-ghost rounded ${location.pathname.includes(`/stock/${ticker}/financials`) ? 'active' : ''}`}>Financials</Link>
+                }
                 <Link to={`/stock/${ticker}/statistics`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/statistics` ? 'active' : ''}`}>Statistics</Link>
                 <Link to={`/stock/${ticker}/analyst-ratings`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/analyst-ratings` ? 'active' : ''}`}>Analyst Ratings</Link>
                 {
@@ -97,7 +122,7 @@ const StockHeader = ({ chartInterval, chartQuote, stockQuote, ticker }) => {
                 <Link to={`/stock/${ticker}/holderinsider`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/holderinsider` ? 'active' : ''}`}>Holders & Insiders</Link>
                 <Link to={`/stock/${ticker}/profile`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/profile` ? 'active' : ''}`}>Profile</Link>
             </div>
-            <div className="divider my-3"></div>
+            <div className="divider mt-3 mb-0"></div>
         </div>
     )
 }

@@ -7,7 +7,7 @@ import StockUpSell from "./components/StockUpSell"
 
 const StockHome = ({chartInterval, chartQuote, stockChart, setChartInterval,stockQuote, stockSummary,ticker}) => {
     return (
-        <div>
+        <div className="mt-3">
             <RangeButtons chartInterval={chartInterval} setChartInterval={setChartInterval} />
             <StockChart key={`${chartInterval}-${chartQuote.length}`} data={chartQuote} prevClose={stockChart.meta.previousClose} chartInterval={chartInterval} />
             <StockStat stockQuote={stockQuote} stockSummary={stockSummary} />

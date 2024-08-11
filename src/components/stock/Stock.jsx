@@ -14,6 +14,7 @@ import StockHome from "./StockHome"
 import StockHolderInsider from "./StockHolderInsider"
 import StockOptions from "./StockOptions"
 import StockNews from "./StockNews"
+import StockFinancials from "./StockFinancials"
 
 const Stock = () => {
     const ticker = useParams().ticker
@@ -153,14 +154,15 @@ const Stock = () => {
                 <StockHeader chartInterval={chartInterval} chartQuote={chartQuote} ticker={ticker} stockChart={stockChart} stockQuote={stockQuote} />
 
                 <Routes>
-                    <Route path='/' element={<StockHome chartInterval={chartInterval} chartQuote={chartQuote}  stockChart={stockChart} setChartInterval={setChartInterval} stockQuote={stockQuote} stockSummary={stockSummary} ticker={ticker}/>} />
+                    <Route path='/' element={<StockHome chartInterval={chartInterval} chartQuote={chartQuote} stockChart={stockChart} setChartInterval={setChartInterval} stockQuote={stockQuote} stockSummary={stockSummary} ticker={ticker} />} />
                     <Route path='news' element={<StockNews ticker={ticker} />} />
-                    <Route path='statistics' element={<StockStatistics stockQuote={stockQuote}/>} />
+                    <Route path='financials/*' element={<StockFinancials ticker={ticker} stockQuote={stockQuote}/>} />
+                    <Route path='statistics' element={<StockStatistics ticker={ticker} stockQuote={stockQuote} />} />
                     <Route path='options' element={<StockOptions />} />
-                    <Route path='analyst-ratings' element={<StockAnalystRating ticker={ticker} stockQuote={stockQuote}/>} />
-                    <Route path='dividends' element={<StockDividend ticker={ticker} stockQuote={stockQuote}/>} />
+                    <Route path='analyst-ratings' element={<StockAnalystRating ticker={ticker} stockQuote={stockQuote} />} />
+                    <Route path='dividends' element={<StockDividend ticker={ticker} stockQuote={stockQuote} />} />
                     <Route path='holderinsider' element={<StockHolderInsider ticker={ticker} />} />
-                    <Route path='profile' element={<StockProfile ticker={ticker} stockQuote={stockQuote}/>} />
+                    <Route path='profile' element={<StockProfile ticker={ticker} stockQuote={stockQuote} />} />
                 </Routes>
             </div>
             <div className="hidden lg:block w-1/3 p-3">
