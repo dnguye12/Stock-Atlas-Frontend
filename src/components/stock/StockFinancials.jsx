@@ -16,7 +16,7 @@ const StockFinancials = ({ ticker, stockQuote }) => {
                     <Route path='/' element={<FinancialsIncome ticker={ticker} stockQuote={stockQuote}/>} />
                     <Route path='balance-sheet' element={<FinancialsBalanceSheet ticker={ticker}/>} />
                     <Route path='cash-flow' element={<FinancialsCashFlow ticker={ticker}/>} />
-                    <Route path='ratios' element={<FinancialsRatios />} />
+                    <Route path='ratios' element={<FinancialsRatios ticker={ticker}/>} />
                 </Routes>
             </div>
         </div>

@@ -196,3 +196,17 @@ export const getYahooCashFlowQuarter = async(ticker) => {
     const request = await dailyAxios.get(query)
     return request.data
 }
+
+export const getYahooRatiosAnnual = async(ticker) => {
+    let query = baseUrl + quoteUrl + `/${ticker}/ratios-annual`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}
+
+export const getYahooRatiosQuarterly = async(ticker) => {
+    let query = baseUrl + quoteUrl + `/${ticker}/ratios-quarterly`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}
