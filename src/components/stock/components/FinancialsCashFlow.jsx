@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 
 import { useEffect, useState } from "react"
-import { getYahooIncomeAnnual, getYahooIncomeQuarter } from "../../../services/stock"
+import { getYahooCashFlowAnnual, getYahooCashFlowQuarter } from "../../../services/stock"
 
-const FinancialsIncome = ({ ticker, stockQuote }) => {
+const FinancialsCashFlow = ({ ticker }) => {
     const [showAnnual, setShowAnnual] = useState(true)
     const [annualData, setAnnualData] = useState(null)
     const [loadingAnnual, setLoadingAnnual] = useState(true)
@@ -13,7 +13,7 @@ const FinancialsIncome = ({ ticker, stockQuote }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getYahooIncomeAnnual(ticker)
+                const data = await getYahooCashFlowAnnual(ticker)
 
                 if (data) {
                     setAnnualData(data)
@@ -30,7 +30,7 @@ const FinancialsIncome = ({ ticker, stockQuote }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getYahooIncomeQuarter(ticker)
+                const data = await getYahooCashFlowQuarter(ticker)
 
                 if (data) {
                     setQuarterData(data)
@@ -53,7 +53,7 @@ const FinancialsIncome = ({ ticker, stockQuote }) => {
     if (!annualData || !quarterData) {
         return (
             <div>
-                <p className="text-center text-white text-lg font-semibold mt-5">Income statement data is currently not available for {ticker}.</p>
+                <p className="text-center text-white text-lg font-semibold mt-5">Balance sheet data is currently not available for {ticker}.</p>
             </div>
         )
     }
@@ -63,7 +63,6 @@ const FinancialsIncome = ({ ticker, stockQuote }) => {
             <div className="w-full flex justify-between">
                 <div className="flex flex-col justify-center">
                     <p className="text-sm">All numbers in thousands</p>
-                    <p className="text-sm">Currency in {stockQuote.currency}</p>
                 </div>
                 <div>
                     <button className={`btn btn-ghost rounded-none ${showAnnual && "text-white border-b-2 border-b-up"}`} onClick={() => setShowAnnual(true)}>Annual</button>
@@ -134,4 +133,4 @@ const FinancialsIncome = ({ ticker, stockQuote }) => {
     )
 }
 
-export default FinancialsIncome
+export default FinancialsCashFlow

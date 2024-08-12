@@ -168,3 +168,31 @@ export const getYahooIncomeQuarter = async (ticker) => {
     const request = await dailyAxios.get(query)
     return request.data
 }
+
+export const getYahooBalanceSheetAnnual = async(ticker) => {
+    let query = baseUrl + quoteUrl + `/${ticker}/balance-sheet-annual`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}
+
+export const getYahooBalanceSheetQuarter = async(ticker) => {
+    let query = baseUrl + quoteUrl + `/${ticker}/balance-sheet-quarterly`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}
+
+export const getYahooCashFlowAnnual = async(ticker) => {
+    let query = baseUrl + quoteUrl + `/${ticker}/cash-flow-annual`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}
+
+export const getYahooCashFlowQuarter = async(ticker) => {
+    let query = baseUrl + quoteUrl + `/${ticker}/cash-flow-quarterly`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}

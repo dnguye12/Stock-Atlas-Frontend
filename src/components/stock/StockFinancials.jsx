@@ -14,8 +14,8 @@ const StockFinancials = ({ ticker, stockQuote }) => {
             <div className="w-full px-5">
                 <Routes>
                     <Route path='/' element={<FinancialsIncome ticker={ticker} stockQuote={stockQuote}/>} />
-                    <Route path='balance-sheet' element={<FinancialsBalanceSheet />} />
-                    <Route path='cash-flow' element={<FinancialsCashFlow />} />
+                    <Route path='balance-sheet' element={<FinancialsBalanceSheet ticker={ticker}/>} />
+                    <Route path='cash-flow' element={<FinancialsCashFlow ticker={ticker}/>} />
                     <Route path='ratios' element={<FinancialsRatios />} />
                 </Routes>
             </div>
