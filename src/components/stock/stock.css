@@ -14,7 +14,7 @@
     @apply text-base rounded-none transition duration-300 border-b-2 border-b-neutral-950
 }
 
-.stock-stats .navbar .btn {
+.stock-stat .navbar .btn {
     @apply text-sm
 }
 
@@ -22,7 +22,7 @@
     @apply text-sm rounded-none transition duration-300 border-b-2 border-b-neutral-950
 }
 
-.stock-header .navbar .btn.active, .stock-stats .navbar .btn.active, .stock-finance .navbar .btn.active {
+.stock-header .navbar .btn.active, .stock-stat .navbar .btn.active, .stock-finance .navbar .btn.active {
     @apply text-white border-b-2 border-b-up
 }
 

@@ -29,20 +29,22 @@ const FinancialsRatios = ({ ticker }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const data = await getYahooRatiosQuarterly(ticker)
+            if (!loadingAnnual) {
+                try {
+                    const data = await getYahooRatiosQuarterly(ticker)
 
-                if (data) {
-                    setQuarterData(data)
+                    if (data) {
+                        setQuarterData(data)
+                        setLoadingQuarter(false)
+                    }
+                } catch (error) {
                     setLoadingQuarter(false)
+                    console.log(error)
                 }
-            } catch (error) {
-                setLoadingQuarter(false)
-                console.log(error)
             }
         }
         fetchData()
-    }, [ticker])
+    }, [ticker, loadingAnnual])
 
     if ((loadingAnnual && showAnnual) || (loadingQuarter && !showAnnual)) {
         return (
@@ -50,15 +52,13 @@ const FinancialsRatios = ({ ticker }) => {
         )
     }
 
-    if (!annualData || !quarterData) {
+    if ((!annualData && !loadingAnnual) || (!quarterData && !loadingQuarter)) {
         return (
             <div>
                 <p className="text-center text-white text-lg font-semibold mt-5">Ratios data is currently not available for {ticker}.</p>
             </div>
         )
     }
-
-    console.group(annualData)
 
     return (
         <div className="">
