@@ -16,11 +16,12 @@ const Active = () => {
         const fetchData = async () => {
             try {
                 const data = await getYahooDailyActives(5)
-                setActives(data)
+                if (data) {
+                    setActives(data)
+                    setIsLoading(false)
+                }
             } catch (error) {
                 console.log("Getting daily actives: ", error)
-            } finally {
-                setIsLoading(false)
             }
         }
 

@@ -16,11 +16,12 @@ const Losers = () => {
         const fetchData = async () => {
             try {
                 const data = await getYahooDailyLosers(5)
-                setLosers(data)
+                if(data) {
+                    setLosers(data)
+                    setIsLoading(false)
+                }
             } catch (error) {
                 console.log("Getting gainers: ", error)
-            } finally {
-                setIsLoading(false)
             }
         }
 

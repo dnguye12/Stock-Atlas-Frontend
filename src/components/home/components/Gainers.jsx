@@ -17,11 +17,12 @@ const Gainers = () => {
         const fetchData = async () => {
             try {
                 const data = await getYahooDailyGainers(5)
-                setGainers(data.quotes)
+                if (data && data.quotes) {
+                    setGainers(data.quotes)
+                    setIsLoading(false)
+                }
             } catch (error) {
                 console.log("Getting gainers: ", error)
-            } finally {
-                setIsLoading(false)
             }
         }
 
@@ -56,7 +57,7 @@ const Gainers = () => {
                                 {gainer.displayName
                                     ? <td className="name">{truncateText(gainer.displayName)}</td>
                                     : <td className="name">{truncateText(gainer.shortName)}</td>}
-                                <td>{ formatMarketCap(gainer.marketCap)}</td>
+                                <td>{formatMarketCap(gainer.marketCap)}</td>
                                 <td>
                                     <p className="price">{`$${gainer.regularMarketPrice.toFixed(2)}`}</p>
                                     <p className="change text-up"><FontAwesomeIcon icon="fa-solid fa-caret-up" /> {`${gainer.regularMarketChangePercent.toFixed(2)}%`}</p>
