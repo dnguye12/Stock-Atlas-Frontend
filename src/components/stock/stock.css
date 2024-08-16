@@ -208,3 +208,11 @@
 .stock-finance .finan-table tbody th {
     @apply text-white font-semibold text-xs
 }
+
+.stock-stat .table tbody th {
+    @apply text-white font-semibold
+}
+
+.stock-stat .table tbody td span {
+    @apply text-white
+}

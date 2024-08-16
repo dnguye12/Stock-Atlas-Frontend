@@ -33,7 +33,7 @@ const StockAnalystRating = ({ticker, stockQuote}) => {
     }
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-7">
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
                 <AnalystBuyConsensus ticker={ticker} stockQuote={stockQuote} stockSummary={stockSummary} />
                 <AnalystOverview ticker={ticker} stockQuote={stockQuote} stockSummary={stockSummary} />

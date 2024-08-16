@@ -90,7 +90,7 @@ const StockProfile = ({ ticker, stockQuote }) => {
     }
 
     return (
-        <div className="stock-profile flex flex-col">
+        <div className="stock-profile flex flex-col mt-7">
             <div className="bg-neutral-950 border border-neutral-700 rounded p-4 border-spacing-10">
                 <div className="flex flex-col items-center">
                     <h2 className="font-semibold text-white mb-3 text-2xl">{stockSummary.quoteType.longName}</h2>

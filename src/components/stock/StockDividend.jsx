@@ -39,7 +39,7 @@ const StockDividend = ({ticker, stockQuote}) => {
     }
 
     return (
-        <div className="stock-dividend grid grid-cols-1 gap-4">
+        <div className="stock-dividend grid grid-cols-1 gap-4 mt-7">
             <DividendScore ticker={ticker} stockQuote={stockQuote} divData={divData} stockSummary={stockSummary} />
             <DividendOverview stockQuote={stockQuote} divData={divData} stockSummary={stockSummary} />
             <DividendGrowth divData={divData} />

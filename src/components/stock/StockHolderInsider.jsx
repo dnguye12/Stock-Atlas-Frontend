@@ -39,7 +39,7 @@ const StockHolderInsider = ({ ticker }) => {
     }
 
     return (
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full mt-3">
             <HolderInsiderMajorHolders ticker={ticker} majorHoldersBreakdown={stockSummary.majorHoldersBreakdown} />
             <HolderInsiderInstitution ticker={ticker} institutionOwnership={stockSummary.institutionOwnership} />
             <HolderInsiderInsider ticker={ticker} insiderHolders={stockSummary.insiderHolders} />

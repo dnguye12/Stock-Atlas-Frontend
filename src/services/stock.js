@@ -210,3 +210,10 @@ export const getYahooRatiosQuarterly = async(ticker) => {
     const request = await dailyAxios.get(query)
     return request.data
 }
+
+export const getYahooAltmanScore = async(ticker) => {
+    let query = baseUrl + quoteUrl + `/${ticker}/altman-score`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}

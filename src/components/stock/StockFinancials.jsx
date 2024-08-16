@@ -11,7 +11,7 @@ const StockFinancials = ({ ticker, stockQuote }) => {
     return (
         <div className="stock-finance w-full flex flex-col mt-0">
             <FinancialsHeader ticker={ticker} />
-            <div className="w-full px-5">
+            <div className="w-full px-5 mt-1">
                 <Routes>
                     <Route path='/' element={<FinancialsIncome ticker={ticker} stockQuote={stockQuote}/>} />
                     <Route path='balance-sheet' element={<FinancialsBalanceSheet ticker={ticker}/>} />
