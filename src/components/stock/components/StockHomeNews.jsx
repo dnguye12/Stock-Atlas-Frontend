@@ -75,7 +75,9 @@ const StockHomeNews = ({ ticker }) => {
                             </div>
                             <div>
                                 {n.thumbnail && n.thumbnail.resolutions
-                                    ? <img src={n.thumbnail.resolutions[1].url} className="rounded drop-shadow" />
+                                    ? n.thumbnail.resolutions[1]
+                                        ? <img src={n.thumbnail.resolutions[1].url} className="rounded drop-shadow aspect-square max-w-28" />
+                                        : <img src={n.thumbnail.resolutions[0].url} className="rounded drop-shadow aspect-square max-w-28" />
                                     : <div className="rounded drop-shadow border border-neutral-700 w-28 h-28 flex justify-center items-center text-2xl"><FontAwesomeIcon icon="fa-regular fa-image" /></div>
                                 }
                             </div>

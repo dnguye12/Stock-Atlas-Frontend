@@ -72,7 +72,7 @@ const StockNews = ({ ticker }) => {
                                 <a href={n.link} target="_blank" className="text-white font-semibold text-sm mb-1 hover:text-blue-500 transition duration-300">{n.title}</a>
                                 <p className="text-sm mb-1">{n.publisher} - {moment(n.providerPublishTime).format('MMM Do, YYYY')}</p>
                                 <div>
-                                    { n.relatedTickers &&
+                                    {n.relatedTickers &&
                                         n.relatedTickers.map((rela, idx) => (
                                             <Link key={idx} className="badge badge-outline border-neutral-500 mr-1 text-blue-500 font-semibold" to={`/stock/${rela}`}>{rela}</Link>
                                         ))
@@ -81,7 +81,9 @@ const StockNews = ({ ticker }) => {
                             </div>
                             <div className="">
                                 {n.thumbnail && n.thumbnail.resolutions
-                                    ? <img src={n.thumbnail.resolutions[1].url} className="rounded drop-shadow" />
+                                    ? n.thumbnail.resolutions[1]
+                                        ? <img src={n.thumbnail.resolutions[1].url} className="rounded drop-shadow max-w-28" />
+                                        : <img src={n.thumbnail.resolutions[0].url} className="rounded drop-shadow max-w-28" />
                                     : <div className="rounded drop-shadow border border-neutral-700 w-28 h-28 flex justify-center items-center text-2xl"><FontAwesomeIcon icon="fa-regular fa-image" /></div>
                                 }
                             </div>

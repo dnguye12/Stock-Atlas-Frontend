@@ -115,6 +115,7 @@ const StockHeader = ({ chartInterval, chartQuote, stockQuote, ticker }) => {
                     <Link to={`/stock/${ticker}/financials`} className={`btn btn-ghost rounded ${location.pathname.includes(`/stock/${ticker}/financials`) ? 'active' : ''}`}>Financials</Link>
                 }
                 <Link to={`/stock/${ticker}/statistics`} className={`btn btn-ghost rounded ${location.pathname.includes(`/stock/${ticker}/statistics`) ? 'active' : ''}`}>Statistics</Link>
+                <Link to={`/stock/${ticker}/options`} className={`btn btn-ghost rounded ${location.pathname.includes(`/stock/${ticker}/options`) ? 'active' : ''}`}>Options</Link>
                 <Link to={`/stock/${ticker}/analyst-ratings`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/analyst-ratings` ? 'active' : ''}`}>Analyst Ratings</Link>
                 {
                     (stockQuote.dividendDate && stockQuote.trailingAnnualDividendRate) ? <Link to={`/stock/${ticker}/dividends`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/dividends` ? 'active' : ''}`}>Dividends</Link> : null

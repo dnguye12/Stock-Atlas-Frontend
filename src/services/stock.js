@@ -6,6 +6,7 @@ const chartUrl = import.meta.env.VITE_CHART_API_URL
 const dailyUrl = import.meta.env.VITE_DAILY_API_URL
 const quoteUrl = import.meta.env.VITE_QUOTE_API_URL
 const insightsUrl = import.meta.env.VITE_INSIGHTS_API_URL
+const optionsUrl = import.meta.env.VITE_OPTIONS_API_URL
 
 const chartAxios = setupCache(axios.create(), {
     ttl: 60000, // 1 minute cache for chart data
@@ -213,6 +214,13 @@ export const getYahooRatiosQuarterly = async(ticker) => {
 
 export const getYahooAltmanScore = async(ticker) => {
     let query = baseUrl + quoteUrl + `/${ticker}/altman-score`
+
+    const request = await dailyAxios.get(query)
+    return request.data
+}
+
+export const getYahooOptions = async(ticker) => {
+    let query = baseUrl + optionsUrl + `/${ticker}`
 
     const request = await dailyAxios.get(query)
     return request.data

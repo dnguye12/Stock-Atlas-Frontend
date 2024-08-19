@@ -24,7 +24,7 @@ const AnalystOverview = ({ ticker, stockQuote, stockSummary }) => {
             <div className="grid grid-cols-2 gap-5">
                 <div className="detail">
                     <button onClick={() => document.getElementById('my-analystoverview-totalAnalyst').showModal()}><h4 className="detail-title">{t("stock.analyst_rating.Total Analyst")}<FontAwesomeIcon icon="fa-regular fa-circle-question" className="ms-1 sm:ms-2" /></h4></button>
-                    <p className="detail-count">{totalAnalyst}</p>
+                    <p className="detail-count text-white">{totalAnalyst}</p>
                     <dialog id="my-analystoverview-totalAnalyst" className="modal">
                         <div className="modal-box">
                             <h3 className="text-lg font-bold">{t("stock.analyst_rating.Total Analyst")}</h3>
@@ -70,7 +70,7 @@ const AnalystOverview = ({ ticker, stockQuote, stockSummary }) => {
                 </div>
                 <div className="detail">
                     <button onClick={() => document.getElementById('my-analystoverview-priceTarget').showModal()}><h4 className="detail-title">Price Target<FontAwesomeIcon icon="fa-regular fa-circle-question" className="ms-1 sm:ms-2" /></h4></button>
-                    <p className="detail-count">{currToSymbol(stockQuote.currency)}{stockSummary.financialData.targetMeanPrice}</p>
+                    <p className="detail-count text-white">{currToSymbol(stockQuote.currency)}{stockSummary.financialData.targetMeanPrice}</p>
                     <dialog id="my-analystoverview-priceTarget" className="modal">
                         <div className="modal-box">
                             <h3 className="text-lg font-bold">{t("stock.analyst_rating.Price Target")}</h3>

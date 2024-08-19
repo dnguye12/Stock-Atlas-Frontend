@@ -103,11 +103,11 @@
 }
 
 .my-analystoverview .grid .detail .detail-count {
-    @apply font-semibold text-sm
+    @apply font-semibold text-base
 }
 
 .my-analystoverview .grid .detail .modal .modal-box {
-    @apply bg-neutral-800 text-center
+    @apply bg-neutral-950 rounded border border-neutral-700 text-center
 }
 
 .my-analystoverview .grid .detail .modal .modal-box h3 {
@@ -197,6 +197,7 @@
 .stock-finance .finan-table tr {
     @apply border border-neutral-700
 }
+
 .stock-finance .finan-table thead th {
     @apply text-xs font-semibold text-white border-l border-l-neutral-700
 }
@@ -215,4 +216,28 @@
 
 .stock-stat .table tbody td span {
     @apply text-white
+}
+
+.stock-options .grid .modal .modal-box {
+    @apply bg-neutral-950 rounded border border-neutral-700 text-center
+}
+
+.stock-options .grid .modal .modal-box h3 {
+    @apply text-white
+}
+
+.stock-options .grid .modal .modal-box p span {
+    @apply font-semibold
+}
+
+.stock-options .table tr {
+    @apply border border-neutral-700
+}
+
+.stock-options .table thead th {
+    @apply font-semibold text-white border border-neutral-700
+}
+
+.stock-options .table tr td {
+    @apply border-l border-l-neutral-700
 }
