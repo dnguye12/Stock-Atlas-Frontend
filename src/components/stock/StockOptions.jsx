@@ -86,7 +86,7 @@ const StockOptions = ({ ticker }) => {
     return (
         <div className="stock-options flex flex-col">
             <OptionsSummary ticker={ticker} summaryData={summaryData} />
-            <OptionsChart optionsDates={optionsDates} stockOptions={stockOptions} />
+            <OptionsChart ticker={ticker} optionsDates={optionsDates} stockOptions={stockOptions} />
             <OptionsByDate ticker={ticker} optionsDates={optionsDates} stockOptions={stockOptions}/>
         </div>
     )

@@ -5,8 +5,8 @@ import moment from 'moment';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const OptionsChart = ({ optionsDates, stockOptions }) => {
-    const labels = optionsDates.map(date => moment(date).format("YYYY"))
+const OptionsChart = ({ ticker, optionsDates, stockOptions }) => {
+    const labels = optionsDates.map(date => moment(date).format("DD-MM-YYYY"))
     let dataCalls = []
     let dataPuts = []
     let helperCall = 0
@@ -70,7 +70,12 @@ const OptionsChart = ({ optionsDates, stockOptions }) => {
                 },
             },
             title: {
-                display: false,
+                display: true,
+                text: `${ticker} options chart`,
+                color: 'white',
+                font: {
+                    size: 16,
+                }
             },
             tooltip: {
                 mode: 'index',
@@ -89,9 +94,9 @@ const OptionsChart = ({ optionsDates, stockOptions }) => {
                 ticks: {
                     color: 'white',
                     callback: function (value, index, ticks) {
-                        const currentLabel = this.getLabelForValue(value);
-                        const previousLabel = index > 0 ? this.getLabelForValue(ticks[index - 1].value) : null;
-
+                        const currentLabel = this.getLabelForValue(value).split('-')[2]; // Extract the year from the date string
+                        const previousLabel = index > 0 ? this.getLabelForValue(ticks[index - 1].value).split('-')[2] : null;
+                
                         // Display label only if different from the previous one
                         return currentLabel !== previousLabel ? currentLabel : '';
                     },
