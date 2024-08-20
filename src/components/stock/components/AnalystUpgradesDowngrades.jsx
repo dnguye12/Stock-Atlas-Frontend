@@ -89,8 +89,12 @@ const AnalystUpgradesDowngrades = ({ stockSummary }) => {
 
                                                 gradeNumber(grade.action) !== 0
                                                     ? gradeNumber(grade.action) === -1
-                                                        ? { backgroundColor: "rgba(214, 10, 34, 0.5)" }
-                                                        : { backgroundColor: "rgba(3, 123, 102, 0.5)" }
+                                                        ? { backgroundColor: "rgba(255, 88, 97, 0.5)",
+                                                            color: "white"
+                                                         }
+                                                        : { backgroundColor: "rgba(0, 169, 110, 0.5)",
+                                                            color: "white"
+                                                         }
                                                     : {}
                                             }>
                                                 <td>{grade.epochGradeDate.split('T')[0]}</td>

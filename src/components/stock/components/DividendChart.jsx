@@ -18,7 +18,7 @@ const DividendChart = ({ data, grow }) => {
             layout: {
                 background: {
                     type: ColorType.Solid,
-                    color: 'rgba( 38, 166, 154, 0)'
+                    color: 'rgba(0, 169, 110, 0)'
                 },
                 textColor: 'white',
             },
@@ -73,15 +73,15 @@ const DividendChart = ({ data, grow }) => {
         let mySeries;
         if (grow >= 0) {
             mySeries = chart.addAreaSeries({
-                lineColor: 'rgba( 38, 166, 154, 1)',
-                topColor: 'rgba( 38, 166, 154, 0.28)',
-                bottomColor: 'rgba( 38, 166, 154, 0.05)'
+                lineColor: 'rgba( 0, 169, 110, 1)',
+                topColor: 'rgba( 0, 169, 110, 0.28)',
+                bottomColor: 'rgba( 0, 169, 110, 0.05)'
             })
         } else {
             mySeries = chart.addAreaSeries({
-                lineColor: 'rgba( 239, 83, 80, 1)',
-                topColor: 'rgba( 239, 83, 80, 0.05)',
-                bottomColor: 'rgba( 239, 83, 80, 0.28)'
+                lineColor: 'rgba( 255, 88, 97, 1)',
+                topColor: 'rgba( 255, 88, 97, 0.05)',
+                bottomColor: 'rgba( 255, 88, 97, 0.28)'
             })
         }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { getYahooOptions } from "../../services/stock"
 import OptionsSummary from "./components/OptionsSummary";
 import OptionsByDate from "./components/OptionsByDate";
+import OptionsChart from "./components/OptionsChart";
 
 const dataSummary = (stockOptions) => {
     let totalVolume = 0
@@ -85,6 +86,7 @@ const StockOptions = ({ ticker }) => {
     return (
         <div className="stock-options flex flex-col">
             <OptionsSummary ticker={ticker} summaryData={summaryData} />
+            <OptionsChart optionsDates={optionsDates} stockOptions={stockOptions} />
             <OptionsByDate ticker={ticker} optionsDates={optionsDates} stockOptions={stockOptions}/>
         </div>
     )

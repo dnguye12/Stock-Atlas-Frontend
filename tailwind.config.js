@@ -8,9 +8,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        up: '#26A69A',
-        down: '#EF5350',
-        hold: '#FFD747'
+        up: 'rgb(0 169 110)',
+        down: 'rgb(255 88 97)',
+        hold: 'rgb(255 190 0)'
       }
     },
   },
