@@ -108,7 +108,7 @@ const StockHeader = ({ chartInterval, chartQuote, stockQuote, ticker }) => {
                 }
             </div>
             <div className="divider my-3"></div>
-            <div className="navbar">
+            <div className="navbar hidden 2xl:flex">
                 <Link to={`/stock/${ticker}`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}` ? 'active' : ''}`}>Overview</Link>
                 <Link to={`/stock/${ticker}/news`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/news` ? 'active' : ''}`}>News</Link>
                 {incomeStatement && !loadIncomeStatement &&
@@ -122,6 +122,25 @@ const StockHeader = ({ chartInterval, chartQuote, stockQuote, ticker }) => {
                 }
                 <Link to={`/stock/${ticker}/holderinsider`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/holderinsider` ? 'active' : ''}`}>Holders & Insiders</Link>
                 <Link to={`/stock/${ticker}/profile`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/profile` ? 'active' : ''}`}>Profile</Link>
+            </div>
+            <div className="navbar flex 2xl:hidden flex-col">
+                <div>
+                    <Link to={`/stock/${ticker}`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}` ? 'active' : ''}`}>Overview</Link>
+                    <Link to={`/stock/${ticker}/news`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/news` ? 'active' : ''}`}>News</Link>
+                    {incomeStatement && !loadIncomeStatement &&
+                        <Link to={`/stock/${ticker}/financials`} className={`btn btn-ghost rounded ${location.pathname.includes(`/stock/${ticker}/financials`) ? 'active' : ''}`}>Financials</Link>
+                    }
+                    <Link to={`/stock/${ticker}/statistics`} className={`btn btn-ghost rounded ${location.pathname.includes(`/stock/${ticker}/statistics`) ? 'active' : ''}`}>Statistics</Link>
+                    <Link to={`/stock/${ticker}/options`} className={`btn btn-ghost rounded ${location.pathname.includes(`/stock/${ticker}/options`) ? 'active' : ''}`}>Options</Link>
+                </div>
+                <div>
+                    <Link to={`/stock/${ticker}/analyst-ratings`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/analyst-ratings` ? 'active' : ''}`}>Analyst Ratings</Link>
+                    {
+                        (stockQuote.dividendDate && stockQuote.trailingAnnualDividendRate) ? <Link to={`/stock/${ticker}/dividends`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/dividends` ? 'active' : ''}`}>Dividends</Link> : null
+                    }
+                    <Link to={`/stock/${ticker}/holderinsider`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/holderinsider` ? 'active' : ''}`}>Holders & Insiders</Link>
+                    <Link to={`/stock/${ticker}/profile`} className={`btn btn-ghost rounded ${location.pathname === `/stock/${ticker}/profile` ? 'active' : ''}`}>Profile</Link>
+                </div>
             </div>
             <div className="divider mt-3 mb-0"></div>
         </div>
