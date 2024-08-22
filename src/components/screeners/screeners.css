@@ -1,0 +1,11 @@
+.screeners .table, .screeners .table tr, .screeners .table td, .screeners .table th {
+    @apply border border-neutral-700
+}
+
+.screeners .table thead th {
+    @apply text-white font-semibold
+}
+
+.screeners .table tbody .ticker {
+    @apply text-blue-500 font-semibold transition duration-300 hover:text-blue-400 cursor-pointer
+}

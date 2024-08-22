@@ -16,7 +16,10 @@ const MenuLinks = () => {
                             <Link to="/"><FontAwesomeIcon icon="fa-solid fa-house" />Home</Link>
                         </li>
                         <li>
-                            <Link to="/"><FontAwesomeIcon icon="fa-solid fa-house" />Home</Link>
+                            <Link to="/heatmaps"><FontAwesomeIcon icon="fa-solid fa-border-all" />Heatmaps</Link>
+                        </li>
+                        <li>
+                            <Link to="/most-shorted-stocks"><FontAwesomeIcon icon="fa-solid fa-arrow-down-short-wide" />Most Shorted Stocks</Link>
                         </li>
                     </ul>
                 </details>

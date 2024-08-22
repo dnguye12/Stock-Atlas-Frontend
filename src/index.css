@@ -1,5 +1,6 @@
 @import './components/home/home.css';
 @import './components/stock/stock.css';
+@import './components/screeners/screeners.css';
 
 @tailwind base;
 @tailwind components;
