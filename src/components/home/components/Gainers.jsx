@@ -40,6 +40,10 @@ const Gainers = () => {
 
     return (
         <div className="overflow-x-auto">
+            <div className="flex justify-between items-center w-full mb-3">
+                <h3><FontAwesomeIcon icon="fa-solid fa-crown" className="mr-2" />Top <span className=" font-bold text-up">Gainers</span> Today</h3>
+                <button onClick={() => navigate(`/day-gainers`)} className="btn home-btn bg-neutral-50 text-neutral-900 hover:bg-neutral-300 transition-colors duration-300">View More <FontAwesomeIcon icon="fa-solid fa-up-right-from-square" /></button>
+            </div>
             <table className="table">
                 <thead>
                     <tr className="bg-neutral-900">

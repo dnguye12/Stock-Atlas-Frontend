@@ -226,8 +226,8 @@ export const getYahooOptions = async(ticker) => {
     return request.data
 }
 
-export const getYahooMostShortedStocks = async() => {
-    let query = baseUrl + dailyUrl + '/most-shorted-stocks'
+export const getYahooMostShortedStocks = async(count = 5) => {
+    let query = baseUrl + dailyUrl + `/most-shorted-stocks/${count}`
 
     const request = await dailyAxios.get(query)
     return request.data

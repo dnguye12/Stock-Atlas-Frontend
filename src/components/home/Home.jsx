@@ -1,13 +1,10 @@
-import { useState } from "react";
 import Active from "./components/Active";
 import Gainers from "./components/Gainers";
 import Indexes from "./components/Indexes";
 import Losers from "./components/Losers";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Shorteds from "./components/Shorteds";
 
 const Home = () => {
-    const [showingGainers, setShowingGainers] = useState(true)
 
     return (
         <div className="home w-full max-w-7xl sm:px-5 mx-auto mt-20 bg-neutral-950">
@@ -21,26 +18,10 @@ const Home = () => {
                 </div>
 
                 <div className="grid grid-cols-2 mx-auto w-full gap-10">
-                    {
-                        showingGainers
-                            ?
-                            <div>
-                                <div className="flex items-center cursor-pointer" onClick={() => { setShowingGainers(false) }}>
-                                    <FontAwesomeIcon className="mr-2 text-white text-xl"  icon="fa-solid fa-rotate" />
-                                    <h3>Top <span className=" font-bold text-up">Gainers</span> Today</h3>
-                                </div>
-                                <Gainers />
-                            </div>
-                            :
-                            <div>
-                                <div className="flex items-center cursor-pointer" onClick={() => { setShowingGainers(true) }}>
-                                    <FontAwesomeIcon className="mr-2 text-white text-xl"  icon="fa-solid fa-rotate" />
-                                    <h3>Top <span className=" font-bold text-down">Losers</span> Today</h3>
-                                </div>
-                                <Losers />
-                            </div>
-                    }
+                    <Gainers />
+                    <Losers />
                     <Active />
+                    <Shorteds />
                 </div>
             </div>
         </div>

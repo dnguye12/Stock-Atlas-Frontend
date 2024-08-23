@@ -14,6 +14,9 @@ import Stock from './components/stock/Stock'
 import MobileMenu from './components/menu/components/mobileMenu'
 import Footer from './components/footer/Footer'
 import MostShortedStocks from './components/screeners/MostShortedStocks'
+import DayGainers from './components/screeners/DayGainers'
+import DayLosers from './components/screeners/DayLosers'
+import MostActives from './components/screeners/MostActives'
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -28,7 +31,11 @@ function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/stock/:ticker/*' element={<Stock />} />
+
             <Route path='/most-shorted-stocks/*' element={<MostShortedStocks />} />
+            <Route path='/day-gainers' element={<DayGainers />} />
+            <Route path='/day-losers' element={<DayLosers />} />
+            <Route path='/most-active' element={<MostActives />} />
             {/*
             <Route path='/stock/:ticker/statistics' element={<StockStatistics />} />
             <Route path='/stock/:ticker/analyst-ratings' element={<StockAnalystRating />} />
