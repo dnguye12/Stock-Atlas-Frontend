@@ -11,7 +11,7 @@
 }
 
 .stock-header .navbar .btn, .stock-stats .navbar .btn {
-    @apply text-base rounded-none transition duration-300 border-b-2 border-b-neutral-950
+    @apply text-sm rounded-none transition duration-300 border-b-2 border-b-neutral-950
 }
 
 .stock-stat .navbar .btn {
